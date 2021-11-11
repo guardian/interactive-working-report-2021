@@ -22,3 +22,29 @@
 html {
   scroll-behavior: smooth;
 }
+
+.article-navigation {
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 5;
+  padding: 10px 0;
+  .nav-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  p {
+    padding-bottom: 12px;
+    font-size: 17px;
+    font-weight: bold;
+  }
+  a {
+    font-size: 20px;
+    font-weight: bold;
+    border: unset !important;
+    padding-bottom: 12px;
+  }
+}
