@@ -4,19 +4,32 @@
 // mainContent
 const mainContent = document.getElementById('maincontent')
 // get all H2s
-const h2s = mainContent.querySelectorAll('h2')
-console.log(h2s)
+const targetElem = mainContent.querySelectorAll('h2')
+// console.log(targetElem)
 
 // get first set of links
-const firstList = mainContent.querySelectorAll('ul')[0]
+const firstList = mainContent.querySelectorAll('ul')[0] // only needed if menu list exists
 
+function wrapElem(tagName,idName,className,targetContainer) {
+  // build wrappers add content
+  const newList = document.createElement(tagName);
+  newList.setAttribute('id', idName);
+  newList.classList.add(className);
+  targetContainer.prepend(newList)
+
+}
+
+// wrapElem('div','new-list2','article-navigation',mainContent);
 
 function addNewList() {
-    var newList = document.createElement("nav")
+    // build navigation container
+    const newList = document.createElement("nav")
     newList.setAttribute("id", "new-list")
     newList.classList.add("article-navigation")
     mainContent.prepend(newList)
-    
+
+    // console.log(wrapElem('div','new-list2','article-navigation',mainContent));
+
     // Create nav wrapper
     const navTitleWrapper = document.createElement('div')
     navTitleWrapper.classList.add("nav-title-wrapper")
@@ -30,8 +43,8 @@ function addNewList() {
     navTitleWrapper.appendChild(navTitle)
     navTitleWrapper.appendChild(navChevron)
 
-    for (var i = 0; i < h2s.length; i++) {
-        var node = h2s[i];
+    for (var i = 0; i < targetElem.length; i++) {
+        var node = targetElem[i];
         // create new div
         const titleWrapper = document.createElement('div')
         titleWrapper.setAttribute('id', 'nav' + i)
@@ -52,12 +65,12 @@ function addNewList() {
         // add hrefs to new links
         navLink.href = '#' + titleWrapper.getAttribute('id');
         // get h2 text and add to new links
-        navLink.innerHTML = h2s[i].innerHTML
+        navLink.innerHTML = targetElem[i].innerHTML
         // add new links to nav list
         newList.appendChild(navLink)
 
     }
-    
+
 
 }
 addNewList()
