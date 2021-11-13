@@ -46,5 +46,17 @@ html {
     font-weight: bold;
     border: unset !important;
     padding-bottom: 12px;
+    &.active {
+      color: blue;
+    }
+  }
+}
+.section-header {
+  &::before {
+      display: block;
+      content: " ";
+      top: -70px;
+      height: 70px;
+      visibility: hidden;
   }
 }
