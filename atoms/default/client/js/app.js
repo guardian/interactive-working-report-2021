@@ -1,6 +1,3 @@
-// if you want to import a module from shared/js then you can
-// just do e.g. import Scatter from "shared/js/scatter.js"
-
 // get our content contaciner
 const mainContent = document.getElementById('maincontent')
 // get our target element
@@ -16,6 +13,7 @@ const firstList = mainContent.querySelectorAll('ul')[0] // ********* only needed
 const navID             = 'jump-nav';
 const anchorTag         = 'header';
 const navTag            = 'nav';
+const menuClass          = 'nav-class';
 const anchorIdLabel     = 'section';
 const anchorClass       = 'section-header';
 const navClass          = 'article-navigation';
@@ -88,7 +86,7 @@ function linkURL(targetElem, i) {
   const anchorID = anchorIdLabel + (index+1);
   const linkTitle = targetElem[i].innerText;
   const linkHref = '#' + anchorID;
-  newElem('a','href',linkHref,'nav-class',linkTitle,navHolder,'after');
+  newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
 }
 
 // Loop through and build anchors and menu links
@@ -102,15 +100,30 @@ for (let i = 0; i < targetElem.length; i++) {
 // detect section in view
 let sectionHeader = document.querySelectorAll(anchorTag);
 
-let n=0;
+// console.log(sectionHeader)
+
+
+const menuTarget = document.getElementsByClassName(menuClass);
 let observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
-      console.log('Section ' + `${++n}` + ' in view ');
-      observer.unobserve(entry.target);
-    }
-  });
-}, {threshold: 1});
+      const labelText = entry.target.innerText;
+
+      for (let i = 0; i < menuTarget.length; i++) {
+        if (labelText === menuTarget[i].innerText) {
+          console.log(menuTarget[i])
+          menuTarget[i].classList.add('active')
+        
+        } else {
+          menuTarget[i].classList.remove('active')
+        }
+      }
+
+      }
+    });
+  }, {
+    threshold: 1
+});
 
 sectionHeader.forEach(header => { observer.observe(header) });
 
