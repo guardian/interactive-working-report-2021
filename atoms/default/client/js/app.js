@@ -109,16 +109,24 @@ let observer = new IntersectionObserver((entries, observer) => {
     if(entry.isIntersecting){
       const labelText = entry.target.innerText;
 
-      for (let i = 0; i < menuTarget.length; i++) {
-        if (labelText === menuTarget[i].innerText) {
-          console.log(menuTarget[i])
-          menuTarget[i].classList.add('active')
-        
-        } else {
-          menuTarget[i].classList.remove('active')
-        }
-      }
-
+      // for (let i = 0; i < menuTarget.length; i++) {
+      //   if (labelText === menuTarget[i].innerText) {
+      //     console.log(menuTarget[i])
+      //     menuTarget[i].classList.add('active')
+      //
+      //   } else {
+      //     menuTarget[i].classList.remove('active')
+      //   }
+      // }
+        // progressive method
+        menuTarget.forEach(function(item){
+          if (labelText === item.innerText) {
+            console.log(item)
+            item.classList.add('active')
+          } else {
+            item.classList.remove('active')
+          }
+        });
       }
     });
   }, {
