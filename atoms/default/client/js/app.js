@@ -1,4 +1,3 @@
-
 const navID             = 'jump-nav';
 const anchorTag         = 'header';
 const targetTag         = 'h2';
@@ -6,7 +5,6 @@ const targetTagInner    = 'strong';
 const navTag            = 'nav';
 const menuClass         = 'nav-class';
 const anchorIdLabel     = 'section';
-// const anchorIdLabel     = null;
 const anchorClass       = 'section-header';
 const navClass          = 'article-navigation';
 const navBarClass       = 'nav-title-wrapper';
@@ -127,7 +125,7 @@ let sectionHeader = document.querySelectorAll(anchorTag);
 const menuTarget = document.getElementsByClassName(menuClass);
 const menuTargetArr = [].slice.call(menuTarget); // create an array for forEach in safari
 
-console.log(menuTargetArr);
+// console.log(menuTargetArr);
 let currItem = null;
 let prevItem = null;
 let options = {
