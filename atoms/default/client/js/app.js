@@ -104,34 +104,33 @@ let sectionHeader = document.querySelectorAll(anchorTag);
 
 
 const menuTarget = document.getElementsByClassName(menuClass);
+let currItem = null;
+let prevItem = null;
+let options = {
+  rootMargin: '0px 0px -75% 0px', // add for sticky menu
+  threshold: 1.0
+}
 let observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       const labelText = entry.target.innerText;
-
-      // for (let i = 0; i < menuTarget.length; i++) {
-      //   if (labelText === menuTarget[i].innerText) {
-      //     console.log(menuTarget[i])
-      //     menuTarget[i].classList.add('active')
-      //
-      //   } else {
-      //     menuTarget[i].classList.remove('active')
-      //   }
-      // }
-        // progressive method
+      // previous is current
+        prevItem = currItem;
+        console.log('prevItem: ' + prevItem)
         menuTarget.forEach(function(item){
           if (labelText === item.innerText) {
             console.log(item)
             item.classList.add('active')
+            // get current item
+            currItem = labelText;
+            console.log('currItem: ' + currItem);
           } else {
             item.classList.remove('active')
           }
         });
       }
     });
-  }, {
-    threshold: 1
-});
+  }, options);
 
 sectionHeader.forEach(header => { observer.observe(header) });
 
