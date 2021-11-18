@@ -6,6 +6,10 @@
 // gu_grid pulls the css for gs-container and content__main-column
 // @import "gu_grid";
 
+// Colour pallet
+$brand400: #052962;
+
+
 .interactive-atom {
   margin: 0;
   padding: 0;
@@ -49,11 +53,17 @@ html {
     &.active {
       color: blue;
     }
+    &.prev {
+      color: green;
+    }
   }
 }
 .section-header {
-  background-color: yellow;
-  &::before {
+  border-top: 1px solid $brand400;
+  // background-color: yellow;
+  &::before,
+  // &::after
+  {
       display: block;
       content: " ";
       top: -50px;
