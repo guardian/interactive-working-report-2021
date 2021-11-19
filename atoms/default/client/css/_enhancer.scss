@@ -345,3 +345,14 @@ a,
 // .prose blockquote.quoted::before {
 //   display: none;
 // }
+
+.article-navigation {
+  max-width: 620px;
+
+  @include mq(leftCol) {
+    margin-left: 160px !important;
+  }
+  @include mq(wide) {
+    margin-left: 240px !important;
+  }
+}

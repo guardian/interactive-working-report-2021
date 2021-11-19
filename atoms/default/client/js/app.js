@@ -241,3 +241,57 @@ function addNewList() {
         navHolder.appendChild(navLink)
     }
 }
+
+
+// const navIsAtTopOptions
+
+// // detect when navHolder is at the top of the screen
+// const navIsAtTop = new IntersectionObserver( 
+//   ([e]) => {
+//     console.log(e.boundingClientRect.top)
+//     console.log(e.target)
+//     if (e.boundingClientRect.top < 1) {
+//       console.log("we at top")
+//       e.target.classList.add("we-pinnnned")
+//     }
+//   }
+// );
+
+let navTopOptions = {
+  rootMargin: '0px 0px 0px 0px',
+  threshold: 1.0
+}
+
+let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
+  entries.forEach(entry => {
+    if(entry.intersectionRatio < 1){
+      entry.target.classList.toggle("stick-me")
+    } else {
+    }
+  });
+}, navTopOptions);
+
+navIsAtTop.observe(navHolder)
+
+
+// let navIsAtTop = new IntersectionObserver(callback, navTopOptions);
+// navIsAtTop.observe(navHolder)
+
+// let callback = (entries, navIsAtTop) => {
+//   entries.forEach(entry => {
+//     // Each entry describes an intersection change for one observed
+//     // target element:
+//       // console.log(entry.boundingClientRect)
+//       console.log(entry.intersectionRatio)
+//     //   
+//     //   entry.intersectionRect
+//     //   entry.isIntersecting
+//     //   entry.rootBounds
+//     //   entry.target
+//     //   entry.time
+//   });
+// };
+
+
+
+// navIsAtTop.observe(navHolder)

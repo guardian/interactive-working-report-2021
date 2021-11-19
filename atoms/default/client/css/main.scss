@@ -9,7 +9,6 @@
 // Colour pallet
 $brand400: #052962;
 
-
 .interactive-atom {
   margin: 0;
   padding: 0;
@@ -32,11 +31,14 @@ html {
   max-width: 620px;
   display: flex;
   flex-direction: column;
-  position: sticky;
+
   top: 0;
   background-color: white;
   z-index: 5;
   padding: 10px 0;
+  &.stick-me {
+    position: sticky;
+  }
   .nav-title-wrapper {
     display: flex;
     justify-content: space-between;
@@ -65,10 +67,10 @@ html {
   &::before,
   // &::after
   {
-      display: block;
-      content: " ";
-      top: -50px;
-      height: 50px;
-      visibility: hidden;
+    display: block;
+    content: " ";
+    top: -50px;
+    height: 50px;
+    visibility: hidden;
   }
 }
