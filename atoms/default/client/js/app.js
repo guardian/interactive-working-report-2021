@@ -153,7 +153,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
             updateHash(linkHash);
 
             item.classList.add('active');
-            // updateHash(url);
+            updateHash(url);
             // get current item
             currItem = labelText;
             // console.log('currItem: ' + currItem);
@@ -235,7 +235,7 @@ const handleIntersect = entries => {
       }
     } else if (currentY > previousY && isIntersecting) {
       if (currentRatio < previousRatio) {
-        console.log("Scrolling up leave")
+        console.log("Scrolling up leave: Remove class")
       } else {
         console.log("Scrolling up enter: Remove my class - if -1px set doesn't work") // removes on way back up?
         // entry.target.classList.remove(menuStuck);
