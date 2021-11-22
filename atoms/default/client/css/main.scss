@@ -36,12 +36,15 @@ html {
   background-color: white;
   z-index: 5;
   padding: 10px 0;
-  position: sticky;
-  // top: -1px;                      /* ➜ the trick */
-  // padding-top: calc(1em + 1px);  /* ➜ compensate for the trick */
+  // position: sticky;
+  top: -1px; /* ➜ the trick */
+  padding-top: calc(1em + 1px); /* ➜ compensate for the trick */
+  transition: height 3s ease;
   &.stick-me {
     background-color: yellow;
-    // position: sticky;
+    height: 20px;
+    overflow-y: hidden;
+    position: sticky;
   }
   &.at-bottom {
     background-color: green;

@@ -153,7 +153,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
             updateHash(linkHash);
 
             item.classList.add('active');
-            // updateHash(url);
+            updateHash(url);
             // get current item
             currItem = labelText;
             // console.log('currItem: ' + currItem);
@@ -184,20 +184,19 @@ const navElem = document.getElementsByClassName(menuClass);
 Array.from(navElem).forEach(function(item){
   item.addEventListener('click', (e) => {
     hashState = 1;
-    console.log('click: ' + hashState);
+    setTimeout(() => {
+      hashState = 0;
+      console.log('click: ' + hashState);
+    }, 1000)
   });
 });
 
 // hash url update
 function updateHash(url) {
   // works on click but not using the keyboard
-  if (hashState === 1) {
-    console.log('dont update url: ' + hashState);
-  } else {
-    hashState = 0; // not working?
+  if (hashState !== 1) {
     window.location.hash = '#' + url;
-    // console.log('NO click: ' + hashState);
-  }
+  } 
 }
 // remove hash at top of page
 function removeHash(){
@@ -209,54 +208,94 @@ function removeHash(){
 //   ([e]) => e.target.classList.toggle(menuStuck, e.intersectionRatio < 1),
 //   {threshold: [1]}
 // );
-//
+
 // navIsAtTop.observe(navHolder);
 
-const thresholdArray = steps => Array(steps + 1)
- .fill(0)
- .map((_, index) => index / steps || 0)
 
-let previousY = 0
-let previousRatio = 0
+// const thresholdArray = steps => Array(steps + 1)
+//  .fill(0)
+//  .map((_, index) => index / steps || 0)
 
-const handleIntersect = entries => {
-  entries.forEach(entry => {
-    const currentY = entry.boundingClientRect.y
-    const currentRatio = entry.intersectionRatio
-    const isIntersecting = entry.isIntersecting
+// let previousY = 0
+// let previousRatio = 0
 
-    // Scrolling down/up
-    if (currentY < previousY) {
-      if (currentRatio > previousRatio && isIntersecting) {
-        console.log("Scrolling down enter")
-      } else {
-        console.log("Scrolling down leave: Add my style - if -1px set")
-        entry.target.classList.add(menuStuck);
-      }
-    } else if (currentY > previousY && isIntersecting) {
-      if (currentRatio < previousRatio) {
-        console.log("Scrolling up leave")
-      } else {
-        console.log("Scrolling up enter: Remove my class - if -1px set doesn't work") // removes on way back up?
-        // entry.target.classList.remove(menuStuck);
-      }
-    }
+// const handleIntersect = entries => {
+//   entries.forEach(entry => {
+//     const currentY = entry.boundingClientRect.y
+//     const currentRatio = entry.intersectionRatio
+//     const isIntersecting = entry.isIntersecting
 
-    previousY = currentY
-    previousRatio = currentRatio
-  })
+//     // Scrolling down/up
+//     if (currentY < previousY) {
+//       if (currentRatio > previousRatio && isIntersecting) {
+//         console.log("Scrolling down enter")
+//       } else {
+//         console.log("Scrolling down leave: Add my style - if -1px set")
+//         entry.target.classList.add(menuStuck);
+//       }
+//     } else if (currentY > previousY && isIntersecting) {
+//       if (currentRatio < previousRatio) {
+//         console.log("Scrolling up leave")
+//       } else {
+//         console.log("Scrolling up enter: Remove my class - if -1px set doesn't work") // removes on way back up?
+//         // entry.target.classList.remove(menuStuck);
+//       }
+//     }
+
+//     previousY = currentY
+//     previousRatio = currentRatio
+//   })
+// }
+
+// const topObserver = new IntersectionObserver(handleIntersect, {
+//   threshold: thresholdArray(20),
+// })
+
+// topObserver.observe(navHolder)
+
+const navIsAtTop = () => {
+  console.log("IM AT THE TOPPPPP")
+  navHolder.classList.add("stick-me")
 }
 
-const topObserver = new IntersectionObserver(handleIntersect, {
-  threshold: thresholdArray(20),
-})
+const debounce = (func, wait) => {
+  let timeout;
 
-topObserver.observe(navHolder)
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
 
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
+var debouncedNavAtTop = debounce(function () {
+  if (navHolder.getBoundingClientRect().top < 0) {
+    navIsAtTop()
+  } else {
+
+  }
+}, 200);
+
+window.addEventListener('wheel', debouncedNavAtTop);
+
+
+
+// const navHeight = navHolder.offsetHeight
+
+// window.addEventListener("scroll", () => {
+//   console.log(navHolder)
+//   console.log(navHolder.getBoundingClientRect().top)
+
+// }) 
 
 // let navTopOptions = {
-//   // rootMargin: '0px 0px 0px 0px',
-//   threshold: [1]
+//   // rootMargin: navHeight + 'px 0px 0px 0px',
+//   rootMargin: '0px 0px 0px 0px',
+//   threshold: 1
 // }
 // half way there
 // let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
@@ -274,15 +313,36 @@ topObserver.observe(navHolder)
 
 // let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
 //   entries.forEach(entry => {
+//     console.log(entry.intersectionRatio)
+//     if(entry.intersectionRatio === 0) {
+//       console.log('OUT of view');
+//     } else if(entry.intersectionRatio === 1) {
+//       console.log('all IN view');
+//     }
 //     if(entry.intersectionRatio < 1){
 //       entry.target.classList.toggle("stick-me");
 //       // console.log('in view');
 //     } else {
-//       // console.log('stuck');
+//       // console.log('not in view');
 //     }
 //   });
 // }, navTopOptions);
-//
+
+// let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
+//   entries.forEach(entry => {
+//     console.log(entry.intersectionRect)
+//     console.log(navHeight)
+//     console.log(entry.intersectionRect.height)
+//     console.log(entry.intersectionRect.top)
+//     if(entry.intersectionRect.top === - navHeight) {
+//       console.log('OUT of view');
+//             entry.target.classList.add("stick-me");
+//     } else {
+//       console.log('all IN view');
+//     }
+//   });
+// }, navTopOptions);
+
 // navIsAtTop.observe(navHolder)
 
 // let navIsAtTop = new IntersectionObserver(callback, navTopOptions);
