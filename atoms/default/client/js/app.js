@@ -4,6 +4,7 @@ const targetTag         = 'h2';
 const targetTagInner    = 'strong';
 const navTag            = 'nav';
 const menuClass         = 'nav-class';
+const menuStuck         = 'stick-me';
 const anchorIdLabel     = 'section';
 const anchorClass       = 'section-header';
 const navClass          = 'article-navigation';
@@ -92,14 +93,18 @@ function addAnchorWrap(targetElem, i) {
   // Add marker *if* we need it?
   // newElem('span','','','marker','',titleWrapper,'before');
 }
-
+// Concatinate titles
+function concatTitle(title) {
+  const newURL = title.replace(/\s+/g, '-').toLowerCase();
+  return newURL;
+}
 // Builds our url's. Currently the whole link but may need just urls output
 function linkURL(targetElem, i) {
   let index = parseInt(i); // change string to interger to start at 1
   const anchorNode      = targetElem[i];
   const anchorID        = anchorIdLabel + (index+1);
   const linkTitle       = targetElem[i].innerText;
-  const anchorIDTitle   = linkTitle.replace(/\s+/g, '-').toLowerCase();
+  const anchorIDTitle   = concatTitle(linkTitle);
 
   // const linkHref = '#' + anchorID; // using section variable
   const linkHref = '#' + anchorIDTitle; // using anchor text
@@ -123,34 +128,40 @@ for (let i = 0; i < targetElem.length; i++) {
 let sectionHeader = document.querySelectorAll(anchorTag);
 
 const menuTarget = document.getElementsByClassName(menuClass);
-const menuTargetArr = [].slice.call(menuTarget); // create an array for forEach in safari
 
 // console.log(menuTargetArr);
 let currItem = null;
 let prevItem = null;
-let options = {
+let anchorOptions = {
   rootMargin: '0px 0px -75% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections
   threshold: 1.0
 }
 
-let observer = new IntersectionObserver((entries, observer) => {
+let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
-      const labelText = entry.target.textContent; // changed innerText to text Content to work in safari
+      const labelText = entry.target.textContent; // changed innerText to textContent to work in safari
       // previous is current
         prevItem = currItem;
-
-        menuTargetArr.forEach(function(item){
+        // convert html collection to array to loop with forEach
+        Array.from(menuTarget).forEach(function(item){
           // loop through links to match active target text
           if ( labelText === item.textContent ) {
 
+            let linkHash = concatTitle(item.textContent);
+            // console.log(linkHash);
+            updateHash(linkHash);
+
             item.classList.add('active');
+            // updateHash(url);
             // get current item
             currItem = labelText;
             // console.log('currItem: ' + currItem);
 
+
           } else if ( prevItem === item.textContent ) {
 
+            item.classList.remove('active');
             item.classList.add('prev');
             // console.log('prevItem: ' + prevItem);
 
@@ -163,30 +174,134 @@ let observer = new IntersectionObserver((entries, observer) => {
         });
       }
     });
-  }, options);
+  }, anchorOptions);
 
-sectionHeader.forEach(header => { observer.observe(header) });
+sectionHeader.forEach(header => { anchorObserver.observe(header) });
 
-// ---------------------------- Detect menu ----------------------------- //
+let hashState = 0;
+// if menu has been clicked skip the auto update
+const navElem = document.getElementsByClassName(menuClass);
+Array.from(navElem).forEach(function(item){
+  item.addEventListener('click', (e) => {
+    hashState = 1;
+    console.log('click: ' + hashState);
+  });
+});
 
-// check for ul menu
-// var getNextSibling = function (elem, selector) {
+// hash url update
+function updateHash(url) {
+  // works on click but not using the keyboard
+  if (hashState === 1) {
+    console.log('dont update url: ' + hashState);
+  } else {
+    hashState = 0; // not working?
+    window.location.hash = '#' + url;
+    // console.log('NO click: ' + hashState);
+  }
+}
+// remove hash at top of page
+function removeHash(){
+  history.pushState("", document.title, window.location.pathname + window.location.search);
+}
+
+// Almost what's needed but class present before sticking
+// const navIsAtTop = new IntersectionObserver(
+//   ([e]) => e.target.classList.toggle(menuStuck, e.intersectionRatio < 1),
+//   {threshold: [1]}
+// );
 //
-// 	// Get the next sibling element
-// 	var sibling = elem.nextElementSibling;
-//
-// 	// If the sibling matches our selector, use it
-// 	// If not, jump to the next sibling and continue the loop
-// 	while (sibling) {
-// 		if (sibling.matches(selector)) return sibling;
-// 		sibling = sibling.nextElementSibling
-// 	}
-//
-// };
-// var findList = document.querySelector('ul');
-// if () {
-//   content.querySelector('ul').innerHTML
+// navIsAtTop.observe(navHolder);
+
+const thresholdArray = steps => Array(steps + 1)
+ .fill(0)
+ .map((_, index) => index / steps || 0)
+
+let previousY = 0
+let previousRatio = 0
+
+const handleIntersect = entries => {
+  entries.forEach(entry => {
+    const currentY = entry.boundingClientRect.y
+    const currentRatio = entry.intersectionRatio
+    const isIntersecting = entry.isIntersecting
+
+    // Scrolling down/up
+    if (currentY < previousY) {
+      if (currentRatio > previousRatio && isIntersecting) {
+        console.log("Scrolling down enter")
+      } else {
+        console.log("Scrolling down leave: Add my style - if -1px set")
+        entry.target.classList.add(menuStuck);
+      }
+    } else if (currentY > previousY && isIntersecting) {
+      if (currentRatio < previousRatio) {
+        console.log("Scrolling up leave")
+      } else {
+        console.log("Scrolling up enter: Remove my class - if -1px set doesn't work") // removes on way back up?
+        // entry.target.classList.remove(menuStuck);
+      }
+    }
+
+    previousY = currentY
+    previousRatio = currentRatio
+  })
+}
+
+const topObserver = new IntersectionObserver(handleIntersect, {
+  threshold: thresholdArray(20),
+})
+
+topObserver.observe(navHolder)
+
+
+// let navTopOptions = {
+//   // rootMargin: '0px 0px 0px 0px',
+//   threshold: [1]
 // }
+// half way there
+// let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
+//   entries.forEach(entry => {
+//     if(entry.intersectionRatio < 1){
+//       entry.target.classList.toggle("stick-me");
+//       // console.log('in view');
+//     } else {
+//       // console.log('stuck');
+//     }
+//   });
+// }, navTopOptions);
+//
+// navIsAtTop.observe(navHolder)
+
+// let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
+//   entries.forEach(entry => {
+//     if(entry.intersectionRatio < 1){
+//       entry.target.classList.toggle("stick-me");
+//       // console.log('in view');
+//     } else {
+//       // console.log('stuck');
+//     }
+//   });
+// }, navTopOptions);
+//
+// navIsAtTop.observe(navHolder)
+
+// let navIsAtTop = new IntersectionObserver(callback, navTopOptions);
+// navIsAtTop.observe(navHolder)
+
+// let callback = (entries, navIsAtTop) => {
+//   entries.forEach(entry => {
+//     // Each entry describes an intersection change for one observed
+//     // target element:
+//       // console.log(entry.boundingClientRect)
+//       console.log(entry.intersectionRatio)
+//     //
+//     //   entry.intersectionRect
+//     //   entry.isIntersecting
+//     //   entry.rootBounds
+//     //   entry.target
+//     //   entry.time
+//   });
+// };
 
 //////////////////////////////////////////////////////////////////////////
 // ---------------------------- Version 1 ----------------------------- //
@@ -246,7 +361,7 @@ function addNewList() {
 // const navIsAtTopOptions
 
 // // detect when navHolder is at the top of the screen
-// const navIsAtTop = new IntersectionObserver( 
+// const navIsAtTop = new IntersectionObserver(
 //   ([e]) => {
 //     console.log(e.boundingClientRect.top)
 //     console.log(e.target)
@@ -256,41 +371,6 @@ function addNewList() {
 //     }
 //   }
 // );
-
-let navTopOptions = {
-  rootMargin: '0px 0px 0px 0px',
-  threshold: 1.0
-}
-
-let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
-  entries.forEach(entry => {
-    if(entry.intersectionRatio < 1){
-      entry.target.classList.toggle("stick-me")
-    } else {
-    }
-  });
-}, navTopOptions);
-
-navIsAtTop.observe(navHolder)
-
-
-// let navIsAtTop = new IntersectionObserver(callback, navTopOptions);
-// navIsAtTop.observe(navHolder)
-
-// let callback = (entries, navIsAtTop) => {
-//   entries.forEach(entry => {
-//     // Each entry describes an intersection change for one observed
-//     // target element:
-//       // console.log(entry.boundingClientRect)
-//       console.log(entry.intersectionRatio)
-//     //   
-//     //   entry.intersectionRect
-//     //   entry.isIntersecting
-//     //   entry.rootBounds
-//     //   entry.target
-//     //   entry.time
-//   });
-// };
 
 
 
