@@ -5,6 +5,7 @@ const targetTagInner    = 'strong';
 const navTag            = 'nav';
 const menuClass         = 'nav-class';
 const menuStuck         = 'stick-me';
+const closeNav          = 'close-nav';
 const anchorIdLabel     = 'section';
 const anchorClass       = 'section-header';
 const navClass          = 'article-navigation';
@@ -12,7 +13,8 @@ const navBarClass       = 'nav-title-wrapper';
 const navUtilityID      = 'nav-utility';
 
 // get our content contaciner
-const mainContent = document.getElementById('maincontent');
+const mainContent = document.getElementById('maincontent')
+const articleContent = document.querySelector('.article-body-viewer-selector')
 // get our target element
 const targetElem = mainContent.querySelectorAll(targetTag);
 // const targetDef = mainContent.querySelector('strong');
@@ -61,12 +63,13 @@ function menuContainer() {
   const navUtility = document.getElementById(navUtilityID);
 
   newElem('p','','','','Jump to',navUtility,'after');
-  newElem('span','','','','Close',navUtility,'after');
+  newElem('span','id',closeNav,'','Toggle menu',navUtility,'after');
 
 }
 
 menuContainer(); // ******* Building this now because it's needed to add the links, but should be when *no* nav has been found
 const navHolder = document.getElementById(navID); // added #2 to not conflict
+const closeBtn = document.getElementById(closeNav);
 
 // wrap our anchors
 function addAnchorWrap(targetElem, i) {
@@ -149,21 +152,16 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
           if ( labelText === item.textContent ) {
 
             let linkHash = concatTitle(item.textContent);
-            // console.log(linkHash);
             updateHash(linkHash);
 
             item.classList.add('active');
-            updateHash(url);
             // get current item
             currItem = labelText;
-            // console.log('currItem: ' + currItem);
-
 
           } else if ( prevItem === item.textContent ) {
 
             item.classList.remove('active');
             item.classList.add('prev');
-            // console.log('prevItem: ' + prevItem);
 
           } else {
 
@@ -178,25 +176,28 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
 
 sectionHeader.forEach(header => { anchorObserver.observe(header) });
 
+
 let hashState = 0;
 // if menu has been clicked skip the auto update
 const navElem = document.getElementsByClassName(menuClass);
 Array.from(navElem).forEach(function(item){
   item.addEventListener('click', (e) => {
     hashState = 1;
-    console.log('click: ' + hashState);
+    setTimeout(() => {
+      hashState = 0;
+      // console.log('click: ' + hashState);
+    }, 1000)
   });
 });
 
+closeBtn.addEventListener('click', (e) => {
+    navHolder.classList.toggle('open-nav');
+});
 // hash url update
 function updateHash(url) {
   // works on click but not using the keyboard
-  if (hashState === 1) {
-    console.log('dont update url: ' + hashState);
-  } else {
-    hashState = 0; // not working?
+  if (hashState !== 1) {
     window.location.hash = '#' + url;
-    // console.log('NO click: ' + hashState);
   }
 }
 // remove hash at top of page
@@ -209,169 +210,63 @@ function removeHash(){
 //   ([e]) => e.target.classList.toggle(menuStuck, e.intersectionRatio < 1),
 //   {threshold: [1]}
 // );
-//
-// navIsAtTop.observe(navHolder);
 
-const thresholdArray = steps => Array(steps + 1)
- .fill(0)
- .map((_, index) => index / steps || 0)
+const navHeight = navHolder.offsetHeight
+const navSpace = window.innerHeight - navHeight
 
-let previousY = 0
-let previousRatio = 0
+let obvsOptUp = {
+  rootMargin: '0px 0px -' + navSpace + 'px 0px',
+  threshold: [0.2,0.8]
+}
 
-const handleIntersect = entries => {
+let obvsCallbackUp = (entries, observerUp) => {
   entries.forEach(entry => {
-    const currentY = entry.boundingClientRect.y
-    const currentRatio = entry.intersectionRatio
-    const isIntersecting = entry.isIntersecting
+    if ( entry.isIntersecting === true && entry.intersectionRatio > 0.8 ) {
+      navHolder.classList.add(menuStuck)
 
-    // Scrolling down/up
-    if (currentY < previousY) {
-      if (currentRatio > previousRatio && isIntersecting) {
-        console.log("Scrolling down enter")
-      } else {
-        console.log("Scrolling down leave: Add my style - if -1px set")
-        entry.target.classList.add(menuStuck);
-      }
-    } else if (currentY > previousY && isIntersecting) {
-      if (currentRatio < previousRatio) {
-        console.log("Scrolling up leave: Remove class")
-      } else {
-        console.log("Scrolling up enter: Remove my class - if -1px set doesn't work") // removes on way back up?
-        // entry.target.classList.remove(menuStuck);
-      }
+    } else if (entry.intersectionRatio < 0.2) {
+      navHolder.classList.remove(menuStuck)
+      removeHash()
+
     }
+  });
+};
 
-    previousY = currentY
-    previousRatio = currentRatio
-  })
+let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
+observerUp.observe(navHolder);
+
+// HF method
+const navIsAtTop = () => {
+  console.log("IM AT THE TOPPPPP")
+  navHolder.classList.add("stick-me")
 }
 
-const topObserver = new IntersectionObserver(handleIntersect, {
-  threshold: thresholdArray(20),
-})
+const debounce = (func, wait) => {
+  let timeout;
 
-topObserver.observe(navHolder)
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
 
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
-// let navTopOptions = {
-//   // rootMargin: '0px 0px 0px 0px',
-//   threshold: [1]
-// }
-// half way there
-// let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
-//   entries.forEach(entry => {
-//     if(entry.intersectionRatio < 1){
-//       entry.target.classList.toggle("stick-me");
-//       // console.log('in view');
-//     } else {
-//       // console.log('stuck');
-//     }
-//   });
-// }, navTopOptions);
+var debouncedNavAtTop = debounce(function () {
+  if (navHolder.getBoundingClientRect().top < 0) {
+    navIsAtTop()
+  } else {
+
+  }
+}, 200);
+
+// window.addEventListener('wheel', debouncedNavAtTop); // ----------> commented out
 //
-// navIsAtTop.observe(navHolder)
-
-// let navIsAtTop = new IntersectionObserver((entries, navHolder) => {
-//   entries.forEach(entry => {
-//     if(entry.intersectionRatio < 1){
-//       entry.target.classList.toggle("stick-me");
-//       // console.log('in view');
-//     } else {
-//       // console.log('stuck');
-//     }
-//   });
-// }, navTopOptions);
+// window.addEventListener("scroll", () => {
+//   console.log(navHolder)
+//   console.log(navHolder.getBoundingClientRect().top)
 //
-// navIsAtTop.observe(navHolder)
-
-// let navIsAtTop = new IntersectionObserver(callback, navTopOptions);
-// navIsAtTop.observe(navHolder)
-
-// let callback = (entries, navIsAtTop) => {
-//   entries.forEach(entry => {
-//     // Each entry describes an intersection change for one observed
-//     // target element:
-//       // console.log(entry.boundingClientRect)
-//       console.log(entry.intersectionRatio)
-//     //
-//     //   entry.intersectionRect
-//     //   entry.isIntersecting
-//     //   entry.rootBounds
-//     //   entry.target
-//     //   entry.time
-//   });
-// };
-
-//////////////////////////////////////////////////////////////////////////
-// ---------------------------- Version 1 ----------------------------- //
-//////////////////////////////////////////////////////////////////////////
-
-// addNewList(); // inactive version
-function addNewList() {
-    // build navigation container
-    const navHolder = document.createElement("nav")
-    navHolder.setAttribute("id", "new-list")
-    navHolder.classList.add("article-navigation")
-    mainContent.prepend(navHolder)
-    // Create nav wrapper
-    const navTitleWrapper = document.createElement('div')
-    navTitleWrapper.classList.add("nav-title-wrapper")
-    navHolder.appendChild(navTitleWrapper)
-    // create nav title and close button
-    const navTitle = document.createElement('p')
-    const navChevron = document.createElement('span')
-    navTitle.innerHTML = "Jump to"
-    navChevron.innerHTML = "Close"
-    // add nav title and close button to the wrapper div
-    navTitleWrapper.appendChild(navTitle)
-    navTitleWrapper.appendChild(navChevron)
-
-    for (var i = 0; i < targetElem.length; i++) {
-        const anchorNode = targetElem[i];
-        const anchorID = 'nav' + i;
-
-        const titleWrapper = document.createElement('header');
-        titleWrapper.setAttribute('id', anchorID);
-
-        const marker = document.createElement('span')
-        marker.classList.add("marker")
-        titleWrapper.appendChild(marker)
-        console.log(marker)
-
-        // add new div
-        anchorNode.parentNode.insertBefore(titleWrapper, anchorNode);
-        // remove old H2
-        anchorNode.parentNode.removeChild(anchorNode);
-        // add H2 into div
-        titleWrapper.appendChild(anchorNode);
-        console.log(anchorNode)
-        // create new nav links
-        const navLink = document.createElement('a');
-        // add hrefs to new links
-        navLink.href = '#' + titleWrapper.getAttribute('id');
-        // get h2 text and add to new links
-        navLink.innerHTML = targetElem[i].innerHTML
-        // add new links to nav list
-        navHolder.appendChild(navLink)
-    }
-}
-
-
-// const navIsAtTopOptions
-
-// // detect when navHolder is at the top of the screen
-// const navIsAtTop = new IntersectionObserver(
-//   ([e]) => {
-//     console.log(e.boundingClientRect.top)
-//     console.log(e.target)
-//     if (e.boundingClientRect.top < 1) {
-//       console.log("we at top")
-//       e.target.classList.add("we-pinnnned")
-//     }
-//   }
-// );
-
-
-
-// navIsAtTop.observe(navHolder)
+// })
