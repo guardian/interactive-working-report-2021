@@ -21,6 +21,8 @@ const targetElem = mainContent.querySelectorAll(targetTag);
 // get first set of links
 const firstList = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
 
+const titleWrapper    = document.createElement('span');
+
 //////////////////////////////////////////////////////////////////////////
 // ---------------------------- Version 2 ----------------------------- //
 //////////////////////////////////////////////////////////////////////////
@@ -106,7 +108,9 @@ function linkURL(targetElem, i) {
   let index = parseInt(i); // change string to interger to start at 1
   const anchorNode      = targetElem[i];
   const anchorID        = anchorIdLabel + (index+1);
-  const linkTitle       = targetElem[i].innerText;
+  const linkTitle = targetElem[i].innerText;
+  console.log(linkTitle)
+  const linkWrapper     = titleWrapper.append(linkTitle);
   const anchorIDTitle   = concatTitle(linkTitle);
 
   // const linkHref = '#' + anchorID; // using section variable
