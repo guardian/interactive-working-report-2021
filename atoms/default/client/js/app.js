@@ -21,8 +21,6 @@ const targetElem = mainContent.querySelectorAll(targetTag);
 // get first set of links
 const firstList = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
 
-const titleWrapper    = document.createElement('span');
-
 //////////////////////////////////////////////////////////////////////////
 // ---------------------------- Version 2 ----------------------------- //
 //////////////////////////////////////////////////////////////////////////
@@ -75,7 +73,7 @@ const closeBtn = document.getElementById(closeNav);
 
 // wrap our anchors
 function addAnchorWrap(targetElem, i) {
-  let index = parseInt(i);// change string to interger to start at 1
+  let index             = parseInt(i);// change string to interger to start at 1
   const anchorNode      = targetElem[i];
   const anchorID        = anchorIdLabel + (index+1);
   const linkTitle       = targetElem[i].innerText;
@@ -86,9 +84,10 @@ function addAnchorWrap(targetElem, i) {
 
   // titleWrapper.setAttribute('id', anchorID); // using section var
   titleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
-
+  // add class
   titleWrapper.classList.add(anchorClass);
 
+  // only select target with bold tag
   const innerNode = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
 
   if (anchorNode.contains(innerNode)) {
@@ -108,9 +107,8 @@ function linkURL(targetElem, i) {
   let index = parseInt(i); // change string to interger to start at 1
   const anchorNode      = targetElem[i];
   const anchorID        = anchorIdLabel + (index+1);
-  const linkTitle = targetElem[i].innerText;
-  console.log(linkTitle)
-  const linkWrapper     = titleWrapper.append(linkTitle);
+  const linkTitle       = targetElem[i].innerText;
+  // const linkWrapper     = titleWrapper.append(linkTitle);
   const anchorIDTitle   = concatTitle(linkTitle);
 
   // const linkHref = '#' + anchorID; // using section variable
@@ -130,6 +128,20 @@ for (let i = 0; i < targetElem.length; i++) {
   // build link
   linkURL(targetElem, [i]);
 }
+// wrap our anchor link text in spans
+const linkTextToWrap = document.getElementsByClassName(menuClass);
+
+Array.from(linkTextToWrap).forEach(function(link){
+
+  const titleWrapper    = document.createElement('span');
+  const linkLabel       = link.innerText
+  const newLinkNode     = document.createTextNode(linkLabel)
+
+  titleWrapper.appendChild(newLinkNode)
+  link.innerText = ''
+  link.append(titleWrapper)
+
+});
 
 // detect section in view
 let sectionHeader = document.querySelectorAll(anchorTag);
@@ -230,7 +242,7 @@ let obvsCallbackUp = (entries, observerUp) => {
 
     } else if (entry.intersectionRatio < 0.2) {
       navHolder.classList.remove(menuStuck)
-      removeHash()
+      removeHash() // only works on mobile as menu sticky
 
     }
   });
@@ -240,32 +252,32 @@ let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
 observerUp.observe(navHolder);
 
 // HF method
-const navIsAtTop = () => {
-  console.log("IM AT THE TOPPPPP")
-  navHolder.classList.add("stick-me")
-}
-
-const debounce = (func, wait) => {
-  let timeout;
-
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-
-var debouncedNavAtTop = debounce(function () {
-  if (navHolder.getBoundingClientRect().top < 0) {
-    navIsAtTop()
-  } else {
-
-  }
-}, 200);
+// const navIsAtTop = () => {
+//   console.log("IM AT THE TOPPPPP")
+//   navHolder.classList.add("stick-me")
+// }
+//
+// const debounce = (func, wait) => {
+//   let timeout;
+//
+//   return function executedFunction(...args) {
+//     const later = () => {
+//       clearTimeout(timeout);
+//       func(...args);
+//     };
+//
+//     clearTimeout(timeout);
+//     timeout = setTimeout(later, wait);
+//   };
+// };
+//
+// var debouncedNavAtTop = debounce(function () {
+//   if (navHolder.getBoundingClientRect().top < 0) {
+//     navIsAtTop()
+//   } else {
+//
+//   }
+// }, 200);
 
 // window.addEventListener('wheel', debouncedNavAtTop); // ----------> commented out
 //
