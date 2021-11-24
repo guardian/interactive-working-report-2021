@@ -143,17 +143,38 @@ Array.from(linkTextToWrap).forEach(function(link){
 
 });
 
-// detect section in view
-let sectionHeader = document.querySelectorAll(anchorTag);
+// wrap following p tag if contains em and strong only
+const bylineBox = document.getElementsByClassName(anchorClass)
+console.log('bylineBox: ' + bylineBox)
+Array.from(bylineBox).forEach(function(header){
+  const innerNode = header.nextElementSibling.querySelector('em');
+  if (innerNode !== null) {
+    const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
 
+    if (innerMostNode !== null) {
+      console.log(innerMostNode)
+      innerMostNode.parentElement.parentElement.classList.add("byline-box");
+    }
+  }
+});
+
+
+
+// detect section in view via header
+let sectionHeader = document.querySelectorAll(anchorTag);
+// nav menu
 const menuTarget = document.getElementsByClassName(menuClass);
 
-// console.log(menuTargetArr);
+// We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
+// const headHeight = navHolder.offsetHeight
+// const headSpace = window.innerHeight - headHeight
+
 let currItem = null;
 let prevItem = null;
 let anchorOptions = {
-  rootMargin: '0px 0px -75% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections
-  threshold: 1.0
+  // rootMargin: '0px 0px -' + headSpace + 'px 0px', <-------------------------- check if we need to do some calculations
+  rootMargin: '0px 0px -50% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections
+  threshold: 0.5                                  // <-------------------------- check if we need to do some calculations
 }
 
 let anchorObserver = new IntersectionObserver((entries, observer) => {
@@ -201,7 +222,6 @@ Array.from(navElem).forEach(function(item){
     hashState = 1;
     setTimeout(() => {
       hashState = 0;
-      // console.log('click: ' + hashState);
     }, 1000)
   });
 });
@@ -221,7 +241,7 @@ function removeHash(){
   history.pushState("", document.title, window.location.pathname + window.location.search);
 }
 
-// Almost what's needed but class present before sticking
+// Almost what's needed but class present before sticking --> keeping this for ref
 // const navIsAtTop = new IntersectionObserver(
 //   ([e]) => e.target.classList.toggle(menuStuck, e.intersectionRatio < 1),
 //   {threshold: [1]}

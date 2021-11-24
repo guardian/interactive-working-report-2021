@@ -1,14 +1,20 @@
+
+// Colour pallet - create seperate scss - colours
+$brand400: #052962;
+$neutral100: #ffffff;
+// theme - create seperate scss - theme-core
+$primaryColor: #041f4a;
+$secondaryColor: #ffe500;
+
 @import "fonts";
 // @import "enhanced_fonts";
 @import "mq";
 @import "palette";
 @import "enhancer";
 @import "nav";
+@import "header";
 // gu_grid pulls the css for gs-container and content__main-column
 // @import "gu_grid";
-
-// Colour pallet
-$brand400: #052962;
 
 .interactive-atom {
   margin: 0;
@@ -77,7 +83,10 @@ html {
     // }
   }
 }
-// .section-header {
+.section-header {
+  h2 {
+
+  }
 //   border-top: 1px solid $brand400;
 //   // background-color: yellow;
 //   &::before,
@@ -89,4 +98,4 @@ html {
 //     height: 50px;
 //     visibility: hidden;
 //   }
-// }
+}
