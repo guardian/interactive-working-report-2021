@@ -9,30 +9,7 @@
 .content--interactive, #maincontent {
   // h1, .content__headline, .headline,
   h2 {
-    background-color: $brand400;
-    color: $neutral100;
-    font-family: $f-titlepiece;
-    padding: 2px 6px 48px 10px;
-    margin: 0;
-    font-size: 52px;
-    line-height: 1;
-    @include mq(tablet){
-      font-size: 112px;
-      line-height: .9;
-      padding-top: 1px;
-      padding-bottom: 68px;
-      margin-right: 80px;
-    }
-    @include mq(desktop){
-      font-size: 132px;
-      line-height: .85;
-      font-size: 160px;
-    }
-    @include mq(wide){
-      font-size: 160px;
-      padding-right: 10px;
-      padding-left: 17px;
-    }
+
   }
 }
 #maincontent {
@@ -45,6 +22,30 @@
       width: 920px;
     }
     h2 {
+      background-color: $brand400;
+      color: $neutral100;
+      font-family: $f-titlepiece;
+      padding: 2px 6px 48px 10px;
+      margin: 0;
+      font-size: 52px;
+      line-height: 1;
+      @include mq(tablet){
+        font-size: 112px;
+        line-height: .9;
+        padding-top: 1px;
+        padding-bottom: 68px;
+        margin-right: 80px;
+      }
+      @include mq(desktop){
+        font-size: 132px;
+        line-height: .85;
+        font-size: 160px;
+      }
+      @include mq(wide){
+        font-size: 160px;
+        padding-right: 10px;
+        padding-left: 17px;
+      }
     }
   }
   .byline-box {
