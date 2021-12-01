@@ -30,12 +30,18 @@ $secondaryColor: #ffe500;
 
 .interactive-wrapper {
   margin: 0 -10px;
+  @include mq(tablet) {
+    margin: 0;
+  }
 }
 
 .supporter-wrapper {
-  background-color: $secondaryColor;
-  padding: 4px 10px;
   position: relative;
+  background-color: $secondaryColor;
+  padding: 4px 20px;
+  @include mq(tablet) {
+    padding: 4px 10px;
+  }
   .support_headline {
     font-family: $f-serif-headline;
     line-height: 113%;
@@ -81,6 +87,6 @@ $secondaryColor: #ffe500;
   .support_roundel {
     position: absolute;
     top: 4px;
-    right: 10px;
+    right: 20px;
   }
 }
