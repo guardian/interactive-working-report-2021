@@ -6,6 +6,7 @@ const navTag            = 'nav';
 const menuClass         = 'nav-class';
 const menuStuck         = 'stick-me';
 const closeNav          = 'close-nav';
+const navLabel          = 'nav-label';
 const anchorIdLabel     = 'section';
 const anchorClass       = 'section-header';
 const navClass          = 'article-navigation';
@@ -17,13 +18,52 @@ const mainContent = document.getElementById('maincontent')
 const articleContent = document.querySelector('.article-body-viewer-selector')
 // get our target element
 const targetElem = mainContent.querySelectorAll(targetTag);
-// const targetDef = mainContent.querySelector('strong');
 // get first set of links
 const firstList = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
 
-//////////////////////////////////////////////////////////////////////////
-// ---------------------------- Version 2 ----------------------------- //
-//////////////////////////////////////////////////////////////////////////
+const mainTitle         = document.querySelector('.content__headline');
+
+// ----------------------------------------// Headers // ----------------------------------------------- //
+
+const mainHeader = document.querySelector('.content__headline')
+const standFirst = document.querySelector('.content__standfirst')
+const metaShares = document.querySelector('.content__meta-container_dcr')
+// console.log('mainHeader: ' + mainHeader)
+mainHeader.parentElement.parentElement.parentElement.parentElement.classList.add("headline-wrapper")
+standFirst.parentElement.classList.add("standFirst-wrapper")
+metaShares.parentElement.parentElement.classList.add("meta-shares-wrapper")
+
+const headWrapper = document.querySelector('.headline-wrapper')
+const metaWrapper = document.querySelector('.meta-shares-wrapper')
+// remove grid line
+headWrapper.previousSibling.remove();
+// remove horizontal lines
+metaWrapper.previousSibling.remove();
+
+const mainHeaderWrapper  = document.createElement('header');
+
+mainHeaderWrapper.append(mainHeader,standFirst,metaShares)
+
+mainContent.prepend(mainHeaderWrapper)
+
+mainHeader.classList.add('show-content')
+
+// wrap following p tag if contains em and strong only
+const bylineBox = document.getElementsByClassName(anchorClass)
+// console.log('bylineBox: ' + bylineBox)
+Array.from(bylineBox).forEach(function(header){
+  const innerNode = header.nextElementSibling.querySelector('em');
+  if (innerNode !== null) {
+    const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
+
+    if (innerMostNode !== null) {
+      console.log(innerMostNode)
+      innerMostNode.parentElement.parentElement.classList.add("byline-box");
+    }
+  }
+});
+
+// ---------------------------------------// Navigation //----------------------------------------------- //
 
 // creates elements with attributes and adds them *NB Needs refinement?
 function newElem(tagName,attType,attName,className,content,contentHolder,position) {
@@ -62,9 +102,11 @@ function menuContainer() {
   newElem('div','id',navUtilityID,navBarClass,'',menuHolder,'before');
   const navUtility = document.getElementById(navUtilityID);
 
-  newElem('p','','','','Jump to',navUtility,'after');
-  newElem('span','id',closeNav,'','Toggle menu',navUtility,'after');
+  newElem('p','','',navLabel,'Jump to',navUtility,'after');
+  newElem('div','id',closeNav,'','',navUtility,'after');
+  const navToggle = document.getElementById(closeNav);
 
+  newElem('span','','','sr-only','Toggle menu',navToggle,'after');
 }
 
 menuContainer(); // ******* Building this now because it's needed to add the links, but should be when *no* nav has been found
@@ -143,45 +185,38 @@ Array.from(linkTextToWrap).forEach(function(link){
 
 });
 
-// wrap following p tag if contains em and strong only
-const bylineBox = document.getElementsByClassName(anchorClass)
-console.log('bylineBox: ' + bylineBox)
-Array.from(bylineBox).forEach(function(header){
-  const innerNode = header.nextElementSibling.querySelector('em');
-  if (innerNode !== null) {
-    const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
-
-    if (innerMostNode !== null) {
-      console.log(innerMostNode)
-      innerMostNode.parentElement.parentElement.classList.add("byline-box");
-    }
-  }
-});
-
-
-
 // detect section in view via header
 let sectionHeader = document.querySelectorAll(anchorTag);
 // nav menu
 const menuTarget = document.getElementsByClassName(menuClass);
 
 // We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
-// const headHeight = navHolder.offsetHeight
-// const headSpace = window.innerHeight - headHeight
+const headHeight = navHolder.offsetHeight
+const headSpace = window.innerHeight - headHeight
+
+console.log('headHeight: ' + headHeight)
+console.log('headSpace: ' + headSpace)
 
 let currItem = null;
 let prevItem = null;
+
 let anchorOptions = {
-  // rootMargin: '0px 0px -' + headSpace + 'px 0px', <-------------------------- check if we need to do some calculations
-  rootMargin: '0px 0px -50% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections
-  threshold: 0.5                                  // <-------------------------- check if we need to do some calculations
+  rootMargin: '0px 0px -' + headSpace + 'px 0px', // <-------------------------- check if we need to do some calculations
+  // rootMargin: '0px 0px -50% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections
+  threshold: 1                                  // <-------------------------- check if we need to do some calculations
 }
 
 let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       const labelText = entry.target.textContent; // changed innerText to textContent to work in safari
-      // previous is current
+      // if (navHolder.getBoundingClientRect().top === 0 && navHolder.classList.contains(menuStuck)) {
+      //   console.log("im stuck good");
+      // } else {
+      //   console.log("im NOT stuck and need to be");
+      //   // navHolder.classList.add(menuStuck);
+      // }
+        // previous is current
         prevItem = currItem;
         // convert html collection to array to loop with forEach
         Array.from(menuTarget).forEach(function(item){
@@ -228,24 +263,26 @@ Array.from(navElem).forEach(function(item){
 
 closeBtn.addEventListener('click', (e) => {
     navHolder.classList.toggle('open-nav');
+    e.target.classList.toggle('open');
 });
 // hash url update
 function updateHash(url) {
   // works on click but not using the keyboard
+  let newHash =  '#' + url
   if (hashState !== 1) {
-    window.location.hash = '#' + url;
+  //   window.location.hash = newHash // jerky
+    if(history.replaceState) {
+      history.pushState(null, null, newHash);
+    }
+    else {
+      location.hash = newHash;
+    }
   }
 }
 // remove hash at top of page
 function removeHash(){
   history.pushState("", document.title, window.location.pathname + window.location.search);
 }
-
-// Almost what's needed but class present before sticking --> keeping this for ref
-// const navIsAtTop = new IntersectionObserver(
-//   ([e]) => e.target.classList.toggle(menuStuck, e.intersectionRatio < 1),
-//   {threshold: [1]}
-// );
 
 const navHeight = navHolder.offsetHeight
 const navSpace = window.innerHeight - navHeight
@@ -262,7 +299,6 @@ let obvsCallbackUp = (entries, observerUp) => {
 
     } else if (entry.intersectionRatio < 0.2) {
       navHolder.classList.remove(menuStuck)
-      removeHash() // only works on mobile as menu sticky
 
     }
   });
@@ -271,10 +307,34 @@ let obvsCallbackUp = (entries, observerUp) => {
 let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
 observerUp.observe(navHolder);
 
-// HF method
+// remove hash at top of page watching mainTitle
+let obvsOptsTitleTop = {
+  rootMargin: '0px',
+  threshold: 1
+}
+let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
+  entries.forEach(entry => {
+    if ( entry.isIntersecting ) {
+      // console.log('title top');
+      removeHash()
+    }
+  });
+};
+
+let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
+obvsTitleTop.observe(mainTitle);
+// --------------------------------// previous code options // ---------------------------------------- //
+
+// Almost what's needed but class present before sticking --> keeping this for ref as very neat
+// const navIsAtTop = new IntersectionObserver(
+//   ([e]) => e.target.classList.toggle(menuStuck, e.intersectionRatio < 1),
+//   {threshold: [1]}
+// );
+
+// ----------------------------------- // HF method
 // const navIsAtTop = () => {
 //   console.log("IM AT THE TOPPPPP")
-//   navHolder.classList.add("stick-me")
+//   navHolder.classList.add(menuStuck)
 // }
 //
 // const debounce = (func, wait) => {
@@ -298,7 +358,7 @@ observerUp.observe(navHolder);
 //
 //   }
 // }, 200);
-
+//
 // window.addEventListener('wheel', debouncedNavAtTop); // ----------> commented out
 //
 // window.addEventListener("scroll", () => {

@@ -18,6 +18,7 @@ setTimeout(() => {
   window.resize()
   }
 },100)
+
 // https://github.com/iamdustan/smoothscroll
 // Import any polyfill to enable smoothscroll for JS APIs
 import smoothscrollPolyfill from 'smoothscroll-polyfill';

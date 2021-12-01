@@ -2,20 +2,35 @@
 // Colour pallet - create seperate scss - colours
 $brand400: #052962;
 $neutral100: #ffffff;
+$neutral7: #121212;
+$beige: #fff7e5;
+
 // theme - create seperate scss - theme-core
 $primaryColor: #041f4a;
 $secondaryColor: #ffe500;
+$background: $neutral100;
+
+$collapsed-nav-height: 40px;
+$icon-radius: 24px;
 
 @import "fonts";
 // @import "enhanced_fonts";
 @import "mq";
 @import "palette";
 @import "enhancer";
+
 @import "nav";
 @import "header";
+
 // gu_grid pulls the css for gs-container and content__main-column
 // @import "gu_grid";
 
+.hide-content {
+  opacity: 0;
+}
+.show-content {
+  opacity: 1;
+}
 .interactive-atom {
   margin: 0;
   padding: 0;
@@ -33,69 +48,132 @@ html {
   --scroll-behavior: smooth;
   scroll-behavior: smooth;
 }
-
 .article-navigation {
-  @include mq($until: desktop) {
-    max-width: 620px;
-    display: flex;
-    flex-direction: column;
-
-    top: 0;
-    z-index: 5;
-    padding: 10px 0;
-    // position: sticky;
-    // top: -1px; /* ➜ the trick */
-    // padding-top: calc(1em + 1px); /* ➜ compensate for the trick */
-    transition: height 3s ease;
-    &.stick-me {
-      background-color: yellow;
-      height: 40px;
-      overflow-y: hidden;
-      position: sticky;
-      &.open-nav {
-        height: auto;
-      }
-    }
+  background-color: $background;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  z-index: 5;
+  padding: 10px 0;
+  width: 100%;
+  // position: sticky;
+  // top: -1px; /* ➜ the trick */
+  // padding-top: calc(1em + 1px); /* ➜ compensate for the trick */
+  transition: height 3s ease;
+  .nav-class {
+    font-family: $f-headline-full;
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 700;
+    padding: 3px 0;
+    margin-bottom: 4px;
   }
-
-  &.at-bottom {
-    background-color: green;
+  a:not([data-ignore='global-link-styling']), a:not([data-ignore='global-link-styling']):hover {
+    border-bottom: none;
+  }
+  &.stick-me {
+    height: $collapsed-nav-height;
+    overflow-y: hidden;
+    position: sticky;
+    &.open-nav {
+      height: auto;
+      // .nav-label, .nav-class, .active {
+      //   top: 0px;
+      //   position: relative;
+      //   padding: inherit;
+      //   margin-bottom: inherit;
+      //   height: auto;
+      //   span {
+      //     line-height: inherit;
+      //   }
+      // }
+    }
+    #close-nav {
+      // position: absolute;
+      opacity: 1;
+      // right: 0;
+      // width: $icon-radius;
+      // height: $icon-radius;
+    }
+    // .nav-label, .nav-class {
+    //   position: absolute;
+    //   height: $collapsed-nav-height;
+    //   top: (-$collapsed-nav-height);
+    // }
+    // .active {
+    //   top: 0px;
+    //   height: 40px;
+    //   padding: 0;
+    //   margin-bottom: 0;
+    //   span {
+    //     line-height: $collapsed-nav-height;
+    //   }
+    // }
+  }
+  @include mq(tablet) {
+    // max-width: 620px;
+  }
+  @include mq(desktop) {
+    background-color: transparent;
+    width: 300px;
+    margin-left: 0 !important;
+  }
+  @include mq(leftCol) {
   }
   .nav-title-wrapper {
     display: flex;
     justify-content: space-between;
+    font-family: $f-sans-serif-text;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    p, span {
+
+    }
   }
-  p {
-    padding-bottom: 12px;
-    font-size: 17px;
-    font-weight: bold;
-  }
-  a {
-    font-size: 20px;
-    font-weight: bold;
-    border: unset !important;
-    padding-bottom: 12px;
-    // &.active {
-    //   color: blue;
-    // }
-    // &.prev {
-    //   color: green;
-    // }
+  #close-nav {
+    opacity: 0;
+    display: flex;
+    &::before {
+      width: $icon-radius;
+      height: $icon-radius;
+      border-radius: $icon-radius/2;
+      border: 1px solid $neutral7;
+      content: " ";
+      background-image: url(https://uploads.guim.co.uk/2020/12/10/arrow-brand.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+        transform: rotate(180deg);
+    }
+    &.open {
+      &::before {
+        transform: rotate(0);
+      }
+    }
   }
 }
 .section-header {
+  &::before {
+    display: block;
+    content: " ";
+    // top: -40px;
+    height: $collapsed-nav-height;
+    visibility: hidden;
+  }
   h2 {
 
   }
-//   border-top: 1px solid $brand400;
-//   // background-color: yellow;
-//   &::before,
-//   // &::after
-//   {
-//     display: block;
-//     content: " ";
-//     top: -50px;
-//     height: 50px;
-//     visibility: hidden;
-//   }
+}
+.sr-only {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+	-webkit-clip-path: inset(50%) !important;
+		clip-path: inset(50%) !important;  /* 2 */
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;            /* 3 */
 }
