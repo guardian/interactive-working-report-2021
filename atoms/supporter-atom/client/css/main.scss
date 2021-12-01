@@ -38,10 +38,7 @@ $secondaryColor: #ffe500;
 .supporter-wrapper {
   position: relative;
   background-color: $secondaryColor;
-  padding: 4px 20px;
-  @include mq(tablet) {
-    padding: 4px 10px;
-  }
+  padding: 4px 10px;
   .support_headline {
     font-family: $f-serif-headline;
     line-height: 113%;
@@ -87,6 +84,6 @@ $secondaryColor: #ffe500;
   .support_roundel {
     position: absolute;
     top: 4px;
-    right: 20px;
+    right: 10px;
   }
 }
