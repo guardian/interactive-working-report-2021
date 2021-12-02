@@ -1,0 +1,125 @@
+// Colour pallet - create seperate scss - colours
+$brand400: #052962;
+$neutral100: #ffffff;
+// theme - create seperate scss - theme-core
+$primaryColor: #041f4a;
+$secondaryColor: #ffe500;
+
+@import "fonts";
+// @import "enhanced_fonts";
+@import "mq";
+@import "palette";
+// @import "enhancer";
+// @import "nav";
+// @import "header";
+// gu_grid pulls the css for gs-container and content__main-column
+// @import "gu_grid";
+
+.interactive-atom {
+  margin: 0;
+  padding: 0;
+}
+
+// for apps adds extra padding. Needed to make dark mode work
+.ios,
+.android {
+  .interactive-atom {
+    padding: 8px;
+  }
+}
+
+.interactive-wrapper {
+  margin: 0 -10px;
+  @include mq(tablet) {
+    margin: 0;
+  }
+}
+
+.onwards-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  @include mq(mobileLandscape) {
+    flex-direction: row;
+  }
+  .onwardcard {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    border-bottom: none !important;
+    margin-bottom: 10px;
+    @include mq(mobileLandscape) {
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+    &:hover {
+      .onwardcard-card {
+        background-color: #dcdcdc;
+      }
+    }
+    .onwardcard-image {
+      width: 100%;
+      height: auto;
+    }
+    .onwardcard-card {
+      background-color: #f6f6f6;
+      margin-top: -3px;
+      padding: 4px 10px 24px 10px;
+      .onwardcard-headline {
+        color: #121212;
+        font-family: $f-serif-headline;
+        font-size: 20px;
+        line-height: 115%;
+        span {
+          color: #052962;
+        }
+      }
+    }
+  }
+
+  &.two-cards {
+    .onwardcard:nth-child(2) {
+      margin-right: 0;
+    }
+  }
+
+  &.three-cards {
+    @include mq(mobileLandscape) {
+      overflow-x: scroll;
+      .onwardcard {
+        min-width: 180px;
+      }
+    }
+
+    @include mq(tablet) {
+      overflow-x: unset;
+      .onwardcard {
+        min-width: 225px;
+      }
+    }
+
+    @include mq(desktop) {
+      .onwardcard {
+        min-width: 250px;
+      }
+    }
+
+    @include mq(leftCol) {
+      margin-left: -160px;
+      .onwardcard {
+        min-width: 260px;
+      }
+    }
+
+    @include mq(wide) {
+      margin-left: -240px;
+      .onwardcard {
+        min-width: 300px;
+      }
+    }
+
+    .onwardcard:nth-child(3) {
+      margin-right: 0;
+    }
+  }
+}
