@@ -205,6 +205,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
         // convert html collection to array to loop with forEach
         Array.from(menuTarget).forEach(function(item){
           // loop through links to match active target text
+          console.log('item.textContent: ' + item.textContent)
           if ( labelText === item.textContent ) {
 
             let linkHash = concatTitle(item.textContent);
@@ -306,7 +307,6 @@ let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
 
 let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
 obvsTitleTop.observe(mainTitle);
-
 
 // By line
 // wrap following p tag if contains em and strong only

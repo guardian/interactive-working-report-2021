@@ -107,6 +107,16 @@ a,
   padding-top: 12px;
   border-top: none;
 }
+.article-navigation, .content--interactive header {
+  max-width: 620px;
+
+  @include mq(leftCol) {
+    margin-left: 160px !important;
+  }
+  @include mq(wide) {
+    margin-left: 240px !important;
+  }
+}
 .content__main-column--interactive {
   & > p,
   & > h2,
@@ -346,14 +356,3 @@ a,
 // .prose blockquote.quoted::before {
 //   display: none;
 // }
-
-.article-navigation, header {
-  max-width: 620px;
-
-  @include mq(leftCol) {
-    margin-left: 160px !important;
-  }
-  @include mq(wide) {
-    margin-left: 240px !important;
-  }
-}
