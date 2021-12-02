@@ -19,6 +19,7 @@ $icon-radius: 24px;
 @import "palette";
 @import "enhancer";
 
+@import "theme2020";
 @import "nav";
 @import "header";
 
@@ -116,7 +117,7 @@ html {
   @include mq(desktop) {
     background-color: transparent;
     width: 300px;
-    margin-left: 0 !important;
+    // margin-left: 0 !important;
   }
   @include mq(leftCol) {
   }

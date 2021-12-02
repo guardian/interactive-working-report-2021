@@ -25,43 +25,28 @@ const mainTitle         = document.querySelector('.content__headline');
 
 // ----------------------------------------// Headers // ----------------------------------------------- //
 
-const mainHeader = document.querySelector('.content__headline')
-const standFirst = document.querySelector('.content__standfirst')
-const metaShares = document.querySelector('.content__meta-container_dcr')
-// console.log('mainHeader: ' + mainHeader)
-mainHeader.parentElement.parentElement.parentElement.parentElement.classList.add("headline-wrapper")
-standFirst.parentElement.classList.add("standFirst-wrapper")
-metaShares.parentElement.parentElement.classList.add("meta-shares-wrapper")
-
-const headWrapper = document.querySelector('.headline-wrapper')
-const metaWrapper = document.querySelector('.meta-shares-wrapper')
-// remove grid line
-headWrapper.previousSibling.remove();
-// remove horizontal lines
-metaWrapper.previousSibling.remove();
-
-const mainHeaderWrapper  = document.createElement('header');
-
-mainHeaderWrapper.append(mainHeader,standFirst,metaShares)
-
-mainContent.prepend(mainHeaderWrapper)
-
-mainHeader.classList.add('show-content')
-
-// wrap following p tag if contains em and strong only
-const bylineBox = document.getElementsByClassName(anchorClass)
-// console.log('bylineBox: ' + bylineBox)
-Array.from(bylineBox).forEach(function(header){
-  const innerNode = header.nextElementSibling.querySelector('em');
-  if (innerNode !== null) {
-    const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
-
-    if (innerMostNode !== null) {
-      console.log(innerMostNode)
-      innerMostNode.parentElement.parentElement.classList.add("byline-box");
-    }
-  }
-});
+// const mainHeader = document.querySelector('.content__headline')
+// const standFirst = document.querySelector('.content__standfirst')
+// const metaShares = document.querySelector('.content__meta-container_dcr')
+// // console.log('mainHeader: ' + mainHeader)
+// mainHeader.parentElement.parentElement.parentElement.parentElement.classList.add("headline-wrapper")
+// standFirst.parentElement.classList.add("standFirst-wrapper")
+// metaShares.parentElement.parentElement.classList.add("meta-shares-wrapper")
+//
+// const headWrapper = document.querySelector('.headline-wrapper')
+// const metaWrapper = document.querySelector('.meta-shares-wrapper')
+// // remove grid line
+// headWrapper.previousSibling.remove();
+// // remove horizontal lines
+// metaWrapper.previousSibling.remove();
+//
+// const mainHeaderWrapper  = document.createElement('header');
+//
+// mainHeaderWrapper.append(mainHeader,standFirst,metaShares)
+//
+// mainContent.prepend(mainHeaderWrapper)
+//
+// mainHeader.classList.add('show-content')
 
 // ---------------------------------------// Navigation //----------------------------------------------- //
 
@@ -139,6 +124,7 @@ function addAnchorWrap(targetElem, i) {
   // Add marker *if* we need it?
   // newElem('span','','','marker','',titleWrapper,'before');
 }
+
 // Concatinate titles
 function concatTitle(title) {
   const newURL = title.replace(/\s+/g, '-').toLowerCase();
@@ -194,15 +180,12 @@ const menuTarget = document.getElementsByClassName(menuClass);
 const headHeight = navHolder.offsetHeight
 const headSpace = window.innerHeight - headHeight
 
-console.log('headHeight: ' + headHeight)
-console.log('headSpace: ' + headSpace)
-
 let currItem = null;
 let prevItem = null;
 
 let anchorOptions = {
   rootMargin: '0px 0px -' + headSpace + 'px 0px', // <-------------------------- check if we need to do some calculations
-  // rootMargin: '0px 0px -50% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections
+  // rootMargin: '0px 0px -50% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections // too tight?
   threshold: 1                                  // <-------------------------- check if we need to do some calculations
 }
 
@@ -210,6 +193,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       const labelText = entry.target.textContent; // changed innerText to textContent to work in safari
+                                                //  <-------------------------- mobile disappearing at end of page
       // if (navHolder.getBoundingClientRect().top === 0 && navHolder.classList.contains(menuStuck)) {
       //   console.log("im stuck good");
       // } else {
@@ -247,7 +231,6 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
   }, anchorOptions);
 
 sectionHeader.forEach(header => { anchorObserver.observe(header) });
-
 
 let hashState = 0;
 // if menu has been clicked skip the auto update
@@ -323,6 +306,33 @@ let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
 
 let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
 obvsTitleTop.observe(mainTitle);
+
+
+// By line
+// wrap following p tag if contains em and strong only
+const bylineBox = document.getElementsByClassName(anchorClass)
+const myList = Array.from(bylineBox)
+
+myList.forEach(function(sectHeader){
+
+  const nextPtagID = sectHeader.nextElementSibling.hasAttribute('id')
+  // if the gate remove it
+  if (nextPtagID && sectHeader.nextElementSibling.id === 'sign-in-gate' ) {
+    // console.log('YES: ' + sectHeader.nextElementSibling.id)
+    sectHeader.nextElementSibling.remove()
+  }
+  const innerNode = sectHeader.nextElementSibling.querySelector('em');
+  if (innerNode !== null) {
+
+    const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
+
+    if (innerMostNode !== null) {
+      // console.log(innerMostNode)
+      innerMostNode.parentElement.parentElement.classList.add("byline-box");
+    }
+  }
+});
+
 // --------------------------------// previous code options // ---------------------------------------- //
 
 // Almost what's needed but class present before sticking --> keeping this for ref as very neat

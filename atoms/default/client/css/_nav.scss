@@ -1,13 +1,17 @@
-
-$background: $beige;
-
 #maincontent {
+  .article-navigation, header {
+    // max-width: 620px;
+    @include mq(leftCol) {
+      margin-left: 0 !important;
+    }
+    @include mq(wide) {
+      // margin-left: 240px !important;
+    }
+  }
   .article-navigation {
     display: flex;
     flex-direction: column;
-    @include mq(tablet) {
-
-    }
+    @include mq(tablet) { }
     @include mq(desktop) {
       position: fixed;
       top: 50%;

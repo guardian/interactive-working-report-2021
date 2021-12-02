@@ -1,0 +1,10 @@
+// strip colour and theme out
+$background: $beige;
+
+.content--interactive {
+  // strip lines
+  div:first-of-type {
+    border-left: none;
+    border-right: none;
+  }
+}

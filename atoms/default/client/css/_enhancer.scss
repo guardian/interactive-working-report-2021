@@ -112,6 +112,7 @@ a,
   & > h2,
   & > ul,
   & > sub,
+  & > header,
   .element-interactive,
   .element-atom,
   .element-video {
@@ -346,7 +347,7 @@ a,
 //   display: none;
 // }
 
-.article-navigation {
+.article-navigation, header {
   max-width: 620px;
 
   @include mq(leftCol) {
