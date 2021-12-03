@@ -91,7 +91,7 @@ function menuContainer() {
   newElem('div','id',closeNav,'','',navUtility,'after');
   const navToggle = document.getElementById(closeNav);
 
-  newElem('span','','','sr-only','Toggle menu',navToggle,'after');
+  newElem('span','','','','Toggle menu',navToggle,'after');
 }
 
 menuContainer(); // ******* Building this now because it's needed to add the links, but should be when *no* nav has been found
@@ -173,6 +173,9 @@ Array.from(linkTextToWrap).forEach(function(link){
 
 // detect section in view via header
 let sectionHeader = document.querySelectorAll(anchorTag);
+// let sectionHeader = document.querySelectorAll(anchorClass); // NodeList
+// let sectionHeader = document.querySelectorAll('header.' + anchorClass);
+console.log('sectionHeader: ' + sectionHeader)
 // nav menu
 const menuTarget = document.getElementsByClassName(menuClass);
 
@@ -200,13 +203,15 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       //   console.log("im NOT stuck and need to be");
       //   // navHolder.classList.add(menuStuck);
       // }
+      console.log('labelText: ' + labelText)
         // previous is current
         prevItem = currItem;
         // convert html collection to array to loop with forEach
         Array.from(menuTarget).forEach(function(item){
           // loop through links to match active target text
-          console.log('item.textContent: ' + item.textContent)
           if ( labelText === item.textContent ) {
+            console.log('labelText' + labelText)
+            console.log('item.textContent: ' + item.textContent)
 
             let linkHash = concatTitle(item.textContent);
             updateHash(linkHash);

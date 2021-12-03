@@ -1,5 +1,18 @@
 @import "variables";
 
+@mixin sr-only() {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+	-webkit-clip-path: inset(50%) !important;
+		clip-path: inset(50%) !important;  /* 2 */
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;            /* 3 */
+}
 
 // theme - create seperate scss - theme-core
 $primaryColor: #041f4a;
@@ -15,9 +28,7 @@ $icon-radius: 24px;
 @import "palette";
 @import "enhancer";
 
-@import "theme2020";
-@import "nav";
-@import "header";
+@import "theme2021";
 
 // gu_grid pulls the css for gs-container and content__main-column
 // @import "gu_grid";
@@ -86,8 +97,9 @@ html {
       // }
     }
     #close-nav {
-      // position: absolute;
       opacity: 1;
+      @include sr-only();
+      // position: absolute;
       // right: 0;
       // width: $icon-radius;
       // height: $icon-radius;
@@ -160,17 +172,4 @@ html {
   h2 {
 
   }
-}
-.sr-only {
-	border: 0 !important;
-	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
-	-webkit-clip-path: inset(50%) !important;
-		clip-path: inset(50%) !important;  /* 2 */
-	height: 1px !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	padding: 0 !important;
-	position: absolute !important;
-	width: 1px !important;
-	white-space: nowrap !important;            /* 3 */
 }

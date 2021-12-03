@@ -1,5 +1,8 @@
 // strip colour and theme out
-$background: $beige;
+$background: $neutral100;
+
+@import "nav";
+@import "header";
 
 .content--interactive {
   // strip lines
