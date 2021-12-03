@@ -5,8 +5,7 @@ $background: $neutral100;
 @import "header";
 
 .content--interactive {
-  // strip lines
-  div:first-of-type {
+  & > div:first-child {
     border-left: none;
     border-right: none;
   }

@@ -1,10 +1,46 @@
 // Header boxes
+.content--interactive {
+  // reset header gu_grid
+  div:first-of-type {
+    @include mq(leftCol){
+      grid-template-columns: 0px 1px 1fr;
+      grid-column-gap: 0;
+    }
+  }
+  .element .element-interactive {
+        margin-left: 0px !important;
+  }
+}
 .content--interactive, #maincontent {
+  [data-gu-name="border"] {
+    > div {
+      border-color: transparent;
+    }
+  }
+  [data-gu-name="meta"] {
+    > div {
+      max-width: none;
+    }
+  }
+  .content__meta-container_dcr {
+    div > div:first-child:not([class]), address {
+      display: none;
+    }
+    [data-print-layout="hide"] {
+      div:nth-of-type(2) {
+        border-top-color: transparent;
+      }
+    }
+  }
+  [data-gu-name="lines"] {
+    display: none;
+  }
   [data-gu-name="headline"] {
     content: ' ';
     display: block;
     width: 920px;
     height: 641px;
+    margin: 0;
     background-image: url('https://uploads.guim.co.uk/2021/12/03/Masthead-title-4.5.jpg');
   }
   h1, .content__headline {
@@ -14,7 +50,7 @@
   .headline, .section-header h2 {
     // transition: all 400ms ease-in-out, opacity 200ms linear;
     // opacity: 1;
-    // background-color: $brand400;
+    background-color: $brand400;
     color: $neutral100;
     font-family: $f-titlepiece;
     padding: 2px 6px 48px 10px;
@@ -45,9 +81,9 @@
 }
 .content__standfirst {
   margin-top: 0;
-  margin-bottom: 
+  margin-bottom: 0;
 }
-.byline-box, [data-gu-name="standfirst"] {
+.byline-box, [data-gu-name="standfirst"], .meta__social {
   font-family: $f-serif-headline;
   position: relative;
   @include mq(tablet){
@@ -60,7 +96,7 @@
   strong {
     font-weight: 200;
   }
-  width: 380px;
+  width: 480px;
   // font-size: 20px;
   // line-height: 24px;
   padding-left: 20px;
@@ -72,6 +108,23 @@
   color: #041f4a;
   z-index: 2;
   margin: -27px 14px 0 10px;
+}
+[data-gu-name="standfirst"], .meta__social {
+  width: 560px;
+  @include mq(leftCol) {
+    margin-left: 160px !important;
+  }
+  @include mq(wide) {
+    margin-left: 240px !important;
+  }
+}
+.meta__social {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  margin: -4px 14px 0 10px;
+    padding-bottom: 6px;
 }
 #maincontent {
   .section-header {
