@@ -1,12 +1,43 @@
 // strip colour and theme out
 $background: $neutral100;
+$primaryColor: $brand400;
+$secondaryColor: $culture800;
 
 @import "nav";
 @import "header";
 
+#maincontent {
+  .content__main-column--interactive {
+    & > p,
+    & > h2,
+    & > ul,
+    & > sub,
+    & > blockquote {
+      padding-top: 4px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
 .content--interactive {
   & > div:first-child {
     border-left: none;
     border-right: none;
+  }
+  a, a:not([data-ignore='global-link-styling']) {
+    color: $primaryColor;
+    svg {
+      fill: $primaryColor;
+    }
+  }
+  blockquote {
+    margin-left: 10px;
+    margin-right: 10px;
+    // width: 100vw;
+    border-top: 1px solid $primaryColor;
+    background-color: $secondaryColor;
+    @include mq(tablet) {
+      float: left;
+    }
   }
 }

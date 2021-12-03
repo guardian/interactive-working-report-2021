@@ -24,6 +24,8 @@
       }
     }
     .nav-title-wrapper {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
       @include mq(desktop) {
         justify-content: flex-end;
         p {
@@ -40,7 +42,8 @@
       transition: all 0.3s ease-in-out;
       display: inline-flex;
       align-items: center;
-
+      padding-left: 10px;
+      padding-right: 10px;
       @include mq(desktop) {
         text-align: right;
         justify-content: flex-end;
