@@ -30,9 +30,10 @@
     }
     @include mq(tablet) {
       height: 460px;
+      max-width: 620px;
     }
     @include mq(desktop) {
-      width: 800px;
+      max-width: 800px;
       // margin-right: 0;
       // height: 560px;
       background-size: 100%;
@@ -41,7 +42,7 @@
       margin-left: 0;
     }
     @include mq(wide) {
-      width: 920px;
+      max-width: 920px;
       height: 641px;
       margin: 48px 0 -48px;
     }
@@ -154,12 +155,13 @@
     -webkit-flex-grow: 0;
     -ms-flex-positive: 0;
     flex: 0 0 100%;
-    margin: -3px 0 0;
+    margin: -4px 0 0;
     padding-bottom: 6px;
     padding-left: 10px !important;
     padding-right: 10px !important;
     @include mq(tablet) {
       flex: 0 0 380px;
+      margin: -4px 0 0 20px;
     }
     @include mq(leftCol) {
       flex: 0 0 480px;

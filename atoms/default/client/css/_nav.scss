@@ -1,4 +1,4 @@
-#maincontent {
+  #maincontent {
   .article-navigation, header {
     // max-width: 620px;
     @include mq(leftCol) {
@@ -11,23 +11,25 @@
   .article-navigation {
     display: flex;
     flex-direction: column;
-    @include mq(tablet) {
-
-    }
     @include mq(desktop) {
       position: fixed;
       top: 50%;
       right: 0;
+      overflow-y: visible;
       transform: translateY(-50%);
       z-index: 1082;
       padding: 40px 20px;
       #close-nav {
         display: none;
       }
-       .nav-label {
-
-       }
-      .nav-class,{
+      .nav-label {
+        transform: translateY(-50%);
+        transition: transform .4s cubic-bezier(.32,.03,.19,1),opacity 250ms cubic-bezier(.32,.03,.19,1),visibility 250ms;
+        transition-delay: 0s;
+        transform: translateX(48px);
+        visibility: hidden;
+      }
+      .nav-class {
         span {
           transition: transform .4s cubic-bezier(.32,.03,.19,1),opacity 250ms cubic-bezier(.32,.03,.19,1),visibility 250ms;
           transition-delay: 0s;
@@ -55,7 +57,7 @@
         }
       }
       &:hover {
-        .nav-class span {
+        .nav-class span, .nav-label {
           opacity: 1;
           transform: translateX(0);
           visibility: visible;
@@ -66,16 +68,11 @@
       padding-left: 10px !important;
       padding-right: 10px !important;
       opacity: 1;
-      @include mq(tablet) {
-
-      }
       @include mq(desktop) {
         opacity: 0;
         justify-content: flex-end;
-        // transition: all 0.3s ease-in-out;
         p {
-          // font-family: $f-headline-full;
-          color: $primaryColor;
+          color: $neutral46;
           text-align: right;
         }
       }
@@ -92,6 +89,7 @@
       align-items: center;
       padding-left: 10px;
       padding-right: 10px;
+      transition: all .3s ease-in-out;
       &:hover {
         span {
           background-color: transparent;

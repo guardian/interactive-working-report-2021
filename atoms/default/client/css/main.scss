@@ -18,9 +18,9 @@
 $primaryColor: #041f4a;
 $secondaryColor: #ffe500;
 $background: $neutral100;
-
 $collapsed-nav-height: 40px;
 $icon-radius: 24px;
+$menuMaxHeight: 700px;
 
 @import "fonts";
 // @import "enhanced_fonts";
@@ -62,15 +62,22 @@ html {
     flex-direction: row;
     flex-wrap: wrap;
     padding-bottom: 24px;
-    @include mq(tablet) {
+		// @include mq(mobileLandscape) {
+    // }
+    @include mq(mobileLandscape) {
       width: 240px;
+      float: left;
+			margin-right: 20px;
     }
+		@include mq(tablet) {
+			margin-left: 10px;
+		}
     @include mq(leftCol) {
       width: 304px;
     }
     > p {
       flex: 1 0 50%;
-      @include mq(tablet) {
+      @include mq(mobileLandscape) {
         flex: 0 1 100%;
       }
     }
@@ -120,10 +127,19 @@ html {
   padding: 10px 0;
 	transition: all 0.3s ease-in-out;
 	max-height: 500px;
+	overflow-y: hidden;
+	position: fixed;
+	z-index: 2000;
+	margin-top: -$collapsed-nav-height;
+	max-width: 100%;
+  max-height: $collapsed-nav-height;
+	border-bottom: 1px solid $neutral86;
   // width: 100%;
   // position: sticky;
-  // top: -1px; /* ➜ the trick */
-  // padding-top: calc(1em + 1px); /* ➜ compensate for the trick */
+	@include mq(desktop) {
+		border-bottom: none;
+		max-height: $menuMaxHeight;
+	}
   .nav-class {
     font-family: $f-headline-full;
     font-size: 17px;
@@ -143,10 +159,17 @@ html {
 	}
   &.stick-me {
     max-height: $collapsed-nav-height;
-    overflow-y: hidden;
-    position: sticky;
+		position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    // padding: 10px;
+		// visibility: visible;;
+		// opacity: 1;
+    margin: 0;
     &.open-nav {
-      max-height: 500px;
+      max-height: $menuMaxHeight;
       // .nav-label, .nav-class, .active {
       //   top: 0px;
       //   position: relative;

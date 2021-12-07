@@ -343,7 +343,8 @@ let obvsOptsTitleTop = {
 let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
   entries.forEach(entry => {
     if ( entry.isIntersecting ) {
-      console.log('title top');
+      navElem[0].classList.remove('active');
+      navElem[0].classList.remove('prev');
       removeHash()
     }
   });
