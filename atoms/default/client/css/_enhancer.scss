@@ -164,7 +164,7 @@ a,
     line-height: 1.36;
     font-weight: 700;
     color: #333;
-    margin-top: 36px;
+    // margin-top: 36px;
     margin-bottom: 6px;
 
     @include mq($until: desktop) {

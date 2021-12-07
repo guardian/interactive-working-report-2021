@@ -118,11 +118,12 @@ html {
   top: 0;
   z-index: 5;
   padding: 10px 0;
-  width: 100%;
+	transition: all 0.3s ease-in-out;
+	max-height: 500px;
+  // width: 100%;
   // position: sticky;
   // top: -1px; /* ➜ the trick */
   // padding-top: calc(1em + 1px); /* ➜ compensate for the trick */
-  transition: height 3s ease;
   .nav-class {
     font-family: $f-headline-full;
     font-size: 17px;
@@ -134,12 +135,18 @@ html {
   a:not([data-ignore='global-link-styling']), a:not([data-ignore='global-link-styling']):hover {
     border-bottom: none;
   }
+	#close-nav {
+		opacity: 0;
+		span {
+			@include sr-only();
+		}
+	}
   &.stick-me {
-    height: $collapsed-nav-height;
+    max-height: $collapsed-nav-height;
     overflow-y: hidden;
     position: sticky;
     &.open-nav {
-      height: auto;
+      max-height: 500px;
       // .nav-label, .nav-class, .active {
       //   top: 0px;
       //   position: relative;
@@ -152,9 +159,9 @@ html {
       // }
     }
     #close-nav {
-      // opacity: 1;
+      opacity: 1;
       span {
-        @include sr-only();
+
       }
       // position: absolute;
       // right: 0;
@@ -181,10 +188,11 @@ html {
   }
   @include mq(desktop) {
     background-color: transparent;
-    width: 300px;
+		width: 220px;
     // margin-left: 0 !important;
   }
   @include mq(leftCol) {
+		width: 300px;
   }
   .nav-title-wrapper {
     display: flex;
@@ -198,7 +206,7 @@ html {
     }
   }
   #close-nav {
-    opacity: 0;
+    // opacity: 0;
     display: flex;
     &::before {
       width: $icon-radius;

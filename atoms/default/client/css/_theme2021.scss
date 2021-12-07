@@ -3,10 +3,50 @@ $background: $neutral100;
 $primaryColor: $brand400;
 $secondaryColor: $culture800;
 
-@import "nav";
-@import "header";
-
-#maincontent {
+// Reset page margins
+.content--interactive {
+  & > div:first-child {
+    @include mq(leftCol){
+      grid-template-columns: 0px 1px 1fr;
+      grid-column-gap: 0;
+    }
+  }
+}
+.content--interactive {
+  [data-gu-name="title"] {
+    display: none;
+  }
+  [data-gu-name="border"] {
+    > div {
+      border-color: transparent;
+    }
+  }
+  [data-gu-name="meta"] {
+    > div {
+      max-width: none;
+    }
+  }
+  .content__meta-container_dcr {
+    div > div:first-child:not([class]), address {
+      display: none;
+    }
+    [data-print-layout="hide"] {
+      div:nth-of-type(2) {
+        border-top-color: transparent;
+      }
+    }
+  }
+  [data-gu-name="lines"] {
+    display: none;
+  }
+  [data-gu-name="headline"],
+  [data-gu-name="standfirst"],
+  [data-gu-name="meta"],
+  .article-navigation,
+  .section-header,
+  .byline-box {
+    margin: 0 -10px;
+  }
   .content__main-column--interactive {
     & > p,
     & > h2,
@@ -14,11 +54,19 @@ $secondaryColor: $culture800;
     & > sub,
     & > blockquote {
       padding-top: 4px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding-left: 0px;
+      padding-right: 0px;
+      @include mq(tablet) {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
     }
   }
 }
+
+@import "nav";
+@import "header";
+
 .content--interactive {
   & > div:first-child {
     border-left: none;
@@ -29,13 +77,42 @@ $secondaryColor: $culture800;
     svg {
       fill: $primaryColor;
     }
+    span {
+      transition: all 0.3s ease-in-out;
+    }
+    &:hover span {
+      background-color: $primaryColor;
+      border-color: $primaryColor;
+      svg {
+        fill: $neutral100;
+      }
+    }
+  }
+  .content__main-column--interactive {
+    & > blockquote {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
   blockquote {
-    margin-left: 10px;
-    margin-right: 10px;
-    // width: 100vw;
     border-top: 1px solid $primaryColor;
     background-color: $secondaryColor;
+    p:first-child {
+      height: 20px;
+    }
+    p  > em {
+      display: flex;
+      align-items: center;
+      &::before {
+        content: " ";
+        display: block;
+        background-image: url('https://uploads.guim.co.uk/2021/12/06/Type__Asterisk-30-x2.png');
+        background-size: cover;
+        width: 20px;
+        height: 22px;
+        margin-right: 4px;
+      }
+    }
     @include mq(tablet) {
       float: left;
     }

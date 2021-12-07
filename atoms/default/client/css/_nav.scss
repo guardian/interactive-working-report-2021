@@ -11,7 +11,9 @@
   .article-navigation {
     display: flex;
     flex-direction: column;
-    @include mq(tablet) { }
+    @include mq(tablet) {
+
+    }
     @include mq(desktop) {
       position: fixed;
       top: 50%;
@@ -22,17 +24,63 @@
       #close-nav {
         display: none;
       }
+       .nav-label {
+
+       }
+      .nav-class,{
+        span {
+          transition: transform .4s cubic-bezier(.32,.03,.19,1),opacity 250ms cubic-bezier(.32,.03,.19,1),visibility 250ms;
+          transition-delay: 0s;
+          transform: translateX(48px);
+          visibility: hidden;
+          opacity: 0;
+        }
+        &:nth-child(1) span {
+          transition-delay: 50ms;
+        }
+        &:nth-child(2) span {
+          transition-delay: 75ms;
+        }
+        &:nth-child(3) span {
+          transition-delay: 100ms;
+        }
+        &:nth-child(4) span {
+          transition-delay: 125ms;
+        }
+        &:nth-child(5) span {
+          transition-delay: 150ms;
+        }
+        &:nth-child(6) span {
+          transition-delay: 175ms;
+        }
+      }
+      &:hover {
+        .nav-class span {
+          opacity: 1;
+          transform: translateX(0);
+          visibility: visible;
+        }
+      }
     }
     .nav-title-wrapper {
       padding-left: 10px !important;
       padding-right: 10px !important;
+      opacity: 1;
+      @include mq(tablet) {
+
+      }
       @include mq(desktop) {
+        opacity: 0;
         justify-content: flex-end;
+        // transition: all 0.3s ease-in-out;
         p {
           // font-family: $f-headline-full;
           color: $primaryColor;
           text-align: right;
         }
+      }
+      @include mq(leftCol) {
+        opacity: 1;
       }
     }
     .nav-class {
@@ -44,10 +92,16 @@
       align-items: center;
       padding-left: 10px;
       padding-right: 10px;
+      &:hover {
+        span {
+          background-color: transparent;
+        }
+      }
       @include mq(desktop) {
         text-align: right;
         justify-content: flex-end;
         &:after {
+          position: absolute;
           content: "";
           background-color: $primaryColor;
           width: 2px;
@@ -56,6 +110,9 @@
           margin-left: 12px;
           transition: all 400ms ease-in-out, opacity 200ms linear;
           opacity: 0.5;
+        }
+        span {
+          margin-right: 12px;
         }
         &.active {
           &:after {
@@ -67,8 +124,13 @@
           }
           // color: $secondaryColor;
           span {
-            opacity: 1;
+            // opacity: 1;
           }
+        }
+      }
+      @include mq(leftCol) {
+        span {
+          opacity: 1;
         }
       }
       &:hover {

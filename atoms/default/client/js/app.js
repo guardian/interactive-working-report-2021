@@ -12,17 +12,23 @@ const anchorClass       = 'section-header';
 const navClass          = 'article-navigation';
 const navBarClass       = 'nav-title-wrapper';
 const navUtilityID      = 'nav-utility';
+const outterMargin      = 'content--interactive-margin';
 
 // get our content contaciner
-const mainContent = document.getElementById('maincontent')
-const articleContent = document.querySelector('.article-body-viewer-selector')
+const mainContent       = document.getElementById('maincontent')
+const articleContent    = document.querySelector('.article-body-viewer-selector')
 // get our target element
-const targetElem = mainContent.querySelectorAll(targetTag);
+const targetElem        = mainContent.querySelectorAll(targetTag);
 // get first set of links
-const firstList = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
+const firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
 
-const mainTitle         = document.querySelector('.content__headline');
+// const mainTitle         = document.querySelector('.content__headline'); // sr-only hidden data-gu-name="headline"
+const mainTitle         = document.querySelector('[data-gu-name="headline"]');
+// page structurer
+const interClassElem    = document.querySelector('.content--interactive').firstElementChild;
+console.log('interClassElem: ' + interClassElem.className)
 
+interClassElem.classList.add(outterMargin)
 // ----------------------------------------// Headers // ----------------------------------------------- //
 
 // const mainHeader = document.querySelector('.content__headline')
@@ -172,16 +178,15 @@ Array.from(linkTextToWrap).forEach(function(link){
 });
 
 // detect section in view via header
-let sectionHeader = document.querySelectorAll(anchorTag);
-// let sectionHeader = document.querySelectorAll(anchorClass); // NodeList
-// let sectionHeader = document.querySelectorAll('header.' + anchorClass);
-console.log('sectionHeader: ' + sectionHeader)
+// let sectionHeader = document.querySelectorAll(anchorTag); // too broad includes main header
+let sectionHeader = document.querySelectorAll('.' + anchorClass);
+// console.log('sectionHeader: ' + sectionHeader)
 // nav menu
 const menuTarget = document.getElementsByClassName(menuClass);
 
 // We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
-const headHeight = navHolder.offsetHeight
-const headSpace = window.innerHeight - headHeight
+let headHeight = navHolder.offsetHeight
+let headSpace = window.innerHeight - headHeight
 
 let currItem = null;
 let prevItem = null;
@@ -189,13 +194,17 @@ let prevItem = null;
 let anchorOptions = {
   rootMargin: '0px 0px -' + headSpace + 'px 0px', // <-------------------------- check if we need to do some calculations
   // rootMargin: '0px 0px -50% 0px', // add for sticky menu reduce target area to top 25% of viewport for small sections // too tight?
-  threshold: 1                                  // <-------------------------- check if we need to do some calculations
+  threshold: 0                                  // <-------------------------- check if we need to do some calculations
 }
 
 let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
-      const labelText = entry.target.textContent; // changed innerText to textContent to work in safari
+      let labelText = entry.target.textContent; // changed innerText to textContent to work in safari
+      headHeight = navHolder.offsetHeight
+      headSpace = window.innerHeight - headHeight
+      // console.log('headHeight: ' + headHeight)
+      // console.log('headSpace: ' + 'of ' + labelText + ' - ' + headSpace)
                                                 //  <-------------------------- mobile disappearing at end of page
       // if (navHolder.getBoundingClientRect().top === 0 && navHolder.classList.contains(menuStuck)) {
       //   console.log("im stuck good");
@@ -203,15 +212,14 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       //   console.log("im NOT stuck and need to be");
       //   // navHolder.classList.add(menuStuck);
       // }
-      console.log('labelText: ' + labelText)
         // previous is current
         prevItem = currItem;
         // convert html collection to array to loop with forEach
         Array.from(menuTarget).forEach(function(item){
           // loop through links to match active target text
           if ( labelText === item.textContent ) {
-            console.log('labelText' + labelText)
-            console.log('item.textContent: ' + item.textContent)
+            // console.log('labelText' + labelText)
+            // console.log('item.textContent: ' + item.textContent)
 
             let linkHash = concatTitle(item.textContent);
             updateHash(linkHash);
@@ -296,15 +304,19 @@ let obvsCallbackUp = (entries, observerUp) => {
 let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
 observerUp.observe(navHolder);
 
+// const mainHeadHeight = mainTitle.offsetHeight
+// const mainHeadSpace = window.innerHeight - mainHeadHeight
+
 // remove hash at top of page watching mainTitle
 let obvsOptsTitleTop = {
+  // rootMargin: '0px 0px -' + mainHeadSpace + 'px 0px',
   rootMargin: '0px',
-  threshold: 1
+  threshold: 0
 }
 let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
   entries.forEach(entry => {
     if ( entry.isIntersecting ) {
-      // console.log('title top');
+      console.log('title top');
       removeHash()
     }
   });
