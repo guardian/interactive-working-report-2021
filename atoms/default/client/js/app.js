@@ -14,19 +14,46 @@ const navBarClass       = 'nav-title-wrapper';
 const navUtilityID      = 'nav-utility';
 const outterMargin      = 'content--interactive-margin';
 
-// get our content contaciner
-const mainContent       = document.getElementById('maincontent')
-const articleContent    = document.querySelector('.article-body-viewer-selector')
-// get our target element
-const targetElem        = mainContent.querySelectorAll(targetTag);
-// get first set of links
-const firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
+var mainContent
+var articleContent
+var targetElem
+var firstList
+var mainTitle
+var interClassElem
 
-// const mainTitle         = document.querySelector('.content__headline'); // sr-only hidden data-gu-name="headline"
-const mainTitle         = document.querySelector('[data-gu-name="headline"]');
-// page structurer
-const interClassElem    = document.querySelector('.content--interactive').firstElementChild;
-console.log('interClassElem: ' + interClassElem.className)
+const checkApp = () => {
+  const parentIsIos = window.parent.document.querySelector(".ios")
+  const parentIsAndroid = window.parent.document.querySelector(".android")
+  if (parentIsIos || parentIsAndroid) {
+    console.log('in app')
+    // get our content container
+    mainContent       = document.querySelector('.article--standard')
+    articleContent    = document.querySelector('.article-body-viewer-selector')
+    // get our target element
+    targetElem        = mainContent.querySelectorAll(targetTag);
+    // get first set of links
+    firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
+    mainTitle         = document.querySelector('.headline');
+    // page structurer
+    interClassElem = document.querySelector('.article--standard');
+  
+  } else {
+    console.log('on web')
+    // get our content container
+    mainContent       = document.getElementById('maincontent')
+    articleContent    = document.querySelector('.article-body-viewer-selector')
+    // get our target element
+    targetElem        = mainContent.querySelectorAll(targetTag);
+    // get first set of links
+    firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
+    mainTitle         = document.querySelector('[data-gu-name="headline"]');
+    // page structurer
+    interClassElem = document.querySelector('.content--interactive').firstElementChild;
+  
+  }
+}
+
+checkApp()
 
 interClassElem.classList.add(outterMargin)
 // ----------------------------------------// Headers // ----------------------------------------------- //
