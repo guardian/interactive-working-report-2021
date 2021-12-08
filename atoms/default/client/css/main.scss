@@ -134,14 +134,11 @@ html {
   transition: all 0.3s ease-in-out;
   max-height: 500px;
   overflow-y: hidden;
-  position: fixed;
   z-index: 2000;
   margin-top: -$collapsed-nav-height;
-  max-width: 100%;
-  max-height: $collapsed-nav-height;
   border-bottom: 1px solid $neutral86;
-  // width: 100%;
-  // position: sticky;
+  margin: 0 -10px;
+  width: 100vw;
   @include mq(desktop) {
     border-bottom: none;
     max-height: $menuMaxHeight;
@@ -166,15 +163,10 @@ html {
   }
   &.stick-me {
     max-height: $collapsed-nav-height;
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    max-width: 100%;
-    // padding: 10px;
-    // visibility: visible;;
-    // opacity: 1;
-    margin: 0;
     &.open-nav {
       max-height: $menuMaxHeight;
       // .nav-label, .nav-class, .active {
