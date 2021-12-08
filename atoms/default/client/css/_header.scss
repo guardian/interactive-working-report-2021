@@ -11,8 +11,7 @@
 }
 .content--interactive,
 .article--standard {
-  [data-gu-name="headline"],
-  .headline {
+  [data-gu-name="headline"] {
     content: " ";
     display: block;
     margin-top: 24px;
@@ -83,7 +82,8 @@
       width: 920px;
     }
   }
-  .content__standfirst {
+  .content__standfirst,
+  .standfirst {
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -183,5 +183,70 @@
     // }
     h2 {
     }
+  }
+}
+
+.ios,
+.android {
+  .article--standard h1 {
+    border: unset !important;
+    clip: unset !important;
+    -webkit-clip-path: unset !important;
+    clip-path: unset !important;
+    height: unset !important;
+    margin: unset !important;
+    overflow: unset !important;
+    padding: unset !important;
+    position: unset !important;
+    width: unset !important;
+    white-space: unset !important;
+  }
+  // h1.headline {
+  .article__header {
+    content: " ";
+    display: block;
+    margin-top: 24px !important;
+    margin-bottom: -24px !important;
+    height: 240px !important; // needs to be more dynamic
+    background-image: url("https://uploads.guim.co.uk/2021/12/03/Masthead-title-4.5.jpg");
+    background-size: 120%;
+    background-repeat: no-repeat;
+    @include mq(mobileMedium) {
+      height: 300px !important;
+    }
+    @include mq(mobileLandscape) {
+      height: 360px !important;
+    }
+    @include mq(tablet) {
+      height: 460px !important;
+      max-width: 620px !important;
+    }
+    @include mq(desktop) {
+      max-width: 800px !important;
+      // margin-right: 0;
+      // height: 560px;
+      background-size: 100%;
+    }
+    @include mq(leftCol) {
+      margin-left: 0 !important;
+    }
+    @include mq(wide) {
+      max-width: 920px !important;
+      height: 641px !important;
+      margin: 48px 0 -48px !important;
+    }
+
+    .headline {
+      opacity: 0;
+      background-color: none;
+    }
+  }
+
+  .meta {
+    display: none;
+  }
+
+  .standfirst {
+    margin-top: 150px;
   }
 }

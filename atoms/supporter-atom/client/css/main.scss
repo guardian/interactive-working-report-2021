@@ -73,11 +73,11 @@ $secondaryColor: #ffe500;
     }
     a {
       font-family: $f-sans-serif-text;
-      color: white;
-      border: none;
+      color: white !important;
+      border: none !important;
       &:hover {
-        border: none;
-        color: white;
+        border: none !important;
+        color: white !important;
       }
     }
   }
@@ -85,5 +85,32 @@ $secondaryColor: #ffe500;
     position: absolute;
     top: 4px;
     right: 10px;
+  }
+}
+
+.ios,
+.android {
+  .supporter-wrapper {
+    margin: 4px -12px;
+    .support_button {
+      color: #ffffff !important;
+      background-image: none !important;
+      border-bottom: none !important;
+      &:hover {
+        color: #ffffff !important;
+        background-image: none !important;
+        border-bottom: none !important;
+      }
+    }
+    .garnett--pillar-news:not(.garnett--type-guardianlabs)
+      .prose
+      a:not(.video-URL) {
+      background-image: none;
+    }
+    .garnett--pillar-news:not(.garnett--type-guardianlabs)
+      .prose
+      a:not(.video-URL) {
+      color: #fff;
+    }
   }
 }
