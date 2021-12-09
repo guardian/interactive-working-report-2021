@@ -1,9 +1,16 @@
 // Colour pallet - create seperate scss - colours
-$brand400: #052962;
-$neutral100: #ffffff;
-$neutral46: #707070;
-$neutral86: #dcdcdc;
-$neutral7: #121212;
-$culture800: #FBF6EF;
-$culture350: #866D50;
-$beige: #fff7e5;
+$brand400:      #052962;
+$brandAlt400:   #FFE500;
+$neutral100:    #ffffff;
+$neutral46:     #707070;
+$neutral86:     #dcdcdc;
+$neutral7:      #121212;
+$neutral0:      #000000;
+$culture800:    #FBF6EF;
+$culture350:    #866D50;
+$beige:         #fff7e5;
+
+@mixin background-opacity($color, $opacity: 0.3) {
+    background: $color; /* The Fallback */
+    background: rgba($color, $opacity);
+}

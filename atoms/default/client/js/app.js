@@ -1,8 +1,16 @@
-const navID = 'jump-nav';
+
+setTimeout(() => {
+  console.log("js working")
+}, 30000)
+
+const navID             = 'jump-nav';
 const anchorTag         = 'header';
 const targetTag         = 'h2';
 const targetTagInner    = 'strong';
-const targetTagInnerAlt = 'em';
+const targetTagInnerAlt = 'figcaption';
+const videoClass        = '[data-component="youtube-atom"]';
+const videoOverlayAtt   = '[daya-cy="youtube-overlay"]';
+const videoBtnClass     = 'overlay-play-button';
 const navTag            = 'nav';
 const menuClass         = 'nav-class';
 const menuClassVid      = 'video-link';
@@ -22,6 +30,7 @@ var articleContent
 var targetElem
 var firstList
 var mainTitle
+var videoOverlay
 var interClassElem
 
 const checkApp = () => {
@@ -33,12 +42,13 @@ const checkApp = () => {
     mainContent       = document.querySelector('.article--standard')
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
-    targetElem        = mainContent.querySelectorAll(targetTag);
+    // targetElem        = mainContent.querySelectorAll(targetTag);
+    targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
     mainTitle         = document.querySelector('.headline');
     // page structurer
-    interClassElem = document.querySelector('.article--standard');
+    interClassElem    = document.querySelector('.article--standard');
 
   } else {
     console.log('on web')
@@ -46,17 +56,21 @@ const checkApp = () => {
     mainContent       = document.getElementById('maincontent')
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
-    targetElem        = mainContent.querySelectorAll(targetTag);
+    // targetElem        = mainContent.querySelectorAll(targetTag);
+    targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
     mainTitle         = document.querySelector('[data-gu-name="headline"]');
     // page structurer
-    interClassElem = document.querySelector('.content--interactive').firstElementChild;
+    interClassElem    = document.querySelector('.content--interactive').firstElementChild;
 
   }
 }
 
 checkApp()
+
+// is this same in the app?
+videoOverlay      = document.querySelector(videoOverlayAtt);
 
 interClassElem.classList.add(outterMargin)
 // ----------------------------------------// Headers // ----------------------------------------------- //
@@ -92,8 +106,8 @@ function newElem(tagName,attType,attName,className,content,contentHolder,positio
   const newElem2 = document.createElement(tagName);
   const menuClasses = [className]
   const menuClassesString = className
-  console.log(...menuClasses) // why doesn't this work?
-  console.log('menuClassesString: ' + menuClassesString)
+  // console.log(...menuClasses) // why doesn't this work?
+  // console.log('menuClassesString: ' + menuClassesString)
 
   if (className !== '' ) {
     // newElem2.classList.add(...menuClasses); // why doesn't this work?
@@ -146,32 +160,53 @@ const closeBtn = document.getElementById(closeNav);
 function addAnchorWrap(targetElem, i) {
   let index             = parseInt(i);// change string to interger to start at 1
   const anchorNode      = targetElem[i];
-  const anchorID        = anchorIdLabel + (index+1);
-  const linkTitle       = targetElem[i].innerText;
-  const anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
+
+  // Select target with strong child tag
+  const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
+  // Select target with em child tag
+  const innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets video
+  let anchorIDTitle   = '';
+  // const anchorID        = anchorIdLabel + (index+1); // unused
+  let linkTitle       = targetElem[i].innerText;
+
+  if (anchorNode.contains(innerNodeAlt)) {
+    // console.log(innerNodeAlt.innerText)
+    linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
+    // console.log(anchorNode);
+    anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
+    videoOverlay.setAttribute('id', anchorIDTitle);
+  }
+
+  anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
   // console.log(anchorIDTitle);
   // create header element
   const titleWrapper = document.createElement(anchorTag);
-  const videoTitleWrapper = document.createElement(anchorTag);
+  // const videoTitleWrapper = document.createElement(anchorTag); // not wrapping now
 
   // titleWrapper.setAttribute('id', anchorID); // using section var
   titleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
-  videoTitleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
+
+  // console.log(videoOverlay)
   // add class
   titleWrapper.classList.add(anchorClass); // standard section header
-  videoTitleWrapper.classList.add(vidClass); // video section header
 
-  // Select target with strong child tag
-  const innerNode = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
-  // Select target with em child tag
-  const innerNodeAlt = anchorNode.querySelector(targetTagInnerAlt);
 
   if (anchorNode.contains(innerNode)) {
     // wrap our header element if it contains our inner node of strong
     wrapElem(anchorNode, titleWrapper);
   } else if (anchorNode.contains(innerNodeAlt)) {
-    // wrap our video header element if it contains our inner node of em
-    wrapElem(anchorNode, videoTitleWrapper);
+
+    const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
+    videoBtnWrap.classList.add('video-button-wrapper')
+
+    setTimeout(() => {
+      newElem('div','','','video-overlay','',videoOverlay,'after')
+      const newVidWrapElem = document.querySelector('.video-overlay')
+
+      newElem('div','','','video-inner',linkTitle,newVidWrapElem,'after')
+      // wrap our video header element if it contains our inner node of em
+      // wrapElem(newVidWrapElem, videoOverlay);
+    }, 2000)
   }
   // Add marker *if* we need it?
   // newElem('span','','','marker','',titleWrapper,'before');
@@ -188,17 +223,23 @@ function concatTitle(title) {
 function linkURL(targetElem, i) {
   let index = parseInt(i); // change string to interger to start at 1
   const anchorNode      = targetElem[i];
-  const anchorID        = anchorIdLabel + (index+1);
-  const linkTitle       = targetElem[i].innerText;
+  // const anchorID        = anchorIdLabel + (index+1);  // unused
+  const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
+  const innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt);
+
+  let linkTitle         = targetElem[i].innerText;
+  // video caption for links
+  if (anchorNode.contains(innerNodeAlt)) {
+    // console.log(innerNodeAlt.innerText)
+    linkTitle           = innerNodeAlt.innerText;
+  }
+
   // const linkWrapper     = titleWrapper.append(linkTitle);
   const anchorIDTitle   = concatTitle(linkTitle);
   const classArr        = menuClass + ' ' + menuClassVid;
 
   // const linkHref = '#' + anchorID; // using section variable
   const linkHref = '#' + anchorIDTitle; // using anchor text
-
-  const innerNode = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
-  const innerNodeAlt = anchorNode.querySelector(targetTagInnerAlt);
 
   if (anchorNode.contains(innerNode)) {
     newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
@@ -209,11 +250,13 @@ function linkURL(targetElem, i) {
 
 // Loop through and build anchors and menu links
 for (let i = 0; i < targetElem.length; i++) {
+  // console.log(targetElem);
   // wrap anchors
   addAnchorWrap(targetElem, [i]);
   // build link
   linkURL(targetElem, [i]);
 }
+
 // wrap our anchor link text in spans
 const linkTextToWrap = document.getElementsByClassName(menuClass);
 
@@ -255,15 +298,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       let labelText = entry.target.textContent; // changed innerText to textContent to work in safari
       headHeight = navHolder.offsetHeight
       headSpace = window.innerHeight - headHeight
-      // console.log('headHeight: ' + headHeight)
-      // console.log('headSpace: ' + 'of ' + labelText + ' - ' + headSpace)
-                                                //  <-------------------------- mobile disappearing at end of page
-      // if (navHolder.getBoundingClientRect().top === 0 && navHolder.classList.contains(menuStuck)) {
-      //   console.log("im stuck good");
-      // } else {
-      //   console.log("im NOT stuck and need to be");
-      //   // navHolder.classList.add(menuStuck);
-      // }
+
         // previous is current
         prevItem = currItem;
         // convert html collection to array to loop with forEach
