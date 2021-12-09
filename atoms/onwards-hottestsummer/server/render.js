@@ -1,4 +1,4 @@
-import mainTemplate from "./atoms/onwards-two/server/templates/main.html!text"
+import mainTemplate from "./atoms/onwards-hottestsummer/server/templates/main.html!text"
 import Mustache from 'mustache'
 import rp from 'request-promise'
 

@@ -1,0 +1,37 @@
+// Colour pallet - create seperate scss - colours
+$brand400: #052962;
+$neutral100: #ffffff;
+// theme - create seperate scss - theme-core
+$primaryColor: #041f4a;
+$secondaryColor: #ffe500;
+
+@import "fonts";
+// @import "enhanced_fonts";
+@import "mq";
+@import "palette";
+// @import "enhancer";
+// @import "nav";
+// @import "header";
+// gu_grid pulls the css for gs-container and content__main-column
+// @import "gu_grid";
+@import "onwards";
+
+.interactive-atom {
+  margin: 0;
+  padding: 0;
+}
+
+// for apps adds extra padding. Needed to make dark mode work
+.ios,
+.android {
+  .interactive-atom {
+    padding: 8px;
+  }
+}
+
+.interactive-wrapper {
+  margin: 0 -10px;
+  @include mq(tablet) {
+    margin: 0;
+  }
+}
