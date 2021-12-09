@@ -18,7 +18,7 @@
 $primaryColor: #041f4a;
 $secondaryColor: #ffe500;
 $background: $neutral100;
-$collapsed-nav-height: 40px;
+$collapsed-nav-height: 44px;
 $icon-radius: 24px;
 $menuMaxHeight: 700px;
 
@@ -65,28 +65,33 @@ html {
     flex-wrap: wrap;
     margin: 24px 0;
     padding: 4px 10px 24px 10px;
-    // @include mq(mobileLandscape) {
-    // }
+
+    float: left;
+    width: min-content;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
     @include mq(mobileLandscape) {
       width: 240px;
-      float: left;
       margin-right: 20px;
     }
     @include mq(tablet) {
       margin-left: 10px;
+      > p {
+        flex: 1 0 50%;
+
+        @include mq(mobileLandscape) {
+          flex: 0 1 100%;
+        }
+      }
+      > p:first-child {
+        flex: 0 1 100%;
+      }
     }
     @include mq(leftCol) {
       width: 304px;
     }
-    > p {
-      flex: 1 0 50%;
-      @include mq(mobileLandscape) {
-        flex: 0 1 100%;
-      }
-    }
-    > p:first-child {
-      flex: 0 1 100%;
-    }
+
     p {
       line-height: 115%;
       em {
@@ -95,12 +100,10 @@ html {
         line-height: 1.15;
         color: $culture350;
         font-style: normal;
-        &::before {
-        }
       }
       strong {
         color: $primaryColor;
-        font-family: $f-headline-full;
+        font-family: $f-serif-headline;
         font-weight: 500;
         line-height: 1.15;
         font-size: 20px;
@@ -109,7 +112,7 @@ html {
         }
         em {
           // flex-direction: row;
-          font-family: $f-headline-full;
+          font-family: $f-serif-headline;
           font-variant-numeric: lining-nums;
           color: $primaryColor;
           font-weight: 700;
@@ -144,7 +147,7 @@ html {
     max-height: $menuMaxHeight;
   }
   .nav-class {
-    font-family: $f-headline-full;
+    font-family: $f-serif-headline;
     font-size: 17px;
     line-height: 1.35;
     font-weight: 700;

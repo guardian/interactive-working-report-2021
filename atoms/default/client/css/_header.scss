@@ -151,10 +151,10 @@
     }
   }
   .meta__social {
-    -webkit-box-flex: 0;
-    -webkit-flex-grow: 0;
-    -ms-flex-positive: 0;
-    flex: 0 0 100%;
+    // -webkit-box-flex: 0;
+    // -webkit-flex-grow: 0;
+    // -ms-flex-positive: 0;
+    // flex: 0 0 100%;
     margin: -4px 0 0;
     padding-bottom: 6px;
     padding-left: 10px !important;
@@ -168,6 +168,17 @@
     }
     @include mq(wide) {
       flex: 0 0 560px;
+    }
+
+    & + div {
+      display: none;
+    }
+  }
+
+  .content__meta-container_dcr {
+    margin-right: 0;
+    & div {
+      padding-right: 0;
     }
   }
 }
