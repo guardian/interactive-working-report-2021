@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 setTimeout(() => {
   console.log("js working")
 }, 30000)
 
 const navID             = 'jump-nav';
+=======
+const navID = 'jump-nav';
+>>>>>>> 73153ff2a4bfde59de15729668aeb451efd38aec
 const anchorTag         = 'header';
 const targetTag         = 'h2';
 const targetTagInner    = 'strong';
@@ -126,6 +130,7 @@ function newElem(tagName,attType,attName,className,content,contentHolder,positio
   }
 }
 
+
 // wraps an element
 function wrapElem(el, wrapper) {
     el.parentNode.insertBefore(wrapper, el);
@@ -151,6 +156,8 @@ function menuContainer() {
 menuContainer(); // ******* Building this now because it's needed to add the links, but should be when *no* nav has been found
 const navHolder = document.getElementById(navID); // added #2 to not conflict
 const closeBtn = document.getElementById(closeNav);
+
+
 
 // wrap our anchors
 function addAnchorWrap(targetElem, i) {
@@ -433,6 +440,17 @@ myList.forEach(function(sectHeader){
     }
   }
 });
+
+
+
+// Tracking
+const navLinks = document.querySelectorAll('.nav-class')
+navLinks.forEach((el, index) => {
+  el.dataset.linkName = "working report 2021 : nav link " + index
+})
+
+
+
 
 // --------------------------------// previous code options // ---------------------------------------- //
 
