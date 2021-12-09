@@ -69,9 +69,12 @@
       }
     }
     .nav-title-wrapper {
-      padding-left: 10px !important;
-      padding-right: 10px !important;
+      padding-left: 10px;
+      padding-right: 10px;
       opacity: 1;
+      @include mq(tablet) {
+        padding-left: 20px;
+      }
       @include mq(desktop) {
         opacity: 0;
         justify-content: flex-end;
