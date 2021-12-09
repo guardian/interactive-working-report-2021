@@ -1,12 +1,9 @@
-<<<<<<< HEAD
+
 setTimeout(() => {
   console.log("js working")
 }, 30000)
 
 const navID             = 'jump-nav';
-=======
-const navID = 'jump-nav';
->>>>>>> 73153ff2a4bfde59de15729668aeb451efd38aec
 const anchorTag         = 'header';
 const targetTag         = 'h2';
 const targetTagInner    = 'strong';
