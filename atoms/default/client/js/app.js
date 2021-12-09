@@ -2,13 +2,16 @@ const navID             = 'jump-nav';
 const anchorTag         = 'header';
 const targetTag         = 'h2';
 const targetTagInner    = 'strong';
+const targetTagInnerAlt = 'em';
 const navTag            = 'nav';
 const menuClass         = 'nav-class';
+const menuClassVid      = 'video-link';
 const menuStuck         = 'stick-me';
 const closeNav          = 'close-nav';
 const navLabel          = 'nav-label';
 const anchorIdLabel     = 'section';
 const anchorClass       = 'section-header';
+const vidClass          = 'video-section-header';
 const navClass          = 'article-navigation';
 const navBarClass       = 'nav-title-wrapper';
 const navUtilityID      = 'nav-utility';
@@ -36,7 +39,7 @@ const checkApp = () => {
     mainTitle         = document.querySelector('.headline');
     // page structurer
     interClassElem = document.querySelector('.article--standard');
-  
+
   } else {
     console.log('on web')
     // get our content container
@@ -49,7 +52,7 @@ const checkApp = () => {
     mainTitle         = document.querySelector('[data-gu-name="headline"]');
     // page structurer
     interClassElem = document.querySelector('.content--interactive').firstElementChild;
-  
+
   }
 }
 
@@ -87,9 +90,14 @@ interClassElem.classList.add(outterMargin)
 function newElem(tagName,attType,attName,className,content,contentHolder,position) {
 
   const newElem2 = document.createElement(tagName);
+  const menuClasses = [className]
+  const menuClassesString = className
+  console.log(...menuClasses) // why doesn't this work?
+  console.log('menuClassesString: ' + menuClassesString)
 
   if (className !== '' ) {
-    newElem2.classList.add(className);
+    // newElem2.classList.add(...menuClasses); // why doesn't this work?
+    newElem2.className = menuClassesString
   }
 
   newElem2.innerText = content;
@@ -137,22 +145,30 @@ function addAnchorWrap(targetElem, i) {
   const anchorNode      = targetElem[i];
   const anchorID        = anchorIdLabel + (index+1);
   const linkTitle       = targetElem[i].innerText;
-  const anchorIDTitle   = linkTitle.replace(/\s+/g, '-').toLowerCase();
+  const anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
   // console.log(anchorIDTitle);
   // create header element
   const titleWrapper = document.createElement(anchorTag);
+  const videoTitleWrapper = document.createElement(anchorTag);
 
   // titleWrapper.setAttribute('id', anchorID); // using section var
   titleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
+  videoTitleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
   // add class
-  titleWrapper.classList.add(anchorClass);
+  titleWrapper.classList.add(anchorClass); // standard section header
+  videoTitleWrapper.classList.add(vidClass); // video section header
 
-  // only select target with bold tag
+  // Select target with strong child tag
   const innerNode = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
+  // Select target with em child tag
+  const innerNodeAlt = anchorNode.querySelector(targetTagInnerAlt);
 
   if (anchorNode.contains(innerNode)) {
-    // wrap our header element only if it contains our inner node
+    // wrap our header element if it contains our inner node of strong
     wrapElem(anchorNode, titleWrapper);
+  } else if (anchorNode.contains(innerNodeAlt)) {
+    // wrap our video header element if it contains our inner node of em
+    wrapElem(anchorNode, videoTitleWrapper);
   }
   // Add marker *if* we need it?
   // newElem('span','','','marker','',titleWrapper,'before');
@@ -160,7 +176,9 @@ function addAnchorWrap(targetElem, i) {
 
 // Concatinate titles
 function concatTitle(title) {
-  const newURL = title.replace(/\s+/g, '-').toLowerCase();
+  const newURL = title.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
+  // const newURL = title.replace(/[’\s]+/g, '-').toLowerCase();
+  // console.log(title.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()) // check why id isn't the same?
   return newURL;
 }
 // Builds our url's. Currently the whole link but may need just urls output
@@ -171,14 +189,18 @@ function linkURL(targetElem, i) {
   const linkTitle       = targetElem[i].innerText;
   // const linkWrapper     = titleWrapper.append(linkTitle);
   const anchorIDTitle   = concatTitle(linkTitle);
+  const classArr        = menuClass + ' ' + menuClassVid;
 
   // const linkHref = '#' + anchorID; // using section variable
   const linkHref = '#' + anchorIDTitle; // using anchor text
 
   const innerNode = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
+  const innerNodeAlt = anchorNode.querySelector(targetTagInnerAlt);
 
   if (anchorNode.contains(innerNode)) {
     newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
+  } else if (anchorNode.contains(innerNodeAlt)) {
+    newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
   }
 }
 

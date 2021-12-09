@@ -66,6 +66,7 @@ $secondaryColor: $culture800;
 
 @import "nav";
 @import "header";
+@import "video";
 
 .content--interactive {
   & > div:first-child {
@@ -114,7 +115,7 @@ $secondaryColor: $culture800;
       }
     }
     @include mq(tablet) {
-      
+
     }
   }
 }
