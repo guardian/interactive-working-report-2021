@@ -1,17 +1,17 @@
 @import "variables";
 
 @mixin sr-only() {
-	border: 0 !important;
-	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
-	-webkit-clip-path: inset(50%) !important;
-		clip-path: inset(50%) !important;  /* 2 */
-	height: 1px !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	padding: 0 !important;
-	position: absolute !important;
-	width: 1px !important;
-	white-space: nowrap !important;            /* 3 */
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important; /* 2 */
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important; /* 3 */
 }
 
 // theme - create seperate scss - theme-core
@@ -56,22 +56,25 @@ html {
   --scroll-behavior: smooth;
   scroll-behavior: smooth;
 }
-.content--interactive {
+.content--interactive,
+.article__body {
+  .prose blockquote,
   blockquote {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding-bottom: 24px;
-		// @include mq(mobileLandscape) {
+    margin: 24px 0;
+    padding: 4px 10px 24px 10px;
+    // @include mq(mobileLandscape) {
     // }
     @include mq(mobileLandscape) {
       width: 240px;
       float: left;
-			margin-right: 20px;
+      margin-right: 20px;
     }
-		@include mq(tablet) {
-			margin-left: 10px;
-		}
+    @include mq(tablet) {
+      margin-left: 10px;
+    }
     @include mq(leftCol) {
       width: 304px;
     }
@@ -81,10 +84,11 @@ html {
         flex: 0 1 100%;
       }
     }
-    > p:first-child{
+    > p:first-child {
       flex: 0 1 100%;
     }
     p {
+      line-height: 115%;
       em {
         font-family: $f-sans-serif-text;
         font-size: 15px;
@@ -92,7 +96,6 @@ html {
         color: $culture350;
         font-style: normal;
         &::before {
-
         }
       }
       strong {
@@ -107,9 +110,12 @@ html {
         em {
           // flex-direction: row;
           font-family: $f-headline-full;
+          font-variant-numeric: lining-nums;
           color: $primaryColor;
           font-weight: 700;
           font-size: 56px;
+          width: max-content;
+          margin-right: 8px;
           @include mq(desktop) {
             font-size: 82px;
           }
@@ -125,21 +131,18 @@ html {
   top: 0;
   z-index: 5;
   padding: 10px 0;
-	transition: all 0.3s ease-in-out;
-	max-height: 500px;
-	overflow-y: hidden;
-	position: fixed;
-	z-index: 2000;
-	margin-top: -$collapsed-nav-height;
-	max-width: 100%;
-  max-height: $collapsed-nav-height;
-	border-bottom: 1px solid $neutral86;
-  // width: 100%;
-  // position: sticky;
-	@include mq(desktop) {
-		border-bottom: none;
-		max-height: $menuMaxHeight;
-	}
+  transition: all 0.3s ease-in-out;
+  max-height: 500px;
+  overflow-y: hidden;
+  z-index: 2000;
+  margin-top: -$collapsed-nav-height;
+  border-bottom: 1px solid $neutral86;
+  margin: 0 -10px;
+  width: 100vw;
+  @include mq(desktop) {
+    border-bottom: none;
+    max-height: $menuMaxHeight;
+  }
   .nav-class {
     font-family: $f-headline-full;
     font-size: 17px;
@@ -148,26 +151,22 @@ html {
     padding: 3px 0;
     margin-bottom: 4px;
   }
-  a:not([data-ignore='global-link-styling']), a:not([data-ignore='global-link-styling']):hover {
+  a:not([data-ignore="global-link-styling"]),
+  a:not([data-ignore="global-link-styling"]):hover {
     border-bottom: none;
   }
-	#close-nav {
-		opacity: 0;
-		span {
-			@include sr-only();
-		}
-	}
+  #close-nav {
+    opacity: 0;
+    span {
+      @include sr-only();
+    }
+  }
   &.stick-me {
     max-height: $collapsed-nav-height;
-		position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    max-width: 100%;
-    // padding: 10px;
-		// visibility: visible;;
-		// opacity: 1;
-    margin: 0;
     &.open-nav {
       max-height: $menuMaxHeight;
       // .nav-label, .nav-class, .active {
@@ -184,7 +183,6 @@ html {
     #close-nav {
       opacity: 1;
       span {
-
       }
       // position: absolute;
       // right: 0;
@@ -211,11 +209,11 @@ html {
   }
   @include mq(desktop) {
     background-color: transparent;
-		width: 220px;
+    width: 220px;
     // margin-left: 0 !important;
   }
   @include mq(leftCol) {
-		width: 300px;
+    width: 300px;
   }
   .nav-title-wrapper {
     display: flex;
@@ -224,8 +222,8 @@ html {
     font-size: 15px;
     line-height: 1.5;
     margin-bottom: 8px;
-    p, span {
-
+    p,
+    span {
     }
   }
   #close-nav {
@@ -240,7 +238,7 @@ html {
       background-image: url(https://uploads.guim.co.uk/2020/12/10/arrow-brand.svg);
       background-repeat: no-repeat;
       background-position: center;
-        transform: rotate(180deg);
+      transform: rotate(180deg);
     }
     &.open {
       &::before {
@@ -258,6 +256,5 @@ html {
     visibility: hidden;
   }
   h2 {
-
   }
 }

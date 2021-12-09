@@ -1,5 +1,6 @@
-  #maincontent {
-  .article-navigation, header {
+#maincontent {
+  .article-navigation,
+  header {
     // max-width: 620px;
     @include mq(leftCol) {
       margin-left: 0 !important;
@@ -24,14 +25,16 @@
       }
       .nav-label {
         transform: translateY(-50%);
-        transition: transform .4s cubic-bezier(.32,.03,.19,1),opacity 250ms cubic-bezier(.32,.03,.19,1),visibility 250ms;
+        transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),
+          opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
         transition-delay: 0s;
         transform: translateX(48px);
         visibility: hidden;
       }
       .nav-class {
         span {
-          transition: transform .4s cubic-bezier(.32,.03,.19,1),opacity 250ms cubic-bezier(.32,.03,.19,1),visibility 250ms;
+          transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),
+            opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
           transition-delay: 0s;
           transform: translateX(48px);
           visibility: hidden;
@@ -57,7 +60,8 @@
         }
       }
       &:hover {
-        .nav-class span, .nav-label {
+        .nav-class span,
+        .nav-label {
           opacity: 1;
           transform: translateX(0);
           visibility: visible;
@@ -89,7 +93,7 @@
       align-items: center;
       padding-left: 10px;
       padding-right: 10px;
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
       &:hover {
         span {
           background-color: transparent;

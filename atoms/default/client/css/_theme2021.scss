@@ -6,7 +6,7 @@ $secondaryColor: $culture800;
 // Reset page margins
 .content--interactive {
   & > div:first-child {
-    @include mq(leftCol){
+    @include mq(leftCol) {
       grid-template-columns: 0px 1px 1fr;
       grid-column-gap: 0;
     }
@@ -27,7 +27,8 @@ $secondaryColor: $culture800;
     }
   }
   .content__meta-container_dcr {
-    div > div:first-child:not([class]), address {
+    div > div:first-child:not([class]),
+    address {
       display: none;
     }
     [data-print-layout="hide"] {
@@ -42,7 +43,6 @@ $secondaryColor: $culture800;
   [data-gu-name="headline"],
   [data-gu-name="standfirst"],
   [data-gu-name="meta"],
-  .article-navigation,
   .section-header,
   .byline-box {
     margin: 0 -10px;
@@ -68,12 +68,14 @@ $secondaryColor: $culture800;
 @import "header";
 @import "video";
 
-.content--interactive {
+.content--interactive,
+.article__body {
   & > div:first-child {
     border-left: none;
     border-right: none;
   }
-  a, a:not([data-ignore='global-link-styling']) {
+  a,
+  a:not([data-ignore="global-link-styling"]) {
     color: $primaryColor;
     svg {
       fill: $primaryColor;
@@ -101,13 +103,13 @@ $secondaryColor: $culture800;
     p:first-child {
       height: 20px;
     }
-    p  > em {
+    p > em {
       display: flex;
       align-items: center;
       &::before {
         content: " ";
         display: block;
-        background-image: url('https://uploads.guim.co.uk/2021/12/06/Type__Asterisk-30-x2.png');
+        background-image: url("https://uploads.guim.co.uk/2021/12/06/Type__Asterisk-30-x2.png");
         background-size: cover;
         width: 20px;
         height: 22px;
@@ -115,7 +117,10 @@ $secondaryColor: $culture800;
       }
     }
     @include mq(tablet) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> ec3a7b828bf6e8521f45d45f4e1590bdc836566c
     }
   }
 }
