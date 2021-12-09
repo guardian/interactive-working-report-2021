@@ -7,10 +7,13 @@ const navID             = 'jump-nav';
 const anchorTag         = 'header';
 const targetTag         = 'h2';
 const targetTagInner    = 'strong';
-const targetTagInnerAlt = 'figcaption';
+const targetTagInnerAlt = 'figcaption'; // as soon as we have images in the page it breaks
 const videoClass        = '[data-component="youtube-atom"]';
-const videoOverlayAtt   = '[daya-cy="youtube-overlay"]';
+const videoOverlayAtt   = '[data-cy="youtube-overlay"]';
 const videoBtnClass     = 'overlay-play-button';
+const videoOverOutClass = 'video-overlay';
+const videoOverInClass  = 'video-inner';
+const videoBtnWrapClass = 'video-button-wrapper';
 const navTag            = 'nav';
 const menuClass         = 'nav-class';
 const menuClassVid      = 'video-link';
@@ -71,6 +74,11 @@ checkApp()
 
 // is this same in the app?
 videoOverlay      = document.querySelector(videoOverlayAtt);
+
+// videoOverlay.addEventListener('load', function(){
+//   // The image is ready!
+//   console.log('overlay loaded');
+// });
 
 interClassElem.classList.add(outterMargin)
 // ----------------------------------------// Headers // ----------------------------------------------- //
@@ -164,7 +172,7 @@ function addAnchorWrap(targetElem, i) {
   // Select target with strong child tag
   const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
   // Select target with em child tag
-  const innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets video
+  const innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
   let anchorIDTitle   = '';
   // const anchorID        = anchorIdLabel + (index+1); // unused
   let linkTitle       = targetElem[i].innerText;
@@ -197,16 +205,13 @@ function addAnchorWrap(targetElem, i) {
   } else if (anchorNode.contains(innerNodeAlt)) {
 
     const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
-    videoBtnWrap.classList.add('video-button-wrapper')
+    videoBtnWrap.classList.add(videoBtnWrapClass)
 
     setTimeout(() => {
-      newElem('div','','','video-overlay','',videoOverlay,'after')
+      newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
       const newVidWrapElem = document.querySelector('.video-overlay')
-
-      newElem('div','','','video-inner',linkTitle,newVidWrapElem,'after')
-      // wrap our video header element if it contains our inner node of em
-      // wrapElem(newVidWrapElem, videoOverlay);
-    }, 2000)
+      newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
+    }) // remove 2000 as it should only trigger when content loaded
   }
   // Add marker *if* we need it?
   // newElem('span','','','marker','',titleWrapper,'before');
@@ -273,11 +278,12 @@ Array.from(linkTextToWrap).forEach(function(link){
 });
 
 // detect section in view via header
-// let sectionHeader = document.querySelectorAll(anchorTag); // too broad includes main header
-let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoClass);
-// console.log('sectionHeader: ' + sectionHeader)
+let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoOverlayAtt); // works with - videoOverlayAtt
 // nav menu
 const menuTarget = document.getElementsByClassName(menuClass);
+// video timer
+const videoTimer = document.querySelector('.' + videoBtnWrapClass).textContent;
+console.log('videoTimer: ' + videoTimer);
 
 // We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
 let headHeight = navHolder.offsetHeight
@@ -298,38 +304,43 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       let labelText = entry.target.textContent; // changed innerText to textContent to work in safari
       headHeight = navHolder.offsetHeight
       headSpace = window.innerHeight - headHeight
-
-        // previous is current
-        prevItem = currItem;
-        // convert html collection to array to loop with forEach
-        Array.from(menuTarget).forEach(function(item){
-          // loop through links to match active target text
-          if ( labelText === item.textContent ) {
-            // console.log('labelText' + labelText)
-            // console.log('item.textContent: ' + item.textContent)
-
-            let linkHash = concatTitle(item.textContent);
-            updateHash(linkHash);
-
-            item.classList.add('active');
-            // get current item
-            currItem = labelText;
-
-          } else if ( prevItem === item.textContent ) {
-
-            item.classList.remove('active');
-            item.classList.add('prev');
-
-          } else {
-
-            item.classList.remove('active');
-            item.classList.remove('prev');
-
-          }
-        });
+      // remove the time string
+      if (labelText.startsWith(videoTimer)) {
+        labelText = labelText.replace(videoTimer, "");
+        console.log('labelText if: ' + labelText)
       }
-    });
-  }, anchorOptions);
+      // previous is current
+      prevItem = currItem;
+      // convert html collection to array to loop with forEach
+      Array.from(menuTarget).forEach(function(item){
+        // loop through links to match active target text
+        // console.log('item.textContent: ' + item.textContent)
+        if ( labelText === item.textContent ) {
+          // console.log('labelText: ' + labelText)
+          // console.log('item.textContent: ' + item.textContent)
+
+          let linkHash = concatTitle(item.textContent);
+          updateHash(linkHash);
+
+          item.classList.add('active');
+          // get current item
+          currItem = labelText;
+
+        } else if ( prevItem === item.textContent ) {
+
+          item.classList.remove('active');
+          item.classList.add('prev');
+
+        } else {
+
+          item.classList.remove('active');
+          item.classList.remove('prev');
+
+        }
+      });
+    }
+  });
+}, anchorOptions);
 
 sectionHeader.forEach(header => { anchorObserver.observe(header) });
 
@@ -438,6 +449,28 @@ myList.forEach(function(sectHeader){
   }
 });
 
+//
+// var MY_SELECTOR = videoOverlayAtt // Could be any selector
+//
+// var vidObserver = new MutationObserver(function(mutations){
+//   for (var i=0; i < mutations.length; i++){
+//     for (var j=0; j < mutations[i].addedNodes.length; j++){
+//       // We're iterating through _all_ the elements as the parser parses them,
+//       // deciding if they're the one we're looking for.
+//       if (mutations[i].addedNodes[j].matches(MY_SELECTOR)){
+//         conosle.log("My Element Is Ready!");
+//
+//         // We found our element, we're done:
+//         vidObserver.disconnect();
+//       };
+//     }
+//   }
+// });
+//
+// vidObserver.observe(document.documentElement, {
+//   childList: true,
+//   subtree: true
+// });
 
 
 // Tracking

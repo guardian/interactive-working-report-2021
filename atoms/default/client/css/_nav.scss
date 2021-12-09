@@ -59,6 +59,21 @@
           transition-delay: 175ms;
         }
       }
+      .video-link span {
+        &::before {
+          content: ' ';
+          display: block;
+          // background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.svg);
+          background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.png);
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 20px;
+          height: 22px;
+          margin-right: 8px;
+          float: left;
+        }
+      }
       &:hover {
         .nav-class span,
         .nav-label {
