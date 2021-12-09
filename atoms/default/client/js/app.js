@@ -274,7 +274,7 @@ Array.from(linkTextToWrap).forEach(function(link){
 
 // detect section in view via header
 // let sectionHeader = document.querySelectorAll(anchorTag); // too broad includes main header
-let sectionHeader = document.querySelectorAll('.' + anchorClass);
+let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoClass);
 // console.log('sectionHeader: ' + sectionHeader)
 // nav menu
 const menuTarget = document.getElementsByClassName(menuClass);
