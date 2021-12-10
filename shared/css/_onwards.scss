@@ -16,8 +16,20 @@
     overflow: hidden;
     border-bottom: none !important;
     margin-bottom: 10px;
+    &::before {
+      content: "";
+      width: 1px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -10px;
+      background-color: #dcdcdc;
+    }
+    &:first-child::before {
+      display: none;
+    }
     @include mq(mobileLandscape) {
-      margin-right: 10px;
+      margin-right: 20px;
       margin-bottom: 0;
     }
     &:hover {

@@ -2,10 +2,16 @@
 <div class="onwards-wrapper three-cards">
     {{ #200years-two }}
     <a href="{{ linkUrl }}" data-link-name="onward card : {{ linkName }}" class="onwardcard">
-        <img class="onwardcard-image"
-            src="{{ imageUrl }}" alt="{{kicker}} {{headline}}">
+        <img 
+            class="onwardcard-image"
+            src="{{ imageUrl }}" 
+            alt="{{kicker}} {{headline}}"
+        >
         <div class="onwardcard-card">
-            <h3 class="onwardcard-headline"><span>{{ kicker }}</span> {{ headline }}</h3>
+            <h3 class="onwardcard-headline">
+                <span>{{ kicker }}</span>
+                {{ headline }}
+            </h3>
         </div>
     </a>
     {{ /200years-two }}
