@@ -182,7 +182,9 @@ function addAnchorWrap(targetElem, i) {
     linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
     // console.log(anchorNode);
     anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
-    videoOverlay.setAttribute('id', anchorIDTitle);
+    if(videoOverlay){
+      videoOverlay.setAttribute('id', anchorIDTitle);
+    }
   }
 
   anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();

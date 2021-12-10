@@ -135,6 +135,9 @@
   }
   [data-gu-name="standfirst"],
   .meta__social {
+    strong {
+      font-weight: 500;
+    }
     @include mq(leftCol) {
       margin-left: 160px !important;
     }
