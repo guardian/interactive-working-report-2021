@@ -24,10 +24,10 @@ console.log("main js working")
 
 // https://github.com/iamdustan/smoothscroll
 // Import any polyfill to enable smoothscroll for JS APIs
-// import smoothscrollPolyfill from 'smoothscroll-polyfill';
+import smoothscrollPolyfill from 'smoothscroll-polyfill';
 
-// // Import this package to apply the smoothscroll to anchor links
-// import smoothscrollAnchorPolyfill from 'smoothscroll-anchor-polyfill';
+// Import this package to apply the smoothscroll to anchor links
+import smoothscrollAnchorPolyfill from 'smoothscroll-anchor-polyfill';
 
-// // (Unlike this package, smoothscroll-polyfill needs to be actively invoked: )
-// smoothscrollPolyfill.polyfill();
+// (Unlike this package, smoothscroll-polyfill needs to be actively invoked: )
+smoothscrollPolyfill.polyfill();

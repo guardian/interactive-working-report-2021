@@ -13,7 +13,8 @@
     }
   }
   figcaption {
-    display: none;
+    // display: none;
+    @include sr-only();
   }
   .video-overlay {
     display: flex;
