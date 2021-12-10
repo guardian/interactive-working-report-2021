@@ -162,7 +162,7 @@ menuContainer(); // ******* Building this now because it's needed to add the lin
 const navHolder = document.getElementById(navID); // added #2 to not conflict
 const closeBtn = document.getElementById(closeNav);
 
-
+var vidCaptionTitle = '';
 
 // wrap our anchors
 function addAnchorWrap(targetElem, i) {
@@ -210,14 +210,45 @@ function addAnchorWrap(targetElem, i) {
     videoBtnWrap.classList.add(videoBtnWrapClass)
 
     setTimeout(() => {
-      newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
-      const newVidWrapElem = document.querySelector('.video-overlay')
-      newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
-    }) // remove 2000 as it should only trigger when content loaded
+      // newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
+      // const newVidWrapElem = document.querySelector('.video-overlay')
+      // newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
+      vidCaptionOverlay(linkTitle)
+      // vidCaptionTitle = linkTitle
+    }, 1000) // remove 2000 as it should only trigger when content loaded
   }
-  // Add marker *if* we need it?
-  // newElem('span','','','marker','',titleWrapper,'before');
 }
+// console.log('vidCaptionTitle: ' + vidCaptionTitle);
+
+function vidCaptionOverlay(linkTitle) {
+  newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
+  const newVidWrapElem = document.querySelector('.video-overlay')
+  newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
+}
+// ********************************* mutaion observer the way to go. Will look at it on sunday *********************************
+// const videoOverlayElem = document.querySelector(videoOverlayAtt);
+//
+// const jsElemConfig = { attributes: true, childList: true, subtree: true };
+//
+// const jsElemCallback = function(mutationsList, jsElemObserver) {
+//     // Use traditional 'for loops' for IE 11
+//     for(const mutation of mutationsList) {
+//         if (mutation.type === 'childList') {
+//             console.log('A child node has been added or removed.');
+//         }
+//         else if (mutation.type === 'attributes') {
+//             console.log('The ' + mutation.attributeName + ' attribute was modified.');
+//         } else {
+//           console.log('none of the above')
+//         }
+//     }
+// };
+// // Create an observer instance linked to the jsElemCallback function
+// const jsElemObserver = new MutationObserver(jsElemCallback);
+// // Start observing the target node for configured mutations
+// jsElemObserver.observe(videoOverlayElem, jsElemConfig);
+// // Later, you can stop observing
+// jsElemObserver.disconnect();
 
 // Concatinate titles
 function concatTitle(title) {
@@ -285,7 +316,7 @@ let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoOve
 const menuTarget = document.getElementsByClassName(menuClass);
 // video timer
 const videoTimer = document.querySelector('.' + videoBtnWrapClass).textContent;
-console.log('videoTimer: ' + videoTimer);
+// console.log('videoTimer: ' + videoTimer);
 
 // We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
 let headHeight = navHolder.offsetHeight

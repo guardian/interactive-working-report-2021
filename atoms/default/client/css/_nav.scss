@@ -104,7 +104,6 @@
     }
     .nav-class {
       color: $primaryColor;
-      white-space: nowrap;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       display: inline-flex;
@@ -118,6 +117,7 @@
         }
       }
       @include mq(desktop) {
+        white-space: nowrap;
         text-align: right;
         justify-content: flex-end;
         &:after {
