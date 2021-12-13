@@ -165,6 +165,7 @@ html {
     }
   }
   &.stick-me {
+    // visibility: visible;
     max-height: $collapsed-nav-height;
     position: sticky;
     top: 0;
@@ -272,8 +273,13 @@ html {
     }
   }
   .article-navigation {
+    visibility: hidden;
+    max-height: $collapsed-nav-height;
     padding-right: 10px;
     padding-left: 10px;
+    &.stick-me {
+      visibility: visible;
+    }
     @media (prefers-color-scheme: dark) {
       background-color: $neutral10;
       .nav-title-wrapper {
