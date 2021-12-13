@@ -261,3 +261,10 @@ html {
   h2 {
   }
 }
+
+.ios,
+.android {
+  #standard-article-container {
+    overflow: unset;
+  }
+}

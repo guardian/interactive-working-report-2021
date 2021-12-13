@@ -43,12 +43,12 @@ const checkApp = () => {
   if (parentIsIos || parentIsAndroid) {
     console.log('in app')
     // get our content container
-    mainContent       = document.querySelector('.article--standard')
+    mainContent       = document.getElementById('article-body')
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
     // videoClass        = '.element-youtube'
     videoClass        = '[data-atom-type="media"]'
-    videoOverlayAtt = '.youtube-media__sdk-placeholder'
+    videoOverlayAtt   = '.youtube-media__sdk-placeholder'
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
@@ -182,14 +182,6 @@ function addAnchorWrap(targetElem, i) {
   // const anchorID        = anchorIdLabel + (index+1); // unused
   let linkTitle       = targetElem[i].innerText;
 
-  if (parentIsIos || parentIsAndroid) {
-    innerNodeAlt = document.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
-
-  } else {
-    // Select target with em child tag
-    innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
-  }
-
   if (anchorNode.contains(innerNodeAlt)) {
     // console.log(innerNodeAlt.innerText)
     linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
@@ -216,22 +208,44 @@ function addAnchorWrap(targetElem, i) {
   // add class
   titleWrapper.classList.add(anchorClass); // standard section header
 
+  if (parentIsIos || parentIsAndroid) {
 
-  if (anchorNode.contains(innerNode)) {
-    // wrap our header element if it contains our inner node of strong
-    wrapElem(anchorNode, titleWrapper);
-  } else if (anchorNode.contains(innerNodeAlt)) {
+    innerNodeAlt = document.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
+    var x = innerNodeAlt.parentElement;
 
-    const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
-    videoBtnWrap.classList.add(videoBtnWrapClass)
 
-    setTimeout(() => {
-      // newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
-      // const newVidWrapElem = document.querySelector('.video-overlay')
-      // newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
-      vidCaptionOverlay(linkTitle)
-      // vidCaptionTitle = linkTitle
-    }, 1000) // remove 2000 as it should only trigger when content loaded
+    if (anchorNode.contains(innerNode)) {
+      // wrap our header element if it contains our inner node of strong
+      wrapElem(anchorNode, titleWrapper);
+      
+    } else if (x === anchorNode.nextElementSibling) {
+        
+      linkTitle    = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
+      anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
+      anchorNode.setAttribute('id', anchorIDTitle);
+
+    }
+
+  } else {
+
+    innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); 
+
+    if (anchorNode.contains(innerNode)) {
+      // wrap our header element if it contains our inner node of strong
+      wrapElem(anchorNode, titleWrapper);
+    } else if (anchorNode.contains(innerNodeAlt)) {
+  
+      const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
+      videoBtnWrap.classList.add(videoBtnWrapClass)
+  
+      setTimeout(() => {
+        // newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
+        // const newVidWrapElem = document.querySelector('.video-overlay')
+        // newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
+        vidCaptionOverlay(linkTitle)
+        // vidCaptionTitle = linkTitle
+      }, 1000) // remove 2000 as it should only trigger when content loaded
+    }
   }
 }
 // console.log('vidCaptionTitle: ' + vidCaptionTitle);
@@ -283,37 +297,40 @@ function linkURL(targetElem, i) {
   let linkTitle         = targetElem[i].innerText;
 
   // const linkWrapper     = titleWrapper.append(linkTitle);
-  let anchorIDTitle     = concatTitle(linkTitle);
+  var anchorIDTitle     = concatTitle(linkTitle);
   const classArr        = menuClass + ' ' + menuClassVid;
 
   // const linkHref = '#' + anchorID; // using section variable
-  const linkHref = '#' + anchorIDTitle; // using anchor text
+  var linkHref = '#' + anchorIDTitle; // using anchor text
 
   if (parentIsIos || parentIsAndroid) {
     innerNodeAlt    = document.querySelector(targetTagInnerAlt);
     var x = innerNodeAlt.parentElement;
 
-    setTimeout(() => {
-      console.log(anchorNode)
-      console.log(x)
-      console.log(anchorNode.nextElementSibling)
-      console.log(x === anchorNode.nextElementSibling)
-      console.log("linkTitle URL: " + linkTitle)
-    }, 17000)
+    // setTimeout(() => {
+    //   console.log(anchorNode)
+    //   console.log(x)
+    //   console.log(anchorNode.nextElementSibling)
+    //   console.log(x === anchorNode.nextElementSibling)
+    //   console.log("linkTitle URL: " + linkTitle)
+    // }, 17000)
 
     if (anchorNode.contains(innerNode)) {
+
       newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
+
     } else if (x === anchorNode.nextElementSibling) {
       linkTitle       = innerNodeAlt.innerText;
-      // anchorIDTitle   = concatTitle(linkTitle);
-      // linkHref = '#' + anchorIDTitle;
+      anchorIDTitle   = concatTitle(linkTitle);
+      linkHref        = '#' + anchorIDTitle;
+
       newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
-      setTimeout(() => {
-        console.log("newElem created")
-        console.log(linkTitle)
-        console.log(anchorIDTitle)
-        console.log(linkHref)
-      }, 17000)
+      // setTimeout(() => {
+      //   console.log("newElem created")
+      //   console.log(linkTitle)
+      //   console.log(anchorIDTitle)
+      //   console.log(linkHref)
+      // }, 17000)
     }
 
   } else {
@@ -334,7 +351,9 @@ function linkURL(targetElem, i) {
   //   newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
   // }
 }
-
+setTimeout(() => {
+  console.log("LinkURL completed")
+}, 18000)
 // Loop through and build anchors and menu links
 for (let i = 0; i < targetElem.length; i++) {
   // console.log(targetElem);
@@ -344,6 +363,10 @@ for (let i = 0; i < targetElem.length; i++) {
   linkURL(targetElem, [i]);
 }
 
+setTimeout(() => {
+  console.log("addAnchorWrap run")
+  console.log("linkURL run")
+}, 18000)
 // wrap our anchor link text in spans
 const linkTextToWrap = document.getElementsByClassName(menuClass);
 
@@ -359,17 +382,40 @@ Array.from(linkTextToWrap).forEach(function(link){
 
 });
 
-// detect section in view via header
+setTimeout(() => {
+  console.log("forEach linkTextToWrap")
+}, 18000)
+
+  // detect section in view via header
 let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoOverlayAtt); // works with - videoOverlayAtt
-// nav menu
-const menuTarget = document.getElementsByClassName(menuClass);
-// video timer
-const videoTimer = document.querySelector('.' + videoBtnWrapClass).textContent;
-// console.log('videoTimer: ' + videoTimer);
+let menuTarget
+let videoTimer
+
+if (parentIsIos || parentIsAndroid) {
+  // nav menu
+  menuTarget = document.getElementsByClassName(menuClass);
+
+} else {
+  // nav menu
+  menuTarget = document.getElementsByClassName(menuClass);
+  // video timer
+  videoTimer = document.querySelector('.' + videoBtnWrapClass).textContent;
+  // console.log('videoTimer: ' + videoTimer);
+}
 
 // We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
 let headHeight = navHolder.offsetHeight
 let headSpace = window.innerHeight - headHeight
+
+setTimeout(() => {
+  console.log("intersection headers")
+  console.log(sectionHeader)
+  console.log(menuTarget)
+  // console.log(videoTimer)
+  console.log(headHeight)
+  console.log(headSpace)
+  console.log("end")
+}, 18000)
 
 let currItem = null;
 let prevItem = null;
@@ -386,6 +432,11 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       let labelText = entry.target.textContent; // changed innerText to textContent to work in safari
       headHeight = navHolder.offsetHeight
       headSpace = window.innerHeight - headHeight
+
+      setTimeout(() => {
+        // console.log("intersecting: " + labelText)
+      }, 0)
+
       // remove the time string
       if (labelText.startsWith(videoTimer)) {
         labelText = labelText.replace(videoTimer, "");
@@ -397,9 +448,14 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       Array.from(menuTarget).forEach(function(item){
         // loop through links to match active target text
         // console.log('item.textContent: ' + item.textContent)
+        
         if ( labelText === item.textContent ) {
           // console.log('labelText: ' + labelText)
           // console.log('item.textContent: ' + item.textContent)
+          setTimeout(() => {
+            console.log("matching labelText: " + labelText)
+            console.log('item.textContent: ' + item.textContent)
+          }, 0)
 
           let linkHash = concatTitle(item.textContent);
           updateHash(linkHash);
@@ -467,14 +523,17 @@ const navSpace = window.innerHeight - navHeight
 let obvsOptUp = {
   rootMargin: '0px 0px -' + navSpace + 'px 0px',
   threshold: [0.2,0.8]
+  // threshold: 0
 }
 
 let obvsCallbackUp = (entries, observerUp) => {
   entries.forEach(entry => {
     if ( entry.isIntersecting === true && entry.intersectionRatio > 0.8 ) {
+      // console.log("menu intersecting")
       navHolder.classList.add(menuStuck)
 
     } else if (entry.intersectionRatio < 0.2) {
+      // console.log("menu bottom intersecting")
       navHolder.classList.remove(menuStuck)
 
     }
@@ -519,17 +578,20 @@ myList.forEach(function(sectHeader){
     // console.log('YES: ' + sectHeader.nextElementSibling.id)
     sectHeader.nextElementSibling.remove()
   }
-  const innerNode = sectHeader.nextElementSibling.querySelector('em');
-  if (innerNode !== null) {
+  // const innerNode = sectHeader.nextElementSibling.querySelector('em');
+  // if (innerNode !== null) {
 
-    const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
+  //   const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
 
-    if (innerMostNode !== null) {
-      // console.log(innerMostNode)
-      innerMostNode.parentElement.parentElement.classList.add("byline-box");
-    }
-  }
+  //   if (innerMostNode !== null) {
+  //     // console.log(innerMostNode)
+  //     innerMostNode.parentElement.parentElement.classList.add("byline-box");
+  //   }
+  // }
 });
+
+
+
 
 //
 // var MY_SELECTOR = videoOverlayAtt // Could be any selector

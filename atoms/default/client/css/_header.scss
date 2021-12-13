@@ -96,7 +96,7 @@
       padding-right: 10px;
     }
   }
-  .byline-box,
+  .section-header + p,
   [data-gu-name="standfirst"],
   .standfirst,
   .meta__social {
@@ -224,18 +224,18 @@
     display: block;
     margin-top: 24px !important;
     margin-bottom: -24px !important;
-    height: 240px !important; // needs to be more dynamic
+    // height: 240px !important; // needs to be more dynamic
     background-image: url("https://uploads.guim.co.uk/2021/12/03/Masthead-title-4.5.jpg");
     background-size: 120%;
     background-repeat: no-repeat;
     @include mq(mobileMedium) {
-      height: 300px !important;
+      // height: 300px !important;
     }
     @include mq(mobileLandscape) {
-      height: 360px !important;
+      // height: 360px !important;
     }
     @include mq(tablet) {
-      height: 460px !important;
+      // height: 460px !important;
       max-width: 620px !important;
     }
     @include mq(desktop) {
@@ -249,7 +249,7 @@
     }
     @include mq(wide) {
       max-width: 920px !important;
-      height: 641px !important;
+      // height: 641px !important;
       margin: 48px 0 -48px !important;
     }
 

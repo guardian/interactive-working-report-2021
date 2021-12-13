@@ -69,7 +69,9 @@ $secondaryColor: $culture800;
 @import "video";
 
 .content--interactive,
-.article__body {
+.article__body,
+// .garnett--pillar-news:not(.garnett--type-guardianlabs) .prose a:not(.video-URL),
+#article-body-blocks {
   & > div:first-child {
     border-left: none;
     border-right: none;
@@ -117,7 +119,6 @@ $secondaryColor: $culture800;
       }
     }
     @include mq(tablet) {
-      
     }
   }
 }
