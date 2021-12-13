@@ -183,11 +183,11 @@ function addAnchorWrap(targetElem, i) {
   let linkTitle       = targetElem[i].innerText;
 
   if (parentIsIos || parentIsAndroid) {
-    innerNodeAlt = document.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ****** 
-  
+    innerNodeAlt = document.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
+
   } else {
     // Select target with em child tag
-    innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******  
+    innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
   }
 
   if (anchorNode.contains(innerNodeAlt)) {
@@ -282,25 +282,38 @@ function linkURL(targetElem, i) {
 
   let linkTitle         = targetElem[i].innerText;
 
+  // const linkWrapper     = titleWrapper.append(linkTitle);
+  let anchorIDTitle     = concatTitle(linkTitle);
+  const classArr        = menuClass + ' ' + menuClassVid;
+
+  // const linkHref = '#' + anchorID; // using section variable
+  const linkHref = '#' + anchorIDTitle; // using anchor text
+
   if (parentIsIos || parentIsAndroid) {
     innerNodeAlt    = document.querySelector(targetTagInnerAlt);
-    linkTitle       = innerNodeAlt.innerText;
-
     var x = innerNodeAlt.parentElement;
 
     setTimeout(() => {
       console.log(anchorNode)
       console.log(x)
       console.log(anchorNode.nextElementSibling)
-      console.log("IF : " + anchorNode.nextElementSibling === x )
+      console.log(x === anchorNode.nextElementSibling)
       console.log("linkTitle URL: " + linkTitle)
-    }, 25000)
+    }, 17000)
 
-    if (anchorNode.nextElementSibling === x ) {
+    if (anchorNode.contains(innerNode)) {
+      newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
+    } else if (x === anchorNode.nextElementSibling) {
+      linkTitle       = innerNodeAlt.innerText;
+      // anchorIDTitle   = concatTitle(linkTitle);
+      // linkHref = '#' + anchorIDTitle;
       newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
       setTimeout(() => {
-        console.log("newElem: " + newElem)
-      }, 25000)
+        console.log("newElem created")
+        console.log(linkTitle)
+        console.log(anchorIDTitle)
+        console.log(linkHref)
+      }, 17000)
     }
 
   } else {
@@ -308,23 +321,15 @@ function linkURL(targetElem, i) {
     innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt);
 
     // video caption for links
-    if (anchorNode.contains(innerNodeAlt)) {
+    if (anchorNode.contains(innerNode)) {
+      newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
+    } else if (anchorNode.contains(innerNodeAlt)) {
       // console.log(innerNodeAlt.innerText)
       linkTitle     = innerNodeAlt.innerText;
       newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
     }
   }
 
-  // const linkWrapper     = titleWrapper.append(linkTitle);
-  const anchorIDTitle   = concatTitle(linkTitle);
-  const classArr        = menuClass + ' ' + menuClassVid;
-
-  // const linkHref = '#' + anchorID; // using section variable
-  const linkHref = '#' + anchorIDTitle; // using anchor text
-
-  if (anchorNode.contains(innerNode)) {
-    newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
-  } 
   // else if (anchorNode.contains(innerNodeAlt)) {
   //   newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
   // }
