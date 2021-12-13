@@ -77,7 +77,6 @@ const checkApp = () => {
     targetTagInnerAlt = 'figcaption'; // as soon as we have images in the page it breaks
   }
 }
-
 checkApp()
 
 // is this same in the app?

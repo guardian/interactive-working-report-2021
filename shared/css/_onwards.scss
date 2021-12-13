@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-  padding: 0 10px;
+  // padding: 0 10px;
   @include mq(mobileLandscape) {
     flex-direction: row;
   }
@@ -16,7 +16,10 @@
     overflow: hidden;
     border-bottom: none !important;
     margin-bottom: 10px;
-    &::before {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    &::after {
       content: "";
       width: 1px;
       position: absolute;
@@ -46,7 +49,8 @@
       background-color: #f6f6f6;
       margin-top: -3px;
       padding: 4px 10px 24px 10px;
-      min-height: 98px;
+      min-height: 120px;
+      flex-grow: 1;
       .onwardcard-headline {
         color: #121212;
         font-family: $f-serif-headline;
@@ -63,6 +67,12 @@
   }
 
   &.two-cards {
+    @include mq(tablet) {
+      margin-left: 0;
+      .onwardcard {
+        width: 50%;
+      }
+    }
     .onwardcard:nth-child(2) {
       margin-right: 0;
     }
@@ -71,36 +81,31 @@
   &.three-cards {
     @include mq(mobileLandscape) {
       overflow-x: scroll;
+      margin-right: -20px;
       .onwardcard {
-        min-width: 180px;
+        width: 33%;
+        min-width: 40vw;
       }
     }
 
     @include mq(tablet) {
       overflow-x: unset;
+      margin-right: -60px;
       .onwardcard {
-        min-width: 225px;
+        min-width: unset;
       }
     }
 
     @include mq(desktop) {
-      .onwardcard {
-        min-width: 250px;
-      }
+      margin-right: 0;
     }
 
     @include mq(leftCol) {
       margin-left: -160px;
-      .onwardcard {
-        min-width: 260px;
-      }
     }
 
     @include mq(wide) {
       margin-left: -240px;
-      .onwardcard {
-        min-width: 300px;
-      }
     }
 
     .onwardcard:nth-child(3) {
