@@ -7,9 +7,6 @@ const navID             = 'jump-nav';
 const anchorTag         = 'header';
 const targetTag         = 'h2';
 const targetTagInner    = 'strong';
-const targetTagInnerAlt = 'figcaption'; // as soon as we have images in the page it breaks
-const videoClass        = '[data-component="youtube-atom"]';
-const videoOverlayAtt   = '[data-cy="youtube-overlay"]';
 const videoBtnClass     = 'overlay-play-button';
 const videoOverOutClass = 'video-overlay';
 const videoOverInClass  = 'video-inner';
@@ -35,23 +32,30 @@ var firstList
 var mainTitle
 var videoOverlay
 var interClassElem
+var videoClass
+var videoOverlayAtt
+var targetTagInnerAlt
+var innerNodeAlt
+const parentIsIos = window.parent.document.querySelector(".ios")
+const parentIsAndroid = window.parent.document.querySelector(".android")
 
 const checkApp = () => {
-  const parentIsIos = window.parent.document.querySelector(".ios")
-  const parentIsAndroid = window.parent.document.querySelector(".android")
   if (parentIsIos || parentIsAndroid) {
     console.log('in app')
     // get our content container
     mainContent       = document.querySelector('.article--standard')
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
-    // targetElem        = mainContent.querySelectorAll(targetTag);
+    // videoClass        = '.element-youtube'
+    videoClass        = '[data-atom-type="media"]'
+    videoOverlayAtt = '.youtube-media__sdk-placeholder'
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
     mainTitle         = document.querySelector('.headline');
     // page structurer
-    interClassElem    = document.querySelector('.article--standard');
+    interClassElem = document.querySelector('.article--standard');
+    targetTagInnerAlt = '.youtube-sdk-caption'; // as soon as we have images in the page it breaks
 
   } else {
     console.log('on web')
@@ -60,13 +64,15 @@ const checkApp = () => {
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
     // targetElem        = mainContent.querySelectorAll(targetTag);
+    videoClass        = '[data-component="youtube-atom"]';
+    videoOverlayAtt   = '[data-cy="youtube-overlay"]';
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
     mainTitle         = document.querySelector('[data-gu-name="headline"]');
     // page structurer
     interClassElem    = document.querySelector('.content--interactive').firstElementChild;
-
+    targetTagInnerAlt = 'figcaption'; // as soon as we have images in the page it breaks
   }
 }
 
@@ -171,15 +177,25 @@ function addAnchorWrap(targetElem, i) {
 
   // Select target with strong child tag
   const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
-  // Select target with em child tag
-  const innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******
+
   let anchorIDTitle   = '';
   // const anchorID        = anchorIdLabel + (index+1); // unused
   let linkTitle       = targetElem[i].innerText;
 
+  if (parentIsIos || parentIsAndroid) {
+    innerNodeAlt = document.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ****** 
+  
+  } else {
+    // Select target with em child tag
+    innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt); // targets any figcation NOT video figcaption ******  
+  }
+
   if (anchorNode.contains(innerNodeAlt)) {
     // console.log(innerNodeAlt.innerText)
     linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
+    setTimeout(() => {
+      console.log("linkTitle Wrap: " + linkTitle)
+    }, 25000)
     // console.log(anchorNode);
     anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
     if(videoOverlay){
@@ -263,13 +279,40 @@ function linkURL(targetElem, i) {
   const anchorNode      = targetElem[i];
   // const anchorID        = anchorIdLabel + (index+1);  // unused
   const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
-  const innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt);
 
   let linkTitle         = targetElem[i].innerText;
-  // video caption for links
-  if (anchorNode.contains(innerNodeAlt)) {
-    // console.log(innerNodeAlt.innerText)
-    linkTitle           = innerNodeAlt.innerText;
+
+  if (parentIsIos || parentIsAndroid) {
+    innerNodeAlt    = document.querySelector(targetTagInnerAlt);
+    linkTitle       = innerNodeAlt.innerText;
+
+    var x = innerNodeAlt.parentElement;
+
+    setTimeout(() => {
+      console.log(anchorNode)
+      console.log(x)
+      console.log(anchorNode.nextElementSibling)
+      console.log("IF : " + anchorNode.nextElementSibling === x )
+      console.log("linkTitle URL: " + linkTitle)
+    }, 25000)
+
+    if (anchorNode.nextElementSibling === x ) {
+      newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
+      setTimeout(() => {
+        console.log("newElem: " + newElem)
+      }, 25000)
+    }
+
+  } else {
+    // Select target with em child tag
+    innerNodeAlt    = anchorNode.querySelector(targetTagInnerAlt);
+
+    // video caption for links
+    if (anchorNode.contains(innerNodeAlt)) {
+      // console.log(innerNodeAlt.innerText)
+      linkTitle     = innerNodeAlt.innerText;
+      newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
+    }
   }
 
   // const linkWrapper     = titleWrapper.append(linkTitle);
@@ -281,9 +324,10 @@ function linkURL(targetElem, i) {
 
   if (anchorNode.contains(innerNode)) {
     newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
-  } else if (anchorNode.contains(innerNodeAlt)) {
-    newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
-  }
+  } 
+  // else if (anchorNode.contains(innerNodeAlt)) {
+  //   newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
+  // }
 }
 
 // Loop through and build anchors and menu links
