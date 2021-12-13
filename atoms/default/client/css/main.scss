@@ -18,7 +18,7 @@
 $primaryColor: #041f4a;
 $secondaryColor: #ffe500;
 $background: $neutral100;
-$collapsed-nav-height: 44px;
+$collapsed-nav-height: 48px;
 $icon-radius: 24px;
 $menuMaxHeight: 700px;
 
@@ -250,15 +250,14 @@ html {
     }
   }
 }
-.section-header {
+.section-header,
+[data-component="youtube-atom"],
+.element-youtube {
   &::before {
     display: block;
     content: " ";
-    // top: -40px;
     height: $collapsed-nav-height;
     visibility: hidden;
-  }
-  h2 {
   }
 }
 
@@ -266,5 +265,26 @@ html {
 .android {
   #standard-article-container {
     overflow: unset;
+  }
+  .garnett--pillar-news figure[data-atom-type=interactive] {
+    @media (prefers-color-scheme: dark) {
+      background-color: $neutral10;
+    }
+  }
+  .article-navigation {
+    padding-right: 10px;
+    padding-left: 10px;
+    @media (prefers-color-scheme: dark) {
+      background-color: $neutral10;
+      .nav-title-wrapper {
+        color: $neutral100;
+      }
+      #close-nav {
+        &::before {
+          background-image: url(https://uploads.guim.co.uk/2021/12/13/arrow-white.svg);
+          border-color: $neutral100;
+        }
+      }
+    }
   }
 }

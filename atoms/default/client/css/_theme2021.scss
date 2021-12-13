@@ -122,3 +122,17 @@ $secondaryColor: $culture800;
     }
   }
 }
+.ios,
+.android {
+  @media (prefers-color-scheme: dark) {
+    .article__body {
+      a,
+      a:not([data-ignore="global-link-styling"]) {
+        color: $brand500;
+        svg {
+          fill: $brand500;
+        }
+      }
+    }
+  }
+}

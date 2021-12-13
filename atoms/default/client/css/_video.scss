@@ -1,6 +1,8 @@
 [data-component="youtube-atom"] {
-  border-radius: 12px;
-  overflow: hidden;
+ > div {
+   border-radius: 12px;
+   overflow: hidden;
+ }
   picture{
     &::after {
       content: ' ';
