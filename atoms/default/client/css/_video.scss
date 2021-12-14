@@ -3,17 +3,17 @@
    border-radius: 12px;
    overflow: hidden;
  }
-  picture{
-    &::after {
-      content: ' ';
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      @include background-opacity($neutral7, 0.6);
-    }
-  }
+  // picture{
+  //   &::after {
+  //     content: ' ';
+  //     position: absolute;
+  //     left: 0;
+  //     top: 0;
+  //     right: 0;
+  //     bottom: 0;
+  //     @include background-opacity($neutral7, 0.6);
+  //   }
+  // }
   figcaption {
     // display: none;
     @include sr-only();

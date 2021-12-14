@@ -1,9 +1,9 @@
 
 var appTimer = 8000;
 
-setTimeout(() => {
-  console.log("js working")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("js working")
+// }, appTimer)
 
 const navID             = 'jump-nav';
 const anchorTag         = 'header';
@@ -43,7 +43,7 @@ const parentIsAndroid = window.parent.document.querySelector(".android")
 
 const checkApp = () => {
   if (parentIsIos || parentIsAndroid) {
-    console.log('in app')
+    // console.log('in app')
     // get our content container
     mainContent       = document.getElementById('article-body')
     articleContent    = document.querySelector('.article-body-viewer-selector')
@@ -60,7 +60,7 @@ const checkApp = () => {
     targetTagInnerAlt = '.youtube-sdk-caption'; // as soon as we have images in the page it breaks
 
   } else {
-    console.log('on web')
+    // console.log('on web')
     // get our content container
     mainContent       = document.getElementById('maincontent')
     articleContent    = document.querySelector('.article-body-viewer-selector')
@@ -90,9 +90,9 @@ videoOverlay      = document.querySelector(videoOverlayAtt);
 interClassElem.classList.add(outterMargin)
 
 // ---------------------------------------// Navigation //----------------------------------------------- //
-setTimeout(() => {
-  console.log('creates elements with attributes and adds them: newELem function');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('creates elements with attributes and adds them: newELem function');
+// }, appTimer)
 // creates elements with attributes and adds them *NB Needs refinement?
 function newElem(tagName,attType,attName,className,content,contentHolder,position) {
 
@@ -104,7 +104,9 @@ function newElem(tagName,attType,attName,className,content,contentHolder,positio
     newElem2.className = menuClassesString
   }
 
-  newElem2.innerText = content;
+  if (content !== '' ) {
+    newElem2.innerText = content;
+  }
 
   if (attType !== '' ) {
     newElem2.setAttribute(attType, attName);
@@ -117,18 +119,18 @@ function newElem(tagName,attType,attName,className,content,contentHolder,positio
   }
 }
 
-setTimeout(() => {
-  console.log('wraps an element: wrapElem function');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('wraps an element: wrapElem function');
+// }, appTimer)
 // wraps an element
 function wrapElem(el, wrapper) {
     el.parentNode.insertBefore(wrapper, el);
     wrapper.appendChild(el);
 }
 
-setTimeout(() => {
-  console.log('nav menu builder: menuContainer function');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('nav menu builder: menuContainer function');
+// }, appTimer)
 // nav menu builder
 function menuContainer() {
   // build nav
@@ -151,9 +153,9 @@ const closeBtn = document.getElementById(closeNav);
 
 var vidCaptionTitle = '';
 
-setTimeout(() => {
-  console.log('wrap our anchors addAnchorWrap function');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('wrap our anchors addAnchorWrap function');
+// }, appTimer)
 
 // wrap our anchors
 function addAnchorWrap(targetElem, i) {
@@ -162,21 +164,21 @@ function addAnchorWrap(targetElem, i) {
 
   // Select target with strong child tag
   const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
+  // create header element
+  const titleWrapper = document.createElement(anchorTag);
 
   let anchorIDTitle   = '';
   let linkTitle       = targetElem[i].innerText;
 
-  if (anchorNode.contains(innerNodeAlt)) {
-    linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
-    anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
-    if(videoOverlay){
-      videoOverlay.setAttribute('id', anchorIDTitle);
-    }
-  } // else
+  // if (anchorNode.contains(innerNodeAlt)) {
+  //   linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
+  //   anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
+  //   if(videoOverlay){
+  //     videoOverlay.setAttribute('id', anchorIDTitle);
+  //   }
+  // }
 
   anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
-  // create header element
-  const titleWrapper = document.createElement(anchorTag);
 
   titleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
 
@@ -200,9 +202,9 @@ function addAnchorWrap(targetElem, i) {
 
     }
 
-    setTimeout(() => {
-      console.log('wrap h2s and video (APP)')
-    }, appTimer)
+    // setTimeout(() => {
+    //   console.log('wrap h2s and video (APP)')
+    // }, appTimer)
 
   } else {
 
@@ -218,6 +220,10 @@ function addAnchorWrap(targetElem, i) {
       anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
       anchorNode.setAttribute('id', anchorIDTitle);
 
+      if(videoOverlay){
+        videoOverlay.setAttribute('id', anchorIDTitle);
+      }
+
       const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
       videoBtnWrap.classList.add(videoBtnWrapClass)
 
@@ -225,16 +231,16 @@ function addAnchorWrap(targetElem, i) {
         // newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
         // const newVidWrapElem = document.querySelector('.video-overlay')
         // newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
-        vidCaptionOverlay(linkTitle)
+        // vidCaptionOverlay(linkTitle)
         // vidCaptionTitle = linkTitle
       }, 1000) // remove 2000 as it should only trigger when content loaded
     }
   }
 };
 
-setTimeout(() => {
-  console.log('video overlay newELem');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('video overlay newELem');
+// }, appTimer)
 
 function vidCaptionOverlay(linkTitle) {
   newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
@@ -263,29 +269,33 @@ function vidCaptionOverlay(linkTitle) {
 // // Later, you can stop observing
 // jsElemObserver.disconnect();
 
-setTimeout(() => {
-  console.log('Concatinate titles function');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('Concatinate titles function');
+// }, appTimer)
 // Concatinate titles
 function concatTitle(title) {
   const newURL = title.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase();
   return newURL;
 }
 
-setTimeout(() => {
-  console.log('build linkURLs');
-}, appTimer)
+// setTimeout(() => {
+//   console.log('build linkURLs');
+// }, appTimer)
 // Builds our url's. Currently the whole link but may need just urls output
 function linkURL(targetElem, i) {
   let index = parseInt(i); // change string to interger to start at 1
-  const anchorNode      = targetElem[i];
+  let anchorNode      = targetElem[i];
 
-  const innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
+  let innerNode       = anchorNode.querySelector(targetTagInner); // contains targetTagInner tag
 
-  let linkTitle         = targetElem[i].innerText;
+  let linkTitle       = anchorNode.innerText;
+    // console.log('linkTitle OUT: ')
+    // console.log(linkTitle)
+    // console.log('innerNode OUT')
+    // console.log(innerNode)
 
-  var anchorIDTitle     = concatTitle(linkTitle);
-  const classArr        = menuClass + ' ' + menuClassVid;
+  var anchorIDTitle   = concatTitle(linkTitle);
+  let classArr        = menuClass + ' ' + menuClassVid;
 
   var linkHref          = '#' + anchorIDTitle; // using anchor text
 
@@ -299,11 +309,18 @@ function linkURL(targetElem, i) {
       newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
 
     } else if (x === anchorNode.nextElementSibling) {
+
       linkTitle       = innerNodeAlt.innerText;
       anchorIDTitle   = concatTitle(linkTitle);
       linkHref        = '#' + anchorIDTitle;
 
       newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
+
+      // setTimeout(() => {
+      //   console.log('linkTitle: ')
+      //   console.log(linkTitle)
+      // }, appTimer)
+
     }
 
   } else {
@@ -312,25 +329,25 @@ function linkURL(targetElem, i) {
 
     // video caption for links
     if (anchorNode.contains(innerNode)) {
+      // console.log('linkTitle IN: ')
+      // console.log(linkTitle);
       newElem('a','href',linkHref,menuClass,linkTitle,navHolder,'after');
     } else if (anchorNode.contains(innerNodeAlt)) {
 
-      linkTitle     = innerNodeAlt.innerText;
+      linkTitle       = innerNodeAlt.innerText;
       anchorIDTitle   = concatTitle(linkTitle);
       linkHref        = '#' + anchorIDTitle;
+      // console.log('linkTitle IN: ')
+      // console.log(linkTitle);
 
       newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
     }
   }
-
-  // else if (anchorNode.contains(innerNodeAlt)) {
-  //   newElem('a','href',linkHref,classArr,linkTitle,navHolder,'after');
-  // }
 }
 
-setTimeout(() => {
-  console.log('Loop through and build anchors and menu links')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('Loop through and build anchors and menu links')
+// }, appTimer)
 
 // Loop through and build anchors and menu links
 for (let i = 0; i < targetElem.length; i++) {
@@ -340,9 +357,9 @@ for (let i = 0; i < targetElem.length; i++) {
   linkURL(targetElem, [i]);
 }
 
-setTimeout(() => {
-  console.log('wrap our anchor link text in spans')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('wrap our anchor link text in spans')
+// }, appTimer)
 // wrap our anchor link text in spans
 const linkTextToWrap = document.getElementsByClassName(menuClass);
 
@@ -358,9 +375,9 @@ Array.from(linkTextToWrap).forEach(function(link){
 
 });
 
-setTimeout(() => {
-  console.log("detect section in view via header: forEach linkTextToWrap")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("detect section in view via header: forEach linkTextToWrap")
+// }, appTimer)
   // detect section in view via header
 let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoOverlayAtt); // works with - videoOverlayAtt
 let menuTarget
@@ -376,9 +393,10 @@ if (parentIsIos || parentIsAndroid) {
   // video timer
   videoTimer = document.querySelector('.' + videoBtnWrapClass).textContent;
 }
-setTimeout(() => {
-  console.log("We may need to calculate height of sectionHeader")
-}, appTimer)
+
+// setTimeout(() => {
+//   console.log("We may need to calculate height of sectionHeader")
+// }, appTimer)
 // We may need to calculate height of sectionHeader? <-------------------------- check if we need to do some calculations
 let headHeight = navHolder.offsetHeight
 let headSpace = window.innerHeight - headHeight
@@ -390,9 +408,9 @@ let anchorOptions = {
   rootMargin: '0px 0px -' + headSpace + 'px 0px', // <-------------------------- check if we need to do some calculations
   threshold: 0                                  // <-------------------------- check if we need to do some calculations
 }
-setTimeout(() => {
-  console.log("anchorObserver")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("anchorObserver")
+// }, appTimer)
 
 let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
@@ -404,7 +422,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
       // remove the time string
       if (labelText.startsWith(videoTimer)) {
         labelText = labelText.replace(videoTimer, "");
-        console.log('labelText if: ' + labelText)
+        // console.log('labelText if: ' + labelText)
       }
       // previous is current
       prevItem = currItem;
@@ -413,8 +431,8 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
 
         if ( labelText === item.textContent ) {
 
-            console.log("matching labelText: " + labelText)
-            console.log('item.textContent: ' + item.textContent)
+          // console.log("matching labelText: " + labelText)
+          // console.log('item.textContent: ' + item.textContent)
 
           let linkHash = concatTitle(item.textContent);
           updateHash(linkHash);
@@ -443,9 +461,9 @@ sectionHeader.forEach(header => { anchorObserver.observe(header) });
 
 let hashState = 0;
 
-setTimeout(() => {
-  console.log('if menu has been clicked skip the auto update')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('if menu has been clicked skip the auto update')
+// }, appTimer)
 
 // if menu has been clicked skip the auto update
 const navElem = document.getElementsByClassName(menuClass);
@@ -463,9 +481,9 @@ closeBtn.addEventListener('click', (e) => {
     e.target.classList.toggle('open');
 });
 
-setTimeout(() => {
-  console.log('hash url update')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('hash url update')
+// }, appTimer)
 
 // hash url update
 function updateHash(url) {
@@ -482,9 +500,9 @@ function updateHash(url) {
   }
 }
 
-setTimeout(() => {
-  console.log('remove hash at top of page')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('remove hash at top of page')
+// }, appTimer)
 // remove hash at top of page
 function removeHash(){
   history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -510,9 +528,9 @@ let obvsCallbackUp = (entries, observerUp) => {
     }
   });
 };
-setTimeout(() => {
-  console.log('obvsCallbackUp')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('obvsCallbackUp')
+// }, appTimer)
 
 let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
 observerUp.observe(navHolder);
@@ -532,16 +550,16 @@ let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
   });
 };
 
-setTimeout(() => {
-  console.log('obvsTitleTop')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('obvsTitleTop')
+// }, appTimer)
 
 let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
 obvsTitleTop.observe(mainTitle);
 
-setTimeout(() => {
-  console.log('wrap following p tag if contains em and strong only (REMOVED)')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('wrap following p tag if contains em and strong only (REMOVED)')
+// }, appTimer)
 // By line
 // wrap following p tag if contains em and strong only
 const bylineBox = document.getElementsByClassName(anchorClass)
@@ -565,9 +583,9 @@ myList.forEach(function(sectHeader){
   // }
 });
 
-setTimeout(() => {
-  console.log('Tracking')
-}, appTimer)
+// setTimeout(() => {
+//   console.log('Tracking')
+// }, appTimer)
 
 // Tracking
 const navLinks = document.querySelectorAll('.nav-class')

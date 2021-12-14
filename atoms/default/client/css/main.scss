@@ -165,12 +165,12 @@ html {
     }
   }
   &.stick-me {
-    // visibility: visible;
     max-height: $collapsed-nav-height;
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
+    visibility: visible;
     &.open-nav {
       max-height: $menuMaxHeight;
       // .nav-label, .nav-class, .active {
@@ -186,8 +186,6 @@ html {
     }
     #close-nav {
       opacity: 1;
-      span {
-      }
       // position: absolute;
       // right: 0;
       // width: $icon-radius;
@@ -226,9 +224,6 @@ html {
     font-size: 15px;
     line-height: 1.5;
     margin-bottom: 8px;
-    p,
-    span {
-    }
   }
   #close-nav {
     // opacity: 0;
@@ -253,7 +248,8 @@ html {
 }
 .section-header,
 [data-component="youtube-atom"],
-.element-youtube {
+// .element-youtube
+{
   &::before {
     display: block;
     content: " ";
@@ -267,18 +263,26 @@ html {
   #standard-article-container {
     overflow: unset;
   }
-  .garnett--pillar-news figure[data-atom-type=interactive] {
-    @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: dark) {
+    figure[data-atom-type=interactive] {
       background-color: $neutral10;
     }
   }
+  .article__header {
+    margin-bottom: 0 !important;
+  }
   .article-navigation {
-    visibility: hidden;
-    max-height: $collapsed-nav-height;
     padding-right: 10px;
     padding-left: 10px;
+    // visibility: hidden; // ************************* ************************* THIS CAN BREAK NAV
+    max-height: $collapsed-nav-height; //************************* THIS CAN BREAK NAV
     &.stick-me {
-      visibility: visible;
+      // visibility: visible;
+      // &.open-nav {
+      //   visibility: visible;
+      //   max-height: $menuMaxHeight;
+      // }
+
     }
     @media (prefers-color-scheme: dark) {
       background-color: $neutral10;

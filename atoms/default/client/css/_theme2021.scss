@@ -44,6 +44,7 @@ $secondaryColor: $culture800;
   [data-gu-name="standfirst"],
   [data-gu-name="meta"],
   .section-header,
+  .section-header + p,
   .byline-box {
     margin: 0 -10px;
   }
@@ -86,7 +87,7 @@ $secondaryColor: $culture800;
       transition: all 0.3s ease-in-out;
     }
     &:hover span {
-      background-color: $primaryColor;
+      // background-color: $primaryColor;
       border-color: $primaryColor;
       svg {
         fill: $neutral100;
@@ -124,8 +125,25 @@ $secondaryColor: $culture800;
 }
 .ios,
 .android {
+  .article__body,
+  .content--interactive,
+  #article-body-blocks {
+    a,
+    a:not([data-ignore="global-link-styling"]),
+    a:not(.garnett--type-guardianlabs) .prose a:not(.video-URL) {
+      // background-color: transparent;
+      &:hover {
+        // background-color: transparent;
+      }
+      // background-image: linear-gradient(rgba(199, 0, 0, 0.33) 0%, rgba(199, 0, 0, 0.33) 100%)
+      svg {
+        // fill: $brand500;
+      }
+    }
+  }
   @media (prefers-color-scheme: dark) {
-    .article__body {
+    .article__body,
+    #article-body-blocks {
       a,
       a:not([data-ignore="global-link-styling"]) {
         color: $brand500;
