@@ -40,6 +40,11 @@ var targetTagInnerAlt
 var innerNodeAlt
 const parentIsIos = window.parent.document.querySelector(".ios")
 const parentIsAndroid = window.parent.document.querySelector(".android")
+let menuTarget
+let videoTimer
+let sectionHeader
+let navElem
+let hashState = 0;
 
 const checkApp = () => {
   if (parentIsIos || parentIsAndroid) {
@@ -67,7 +72,7 @@ const checkApp = () => {
     // get our target element
     // targetElem        = mainContent.querySelectorAll(targetTag);
     videoClass        = '[data-component="youtube-atom"]';
-    videoOverlayAtt   = '[data-cy="youtube-overlay"]';
+    videoOverlayAtt   = 'figcaption';
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
@@ -296,7 +301,7 @@ function linkURL(targetElem, i) {
   var anchorIDTitle   = concatTitle(linkTitle);
   let classArr        = menuClass + ' ' + menuClassVid;
 
-  var linkHref          = '#' + anchorIDTitle; // using anchor text
+  var linkHref        = '#' + anchorIDTitle; // using anchor text
 
   if (parentIsIos || parentIsAndroid) {
 
@@ -343,54 +348,122 @@ function linkURL(targetElem, i) {
     }
   }
 }
-
 // setTimeout(() => {
 //   console.log('Loop through and build anchors and menu links')
 // }, appTimer)
 
-// Loop through and build anchors and menu links
-for (let i = 0; i < targetElem.length; i++) {
-  // wrap anchors
-  addAnchorWrap(targetElem, [i]);
-  // build link
-  linkURL(targetElem, [i]);
-}
-
-// setTimeout(() => {
-//   console.log('wrap our anchor link text in spans')
-// }, appTimer)
-// wrap our anchor link text in spans
-const linkTextToWrap = document.getElementsByClassName(menuClass);
-
-Array.from(linkTextToWrap).forEach(function(link){
-
-  const titleWrapper    = document.createElement('span')
-  const linkLabel       = link.innerText
-  const newLinkNode     = document.createTextNode(linkLabel)
-
-  titleWrapper.appendChild(newLinkNode)
-  link.innerText = ''
-  link.append(titleWrapper)
-
-});
-
 // setTimeout(() => {
 //   console.log("detect section in view via header: forEach linkTextToWrap")
 // }, appTimer)
+
+window.onload = function() {
+  // Loop through and build anchors and menu links
+  for (let i = 0; i < targetElem.length; i++) {
+    // wrap anchors
+    addAnchorWrap(targetElem, [i]);
+    // build link
+    linkURL(targetElem, [i]);
+  }
+  // wrap our anchor link text in spans
+  const linkTextToWrap = document.getElementsByClassName(menuClass);
+
+  Array.from(linkTextToWrap).forEach(function(link){
+
+    const titleWrapper    = document.createElement('span')
+    const linkLabel       = link.innerText
+    const newLinkNode     = document.createTextNode(linkLabel)
+
+    titleWrapper.appendChild(newLinkNode)
+    link.innerText = ''
+    link.append(titleWrapper)
+
+  });
+  sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoClass);
+  // nav menu
+  menuTarget = document.getElementsByClassName(menuClass);
+
+  sectionHeader.forEach(header => { anchorObserver.observe(header) });
+
+  navElem = document.getElementsByClassName(menuClass);
+
+  Array.from(navElem).forEach(function(item){
+    item.addEventListener('click', (e) => {
+      hashState = 1;
+      setTimeout(() => {
+        hashState = 0;
+      }, 1000)
+    });
+  });
+  const navHeight = navHolder.offsetHeight
+  const navSpace = window.innerHeight - navHeight
+
+  let obvsOptUp = {
+    rootMargin: '0px 0px -' + navSpace + 'px 0px',
+    threshold: [0.2,0.8]
+  }
+
+
+  let obvsCallbackUp = (entries, observerUp) => {
+    entries.forEach(entry => {
+      if ( entry.isIntersecting === true && entry.intersectionRatio > 0.8 ) {
+        navHolder.classList.add(menuStuck)
+
+      } else if (entry.intersectionRatio < 0.2) {
+        navHolder.classList.remove(menuStuck)
+
+      }
+    });
+  };
+  // setTimeout(() => {
+  //   console.log('obvsCallbackUp')
+  // }, appTimer)
+
+  let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
+  observerUp.observe(navHolder);
+
+  // remove hash at top of page watching mainTitle
+  let obvsOptsTitleTop = {
+    rootMargin: '0px',
+    threshold: 0
+  }
+  let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
+    entries.forEach(entry => {
+      if ( entry.isIntersecting ) {
+        navElem[0].classList.remove('active');
+        navElem[0].classList.remove('prev');
+        removeHash()
+      }
+    });
+  };
+
+  // setTimeout(() => {
+  //   console.log('obvsTitleTop')
+  // }, appTimer)
+
+  let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
+  obvsTitleTop.observe(mainTitle);
+
+  // Tracking
+  const navLinks = document.querySelectorAll('.nav-class')
+  navLinks.forEach((el, index) => {
+    el.dataset.linkName = "working report 2021 : nav link " + index
+  })
+};
+
+
   // detect section in view via header
-let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoOverlayAtt); // works with - videoOverlayAtt
-let menuTarget
-let videoTimer
+// let sectionHeader = document.querySelectorAll('.' + anchorClass + ',' + videoClass);
+
+// console.log(sectionHeader)
+
 
 if (parentIsIos || parentIsAndroid) {
   // nav menu
-  menuTarget = document.getElementsByClassName(menuClass);
+  // menuTarget = document.getElementsByClassName(menuClass);
 
 } else {
-  // nav menu
-  menuTarget = document.getElementsByClassName(menuClass);
   // video timer
-  videoTimer = document.querySelector('.' + videoBtnWrapClass).textContent;
+  // videoTimer = document.querySelector('.' + videoBtnWrapClass).innerText;
 }
 
 // setTimeout(() => {
@@ -414,33 +487,54 @@ let anchorOptions = {
 let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
-      let labelText = entry.target.textContent; // changed innerText to textContent to work in safari
+
+      let labelText
+      let linkHash
+      let currItemTxt
+      // console.log(entry.target.getAttribute('data-component'))
+      // console.log('raw: ')
+      // console.log(entry.target.lastChild.textContent)
+      // if it's video look at figcaption for labelText [data-component="youtube-atom"]
+      if (entry.target.getAttribute('data-component') === "youtube-atom" ) {
+
+        labelText = entry.target.lastChild.textContent.replace(/(\r\n|\n|\r)/gm, "").trim()
+
+
+      } else {
+
+        labelText = entry.target.textContent.replace(/(\r\n|\n|\r)/gm, "").trim()
+
+      }
+
       headHeight = navHolder.offsetHeight
       headSpace = window.innerHeight - headHeight
 
-      // remove the time string
-      if (labelText.startsWith(videoTimer)) {
-        labelText = labelText.replace(videoTimer, "");
-        // console.log('labelText if: ' + labelText)
-      }
       // previous is current
       prevItem = currItem;
       // convert html collection to array to loop with forEach
       Array.from(menuTarget).forEach(function(item){
 
-        if ( labelText === item.textContent ) {
+        currItemTxt = item.textContent.replace(/(\r\n|\n|\r)/gm, "").trim()
+        // console.log('currItemTxt')
+        // console.log(currItemTxt)
+        // console.log('labelText')
+        // console.log(labelText)
+
+        if ( labelText === currItemTxt ) {
 
           // console.log("matching labelText: " + labelText)
-          // console.log('item.textContent: ' + item.textContent)
+          // console.log('item.textContent: ' + currItemTxt)
 
-          let linkHash = concatTitle(item.textContent);
+          linkHash = concatTitle(currItemTxt);
+
+          // console.log("linkHash: " + linkHash)
           updateHash(linkHash);
 
           item.classList.add('active');
           // get current item
           currItem = labelText;
 
-        } else if ( prevItem === item.textContent ) {
+        } else if ( prevItem === currItemTxt ) {
 
           item.classList.remove('active');
           item.classList.add('prev');
@@ -456,24 +550,16 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
   });
 }, anchorOptions);
 
-sectionHeader.forEach(header => { anchorObserver.observe(header) });
+// sectionHeader.forEach(header => { anchorObserver.observe(header) });
 
-let hashState = 0;
 
 // setTimeout(() => {
 //   console.log('if menu has been clicked skip the auto update')
 // }, appTimer)
 
 // if menu has been clicked skip the auto update
-const navElem = document.getElementsByClassName(menuClass);
-Array.from(navElem).forEach(function(item){
-  item.addEventListener('click', (e) => {
-    hashState = 1;
-    setTimeout(() => {
-      hashState = 0;
-    }, 1000)
-  });
-});
+// const navElem = document.getElementsByClassName(menuClass);
+
 
 closeBtn.addEventListener('click', (e) => {
     navHolder.classList.toggle('open-nav');
@@ -507,54 +593,7 @@ function removeHash(){
   history.pushState("", document.title, window.location.pathname + window.location.search);
 }
 
-const navHeight = navHolder.offsetHeight
-const navSpace = window.innerHeight - navHeight
 
-let obvsOptUp = {
-  rootMargin: '0px 0px -' + navSpace + 'px 0px',
-  threshold: [0.2,0.8]
-}
-
-
-let obvsCallbackUp = (entries, observerUp) => {
-  entries.forEach(entry => {
-    if ( entry.isIntersecting === true && entry.intersectionRatio > 0.8 ) {
-      navHolder.classList.add(menuStuck)
-
-    } else if (entry.intersectionRatio < 0.2) {
-      navHolder.classList.remove(menuStuck)
-
-    }
-  });
-};
-// setTimeout(() => {
-//   console.log('obvsCallbackUp')
-// }, appTimer)
-
-let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
-observerUp.observe(navHolder);
-
-// remove hash at top of page watching mainTitle
-let obvsOptsTitleTop = {
-  rootMargin: '0px',
-  threshold: 0
-}
-let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
-  entries.forEach(entry => {
-    if ( entry.isIntersecting ) {
-      navElem[0].classList.remove('active');
-      navElem[0].classList.remove('prev');
-      removeHash()
-    }
-  });
-};
-
-// setTimeout(() => {
-//   console.log('obvsTitleTop')
-// }, appTimer)
-
-let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
-obvsTitleTop.observe(mainTitle);
 
 // setTimeout(() => {
 //   console.log('wrap following p tag if contains em and strong only (REMOVED)')
@@ -586,11 +625,7 @@ myList.forEach(function(sectHeader){
 //   console.log('Tracking')
 // }, appTimer)
 
-// Tracking
-const navLinks = document.querySelectorAll('.nav-class')
-navLinks.forEach((el, index) => {
-  el.dataset.linkName = "working report 2021 : nav link " + index
-})
+
 
 
 
