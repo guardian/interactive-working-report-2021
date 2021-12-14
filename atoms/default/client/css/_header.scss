@@ -137,6 +137,12 @@
       width: 560px;
     }
   }
+  .section-header + p,
+  #sign-in-gate {
+    &:before {
+      display: none;
+    }
+  }
   [data-gu-name="standfirst"],
   .meta__social {
     strong {

@@ -113,4 +113,17 @@ $secondaryColor: #ffe500;
       color: #fff;
     }
   }
+
+  @media (prefers-color-scheme: dark) {
+    figure[data-atom-type="interactive"],
+    .interactive {
+      background-color: transparent;
+    }
+  }
+  .garnett--pillar-news.garnett--type-article
+    .article__body
+    .from-content-api.prose
+    a {
+    background-image: none;
+  }
 }

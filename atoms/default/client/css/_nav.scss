@@ -61,7 +61,7 @@
       }
       .video-link span {
         &::before {
-          content: ' ';
+          content: " ";
           display: block;
           // background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.svg);
           background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.png);
@@ -75,6 +75,10 @@
         }
       }
       &:hover {
+        .nav-class span {
+          background-color: white;
+          padding: 0 10px;
+        }
         .nav-class span,
         .nav-label {
           opacity: 1;
@@ -161,5 +165,4 @@
 }
 .ios,
 .android {
-
 }

@@ -92,6 +92,9 @@ $secondaryColor: $culture800;
         fill: $neutral100;
       }
     }
+    @media (prefers-color-scheme: dark) {
+      color: #dcdcdc;
+    }
   }
   .content__main-column--interactive {
     & > blockquote {

@@ -267,7 +267,7 @@ html {
   #standard-article-container {
     overflow: unset;
   }
-  .garnett--pillar-news figure[data-atom-type=interactive] {
+  .garnett--pillar-news figure[data-atom-type="interactive"] {
     @media (prefers-color-scheme: dark) {
       background-color: $neutral10;
     }
@@ -291,6 +291,13 @@ html {
           border-color: $neutral100;
         }
       }
+    }
+  }
+  .prose blockquote {
+    margin-top: 0;
+    p + p,
+    p + p + p {
+      margin: 0;
     }
   }
 }
