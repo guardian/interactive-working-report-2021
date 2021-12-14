@@ -118,6 +118,9 @@ a,
     margin-left: 240px !important;
   }
 }
+.article-navigation {
+  max-width: unset;
+}
 .content__main-column--interactive {
   & > p,
   & > h2,

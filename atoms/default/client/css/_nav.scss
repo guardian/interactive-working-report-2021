@@ -75,15 +75,13 @@
         }
       }
       &:hover {
-        .nav-class span {
-          background-color: white;
-          padding: 0 10px;
-        }
         .nav-class span,
         .nav-label {
           opacity: 1;
           transform: translateX(0);
           visibility: visible;
+          background-color: white;
+          padding: 0 10px;
         }
       }
     }
@@ -117,7 +115,7 @@
       transition: all 0.3s ease-in-out;
       &:hover {
         span {
-          background-color: transparent;
+          background-color: white;
         }
       }
       @include mq(desktop) {
