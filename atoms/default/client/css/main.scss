@@ -266,13 +266,15 @@ html {
   #standard-article-container {
     overflow: unset;
   }
-<<<<<<< HEAD
+
   @media (prefers-color-scheme: dark) {
     figure[data-atom-type=interactive] {
-=======
+      
+    }
+  }
   .garnett--pillar-news figure[data-atom-type="interactive"] {
     @media (prefers-color-scheme: dark) {
->>>>>>> eef5f71f0b4a56634565750541ad4c3b9a34194a
+
       background-color: $neutral10;
     }
   }
