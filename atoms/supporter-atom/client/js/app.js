@@ -7,9 +7,11 @@ function shouldHideSupportMessaging() {
     return getCookieValue('gu_hide_support_messaging') === 'true';
 }
 if (shouldHideSupportMessaging()) {
-    document.getElementById("wr-support-atom").style.display = "none";
-    console.log("display none")
+    // document.getElementById("wr-support-atom").style.display = "none";
+    document.getElementById("wr-support-atom").classList.add('hide-sub');
+    document.getElementById("wr-support-atom").classList.remove('show-sub');
 } else {
-    document.getElementById("wr-support-atom").style.display = "block";
-    console.log("display block")
+    // document.getElementById("wr-support-atom").style.display = "block";
+    document.getElementById("wr-support-atom").classList.remove('hide-sub');
+    document.getElementById("wr-support-atom").classList.add('show-sub');
 }
