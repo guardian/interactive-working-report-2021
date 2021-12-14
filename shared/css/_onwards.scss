@@ -68,7 +68,7 @@
 
   &.two-cards {
     @include mq(tablet) {
-      margin-left: 0;
+      margin-left: 10px;
       .onwardcard {
         width: 50%;
       }
@@ -118,5 +118,6 @@
 .android {
   .onwards-wrapper {
     padding: 0;
+    margin: -10px;
   }
 }

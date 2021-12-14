@@ -142,6 +142,9 @@ html {
   border-bottom: 1px solid $neutral86;
   margin: 0 -10px;
   width: 100vw;
+  @include mq(phablet) {
+    width: calc(100% + 20px);
+  }
   @include mq(desktop) {
     border-bottom: none;
     max-height: $menuMaxHeight;
@@ -263,8 +266,13 @@ html {
   #standard-article-container {
     overflow: unset;
   }
+<<<<<<< HEAD
   @media (prefers-color-scheme: dark) {
     figure[data-atom-type=interactive] {
+=======
+  .garnett--pillar-news figure[data-atom-type="interactive"] {
+    @media (prefers-color-scheme: dark) {
+>>>>>>> eef5f71f0b4a56634565750541ad4c3b9a34194a
       background-color: $neutral10;
     }
   }
@@ -295,6 +303,13 @@ html {
           border-color: $neutral100;
         }
       }
+    }
+  }
+  .prose blockquote {
+    margin-top: 0;
+    p + p,
+    p + p + p {
+      margin: 0;
     }
   }
 }
