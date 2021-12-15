@@ -97,9 +97,6 @@ videoplayer       = document.querySelector(videoClass);
 setTimeout(() => {
   console.log("checkApp & video")
 }, appTimer)
-
-interClassElem.classList.add(outterMargin)
-
 // ---------------------------------------// Navigation //----------------------------------------------- //
 
 // creates elements with attributes and adds them *NB Needs refinement?
@@ -410,8 +407,13 @@ window.onload = function() {
   navLinks.forEach((el, index) => {
     el.dataset.linkName = "working report 2021 : nav link " + index
   })
+
+  interClassElem.classList.add(outterMargin)
 };
 
+setTimeout(() => {
+  console.log("onload finished")
+}, appTimer)
 // Calculate height of sectionHeader
 let headHeight = navHolder.offsetHeight
 let headSpace = window.innerHeight - headHeight

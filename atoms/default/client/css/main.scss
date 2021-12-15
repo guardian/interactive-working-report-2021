@@ -115,7 +115,7 @@ html {
       height: $anchor-margin;
       margin-top: -$anchor-margin;
       @include mq(desktop) {
-        height: 0;
+        height: $collapsed-nav-height;
         margin-top: 0;
         // height: $collapsed-nav-height/2;
         // margin-top: -$collapsed-nav-height/2;

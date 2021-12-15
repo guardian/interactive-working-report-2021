@@ -146,6 +146,10 @@
       display: none;
     }
   }
+  .meta__social {
+    position: relative;
+    z-index: 10;
+  }
   [data-gu-name="standfirst"],
   .meta__social {
     strong {

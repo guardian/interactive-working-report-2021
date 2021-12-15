@@ -149,6 +149,24 @@ $linkColorDarkActive: rgba($brand500, 1);
     }
   }
 }
+.content--interactive {
+  a {
+    &[role="button"] {
+      &[data-ignore="global-link-styling"] {
+        border-bottom: none;
+        span {
+          &:hover {
+            background-color: $primaryColor;
+            border-color: $primaryColor;
+            svg {
+              fill: $neutral100;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 .ios,
 .android {
   .article__body,
