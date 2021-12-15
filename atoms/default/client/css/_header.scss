@@ -27,8 +27,10 @@
     @include mq(mobileLandscape) {
       height: 360px;
     }
-    @include mq(tablet) {
+    @include mq(phablet) {
       height: 460px;
+    }
+    @include mq(tablet) {
       max-width: 620px;
     }
     @include mq(desktop) {
@@ -47,14 +49,12 @@
     }
   }
   h1,
+  .headline,
   .content__headline {
     @include sr-only();
   }
-  // h1, .content__headline,
   .headline,
   .section-header h2 {
-    // transition: all 400ms ease-in-out, opacity 200ms linear;
-    // opacity: 1;
     background-color: $brand400;
     color: $neutral100;
     font-family: $f-titlepiece;
@@ -90,6 +90,10 @@
   .standfirst {
     margin-top: 0;
     margin-bottom: 0;
+    opacity: 0;
+
+    -webkit-animation: fadein 0.5s ease 1.5s normal forwards 1 ;
+    animation: fadein 0.5s ease 1.5s normal forwards 1 ;
   }
   .content__main-column--interactive {
     & > .byline-box {
@@ -102,8 +106,6 @@
   .standfirst,
   .meta__social {
     font-family: $f-serif-headline;
-    // font-size: 20px;
-    // line-height: 24px;
     position: relative;
     padding: 4px 10px 12px;
     border: 1px solid $neutral86;
@@ -127,10 +129,11 @@
       margin: -27px 14px 0 10px;
       border-left: 1px solid $neutral86;
       border-right: 1px solid $neutral86;
-      width: 380px;
+      // width: 380px;
+      width: 480px;
     }
     @include mq(leftCol) {
-      width: 480px;
+      // width: 480px;
       padding: 6px 9px 26px 10px;
     }
     @include mq(wide) {
@@ -169,11 +172,15 @@
     padding-left: 10px !important;
     padding-right: 10px !important;
     @include mq(tablet) {
-      flex: 0 0 380px;
+      // flex: 0 0 380px;
+      flex: 0 0 480px;
       margin: -4px 0 0 20px;
     }
+    @include mq(desktop) {
+      margin-left: 0;
+    }
     @include mq(leftCol) {
-      flex: 0 0 480px;
+      // flex: 0 0 480px;
     }
     @include mq(wide) {
       flex: 0 0 560px;

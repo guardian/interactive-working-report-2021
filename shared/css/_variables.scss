@@ -12,7 +12,63 @@ $culture800:    #FBF6EF;
 $culture350:    #866D50;
 $beige:         #fff7e5;
 
+$collapsed-nav-height: 48px;
+$icon-radius: 24px;
+$anchor-margin-app: 204px;
+$anchor-margin-video: 264px;
+$anchor-margin: $anchor-margin-app;
+$menuMaxHeight: 700px;
+
+$transition-speed: 300ms;
+$transition-delay: 500ms;
+
 @mixin background-opacity($color, $opacity: 0.3) {
     background: $color; /* The Fallback */
     background: rgba($color, $opacity);
+}
+@mixin border-color-opacity($color, $opacity: 0.3) {
+    border-color: $color; /* The Fallback */
+    border-color: rgba($color, $opacity);
+}
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+@keyframes fadein {
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes fadein {
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+@keyframes fadeout {
+    0% { opacity:1; }
+    100% { opacity:0; }
+}
+
+@-webkit-keyframes fadeout {
+    0% { opacity:1; }
+    100% { opacity:0; }
+}
+@keyframes slidein {
+  from {
+    margin-top: -$anchor-margin;
+  }
+  to {
+    margin-top: 0;
+  }
+}
+
+@-webkit-keyframes slidein {
+  from {
+    margin-top: -$anchor-margin;
+  }
+  to {
+    margin-top: 0;
+  }
 }

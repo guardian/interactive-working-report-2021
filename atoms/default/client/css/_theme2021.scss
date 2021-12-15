@@ -2,6 +2,13 @@
 $background: $neutral100;
 $primaryColor: $brand400;
 $secondaryColor: $culture800;
+$linkColor: rgba($primaryColor, .7);
+$linkColorHover: rgba($primaryColor, .8);
+$linkColorActive: rgba($primaryColor, 1);
+$linkColorDark: rgba($brand500, .7);
+$linkColorDarkHover: rgba($brand500, .8);
+$linkColorDarkActive: rgba($brand500, 1);
+
 
 // Reset page margins
 .content--interactive {
@@ -80,6 +87,8 @@ $secondaryColor: $culture800;
   a,
   a:not([data-ignore="global-link-styling"]) {
     color: $primaryColor;
+    border-bottom: 1px solid #DCDCDC;
+    @include border-color-opacity($brand400, 0.4);
     svg {
       fill: $primaryColor;
     }
@@ -95,6 +104,20 @@ $secondaryColor: $culture800;
     }
     @media (prefers-color-scheme: dark) {
       color: #dcdcdc;
+    }
+  }
+  .meta__social {
+    a {
+      border-bottom: none;
+      span {
+        &:hover {
+          background-color: $primaryColor;
+          border-color: $primaryColor;
+          svg {
+            fill: $neutral100;
+          }
+        }
+      }
     }
   }
   .content__main-column--interactive {
@@ -135,12 +158,28 @@ $secondaryColor: $culture800;
     a:not([data-ignore="global-link-styling"]),
     a:not(.garnett--type-guardianlabs) .prose a:not(.video-URL) {
       // background-color: transparent;
+      background-image: none;
       &:hover {
         // background-color: transparent;
+      }
+      @media (prefers-color-scheme: dark) {
+        color: #dcdcdc;
       }
       // background-image: linear-gradient(rgba(199, 0, 0, 0.33) 0%, rgba(199, 0, 0, 0.33) 100%)
       svg {
         // fill: $brand500;
+      }
+    }
+    .article-navigation {
+      .nav-class {
+        color: $linkColor;
+        background-image: none;
+        &:hover {
+          color: $linkColorHover;
+        }
+        &.active {
+          color: $linkColorActive;
+        }
       }
     }
   }
@@ -152,6 +191,18 @@ $secondaryColor: $culture800;
         color: $brand500;
         svg {
           fill: $brand500;
+        }
+      }
+      .article-navigation {
+        .nav-class {
+          color: $linkColorDark;
+          background-image: none;
+          &:hover {
+            color: $linkColorDarkHover;
+          }
+          &.active {
+            color: $linkColorDarkActive;
+          }
         }
       }
     }

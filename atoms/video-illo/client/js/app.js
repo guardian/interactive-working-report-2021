@@ -37,10 +37,6 @@ if (mediaQuery.matches) {
 
 } else {
   // turn video on
-  if ( document.body.classList.contains("ios") || document.body.classList.contains("android" )) {
-    playVid();
-    vid.setAttribute("autoplay", "");
-  } else {
-    vidCompObserver.observe(videoComp);
-  }
+  vidCompObserver.observe(videoComp);
+
 }
