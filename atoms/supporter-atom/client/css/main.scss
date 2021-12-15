@@ -39,6 +39,22 @@ $secondaryColor: #ffe500;
   position: relative;
   background-color: $secondaryColor;
   padding: 4px 10px;
+  &.show-sub {
+    .show-sub {
+      display: block;
+    }
+    .hide-sub {
+      display: none;
+    }
+  }
+  &.hide-sub {
+    .show-sub {
+      display: none;
+    }
+    .hide-sub {
+      display: block;
+    }
+  }
   .support_headline {
     font-family: $f-serif-headline;
     line-height: 113%;
@@ -91,6 +107,7 @@ $secondaryColor: #ffe500;
 .ios,
 .android {
   .supporter-wrapper {
+    display: none;
     margin: 4px -12px;
     .support_button {
       color: #ffffff !important;
