@@ -96,15 +96,16 @@ $linkColorDarkActive: rgba($brand500, 1);
     span {
       transition: all 0.3s ease-in-out;
     }
-    &:hover span {
-      // background-color: $primaryColor;
+    &:hover {
+      color: $primaryColor;
       border-color: $primaryColor;
-      svg {
-        fill: $neutral100;
+      span {
+        // background-color: $primaryColor;
+        border-color: $primaryColor;
+        svg {
+          fill: $neutral100;
+        }
       }
-    }
-    @media (prefers-color-scheme: dark) {
-      color: #dcdcdc;
     }
   }
   .meta__social {
@@ -187,6 +188,11 @@ $linkColorDarkActive: rgba($brand500, 1);
       // background-image: linear-gradient(rgba(199, 0, 0, 0.33) 0%, rgba(199, 0, 0, 0.33) 100%)
       svg {
         // fill: $brand500;
+      }
+    }
+    a:not([data-ignore="global-link-styling"]) {
+      @media (prefers-color-scheme: dark) {
+        color: #dcdcdc;
       }
     }
     .article-navigation {
