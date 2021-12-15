@@ -54,7 +54,10 @@
     @include sr-only();
   }
   .headline,
-  .section-header h2 {
+  // .section-header h2
+  h2 > strong
+  {
+    display: block;
     background-color: $brand400;
     color: $neutral100;
     font-family: $f-titlepiece;
@@ -223,7 +226,6 @@
     margin-left: 0;
     margin-right: 0;
   }
-  .section-header,
   .section-header + p,
   [data-gu-name="standfirst"],
   .meta__social {
@@ -231,6 +233,9 @@
     @media (prefers-color-scheme: dark) {
       background-color: $neutral10;
     }
+  }
+  .section-header {
+    margin: 0 -12px;
   }
   // h1.headline {
   .article__header {

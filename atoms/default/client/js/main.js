@@ -20,7 +20,7 @@ setTimeout(() => {
 }, 100)
 
 
-console.log("main js working")
+// console.log("main js working")
 
 // https://github.com/iamdustan/smoothscroll
 // Import any polyfill to enable smoothscroll for JS APIs

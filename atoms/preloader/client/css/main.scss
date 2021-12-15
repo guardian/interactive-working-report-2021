@@ -1,0 +1,7 @@
+// @import "variables";
+.content--interactive,
+.article__body {
+  opacity: 0;
+  // -webkit-animation: fadein $transition-speed ease $transition-delay normal forwards 1 ;
+  // animation: fadein $transition-speed ease $transition-delay normal forwards 1 ;
+}
