@@ -1,0 +1,38 @@
+// @import "fonts";
+// @import "enhanced_fonts";
+@import "mq";
+@import "palette";
+// @import "enhancer";
+// @import "nav";
+// @import "header";
+// gu_grid pulls the css for gs-container and content__main-column
+// @import "gu_grid";
+
+.interactive-atom {
+  margin: 0;
+  padding: 0;
+}
+
+// for apps adds extra padding. Needed to make dark mode work
+.ios,
+.android {
+  .interactive-atom {
+    padding: 8px;
+  }
+}
+
+.interactive-wrapper {
+  margin: 0 -10px;
+  @include mq(tablet) {
+    margin: 0;
+  }
+}
+.video-illo-wrapper {
+  @include mq(tablet) {
+    margin-left: 1px;
+  }
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}

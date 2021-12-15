@@ -2,13 +2,12 @@
 $background: $neutral100;
 $primaryColor: $brand400;
 $secondaryColor: $culture800;
-$linkColor: rgba($primaryColor, .7);
-$linkColorHover: rgba($primaryColor, .8);
+$linkColor: rgba($primaryColor, 0.7);
+$linkColorHover: rgba($primaryColor, 0.8);
 $linkColorActive: rgba($primaryColor, 1);
-$linkColorDark: rgba($brand500, .7);
-$linkColorDarkHover: rgba($brand500, .8);
+$linkColorDark: rgba($brand500, 0.7);
+$linkColorDarkHover: rgba($brand500, 0.8);
 $linkColorDarkActive: rgba($brand500, 1);
-
 
 // Reset page margins
 .content--interactive {
@@ -75,11 +74,13 @@ $linkColorDarkActive: rgba($brand500, 1);
 @import "nav";
 @import "header";
 @import "video";
+@import "onwards_main";
+@import "support_main";
+@import "video_main";
 
-.content--interactive,
-.article__body,
-// .garnett--pillar-news:not(.garnett--type-guardianlabs) .prose a:not(.video-URL),
-#article-body-blocks {
+.content--interactive, .article__body,
+  // .garnett--pillar-news:not(.garnett--type-guardianlabs) .prose a:not(.video-URL),
+  #article-body-blocks {
   & > div:first-child {
     border-left: none;
     border-right: none;
@@ -87,7 +88,7 @@ $linkColorDarkActive: rgba($brand500, 1);
   a,
   a:not([data-ignore="global-link-styling"]) {
     color: $primaryColor;
-    border-bottom: 1px solid #DCDCDC;
+    border-bottom: 1px solid #dcdcdc;
     @include border-color-opacity($brand400, 0.4);
     svg {
       fill: $primaryColor;

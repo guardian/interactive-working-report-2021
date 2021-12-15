@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   // padding: 0 10px;
   @include mq(mobileLandscape) {
     flex-direction: row;
@@ -53,7 +55,8 @@
       flex-grow: 1;
       .onwardcard-headline {
         color: #121212;
-        font-family: $f-serif-headline;
+        font-family: "Guardian Headline", "Guardian Egyptian Web",
+          "Guardian Headline Full", Georgia, serif;
         font-size: 20px;
         font-weight: 200;
         line-height: 115%;
@@ -118,6 +121,6 @@
 .android {
   .onwards-wrapper {
     padding: 0;
-    margin: -10px;
+    margin: 0 -10px;
   }
 }
