@@ -1,12 +1,5 @@
-// @import "fonts";
-// @import "enhanced_fonts";
 @import "mq";
 @import "palette";
-// @import "enhancer";
-// @import "nav";
-// @import "header";
-// gu_grid pulls the css for gs-container and content__main-column
-// @import "gu_grid";
 
 .interactive-atom {
   margin: 0;
@@ -27,7 +20,7 @@
     margin: 0;
   }
 }
-.video-illo-wrapper {
+.video-illo-wrapper, .video-illo-wrapper-2 {
   @include mq(tablet) {
     margin-left: 1px;
   }

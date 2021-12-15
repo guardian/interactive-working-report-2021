@@ -1,19 +1,5 @@
-// Colour pallet - create seperate scss - colours
-$brand400: #052962;
-$neutral100: #ffffff;
-// theme - create seperate scss - theme-core
-$primaryColor: #041f4a;
-$secondaryColor: #ffe500;
-
-// @import "fonts";
-// @import "enhanced_fonts";
 @import "mq";
 @import "palette";
-// @import "enhancer";
-// @import "nav";
-// @import "header";
-// gu_grid pulls the css for gs-container and content__main-column
-// @import "gu_grid";
 
 .interactive-atom {
   margin: 0;
@@ -37,7 +23,7 @@ $secondaryColor: #ffe500;
 
 .supporter-wrapper {
   position: relative;
-  background-color: $secondaryColor;
+  background-color: $brandAlt400;
   padding: 4px 10px;
   &.show-sub {
     .show-sub {
