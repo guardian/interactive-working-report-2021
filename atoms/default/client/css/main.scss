@@ -117,8 +117,6 @@ html {
       @include mq(desktop) {
         height: $collapsed-nav-height;
         margin-top: 0;
-        // height: $collapsed-nav-height/2;
-        // margin-top: -$collapsed-nav-height/2;
       }
     }
   }
@@ -126,6 +124,11 @@ html {
     &::before {
       height: $anchor-margin-video;
       margin-top: -$anchor-margin-video;
+
+      @include mq(desktop) {
+        height: $collapsed-nav-height;
+        margin-top: 0;
+      }
     }
   }
 
