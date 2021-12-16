@@ -1,9 +1,9 @@
 
 var appTimer = 8000;
 
-setTimeout(() => {
-  console.log("js working")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("js working")
+// }, appTimer)
 
 const navID             = 'jump-nav'
 const anchorTag         = 'header'
@@ -13,6 +13,7 @@ const videoBtnClass     = 'overlay-play-button'
 const videoOverOutClass = 'video-overlay'
 const videoOverInClass  = 'video-inner'
 const videoBtnWrapClass = 'video-button-wrapper'
+const videoplayerClass  = 'hero-video'
 const navTag            = 'nav'
 const menuClass         = 'nav-class'
 const menuClassVid      = 'video-link'
@@ -60,6 +61,7 @@ const checkApp = () => {
     // get our target element
     videoClass        = '[data-atom-type="media"]'
     videoOverlayAtt   = '.youtube-media__sdk-placeholder'
+    videoplayer       = document.querySelector(videoClass);
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
@@ -75,7 +77,9 @@ const checkApp = () => {
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
     videoClass        = '[data-component="youtube-atom"]';
-    videoOverlayAtt   = 'figcaption';
+    videoOverlayAtt   = '[data-cy="youtube-overlay"]';
+    videoplayer       = document.querySelector(videoClass);
+    videoOverlay      = document.querySelector(videoOverlayAtt);
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
@@ -86,17 +90,10 @@ const checkApp = () => {
   }
 }
 checkApp()
-// is this same in the app?
-videoOverlay      = document.querySelector(videoOverlayAtt);
-videoplayer       = document.querySelector(videoClass);
 
-// videoOverlay.addEventListener('load', function(){
-//   // The image is ready!
-// });
-
-setTimeout(() => {
-  console.log("checkApp & video")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("checkApp & video")
+// }, appTimer)
 // ---------------------------------------// Navigation //----------------------------------------------- //
 
 // creates elements with attributes and adds them *NB Needs refinement?
@@ -164,14 +161,6 @@ function addAnchorWrap(targetElem, i) {
   let anchorIDTitle   = '';
   let linkTitle       = targetElem[i].innerText;
 
-  // if (anchorNode.contains(innerNodeAlt)) {
-  //   linkTitle           = innerNodeAlt.innerText.replace(/(\r\n|\n|\r)/gm, "")
-  //   anchorIDTitle   = linkTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
-  //   if(videoOverlay){
-  //     videoOverlay.setAttribute('id', anchorIDTitle);
-  //   }
-  // }
-
   anchorIDTitle   = concatTitle(linkTitle)
 
   titleWrapper.setAttribute('id', anchorIDTitle); // using anchor text
@@ -209,19 +198,17 @@ function addAnchorWrap(targetElem, i) {
       anchorIDTitle   = concatTitle(linkTitle);
       anchorNode.setAttribute('id', anchorIDTitle);
 
-      if(videoOverlay){
-        videoOverlay.setAttribute('id', anchorIDTitle);
-      }
+      // if(videoOverlay){
+      //   videoOverlay.setAttribute('id', anchorIDTitle);
+      // }
+      videoplayer.classList.add(videoplayerClass)
 
       const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
       videoBtnWrap.classList.add(videoBtnWrapClass)
 
+      // Video overlay
       setTimeout(() => {
-        // newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
-        // const newVidWrapElem = document.querySelector('.video-overlay')
-        // newElem('div','','',videoOverInClass,linkTitle,newVidWrapElem,'after')
-        // vidCaptionOverlay(linkTitle)
-        // vidCaptionTitle = linkTitle
+        vidCaptionOverlay(linkTitle)
       }, 1000) // remove 2000 as it should only trigger when content loaded
     }
   }
@@ -232,9 +219,9 @@ for (let i = 0; i < targetElem.length; i++) {
 
 }
 
-setTimeout(() => {
-  console.log("addAnchorWrap")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("addAnchorWrap")
+// }, appTimer)
 
 function vidCaptionOverlay(linkTitle) {
   newElem('div','','',videoOverOutClass,'',videoOverlay,'after')
@@ -295,9 +282,9 @@ function linkURL(targetElem, i) {
     }
   }
 }
-setTimeout(() => {
-  console.log("before onload")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("before onload")
+// }, appTimer)
 
 window.onload = function() {
   // Loop through and build menu links
@@ -411,9 +398,10 @@ window.onload = function() {
   interClassElem.classList.add(outterMargin)
 };
 
-setTimeout(() => {
-  console.log("onload finished")
-}, appTimer)
+// setTimeout(() => {
+//   console.log("onload finished")
+// }, appTimer)
+
 // Calculate height of sectionHeader
 let headHeight = navHolder.offsetHeight
 let headSpace = window.innerHeight - headHeight
@@ -487,11 +475,7 @@ let anchorObserver = new IntersectionObserver((entries, observer) => {
   });
 }, anchorOptions);
 
-// sectionHeader.forEach(header => { anchorObserver.observe(header) });
-
 // if menu has been clicked skip the auto update
-// const navElem = document.getElementsByClassName(menuClass);
-
 closeBtn.addEventListener('click', (e) => {
     navHolder.classList.toggle(navStatus);
     e.target.classList.toggle('open');
@@ -529,13 +513,5 @@ myList.forEach(function(sectHeader){
   if (nextPtagID && sectHeader.nextElementSibling.id === 'sign-in-gate' ) {
     sectHeader.nextElementSibling.remove()
   }
-  // const innerNode = sectHeader.nextElementSibling.querySelector('em');
-  // if (innerNode !== null) {
 
-  //   const innerMostNode = innerNode.querySelector('strong') // target only if strong within em
-
-  //   if (innerMostNode !== null) {
-  //     innerMostNode.parentElement.parentElement.classList.add("byline-box");
-  //   }
-  // }
 });

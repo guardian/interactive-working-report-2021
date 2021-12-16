@@ -24,11 +24,11 @@
         display: none;
       }
       .nav-label {
-        transform: translateY(-50%);
-        transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
-        transition-delay: 0s;
-        transform: translateX(48px);
-        visibility: hidden;
+        // transform: translateY(-50%);
+        // transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
+        // transition-delay: 0s;
+        // transform: translateX(48px);
+        // visibility: hidden;
       }
       .nav-class {
         span {
@@ -39,22 +39,22 @@
           opacity: 0;
         }
         &:nth-child(1) span {
-          transition-delay: 50ms;
+          transition-delay: 0ms;
         }
         &:nth-child(2) span {
-          transition-delay: 75ms;
+          transition-delay: 5ms;
         }
         &:nth-child(3) span {
-          transition-delay: 100ms;
+          transition-delay: 75ms;
         }
         &:nth-child(4) span {
-          transition-delay: 125ms;
+          transition-delay: 100ms;
         }
         &:nth-child(5) span {
-          transition-delay: 150ms;
+          transition-delay: 125ms;
         }
         &:nth-child(6) span {
-          transition-delay: 175ms;
+          transition-delay: 150ms;
         }
       }
       .video-link span {
@@ -74,12 +74,28 @@
       }
       &:hover {
         .nav-class span,
-        .nav-label {
+        // .nav-label
+          {
+          // transition: all 0.3s ease-in-out;
           opacity: 1;
           transform: translateX(0);
           visibility: visible;
           background-color: white;
           padding: 0 10px;
+        }
+      }
+      .nav-class {
+        &:focus {
+          span,
+        // .nav-label
+          {
+            // transition: all 0.3s ease-in-out;
+            opacity: 1;
+            transform: translateX(0);
+            visibility: visible;
+            background-color: white;
+            padding: 0 10px;
+          }
         }
       }
     }
@@ -92,6 +108,8 @@
         padding-right: 20px;
       }
       @include mq(desktop) {
+        padding-left: 10px;
+        padding-right: 10px;
         opacity: 0;
         justify-content: flex-end;
         p {
@@ -118,7 +136,7 @@
           background-color: white;
         }
       }
-      &.active {
+      &.active, &:focus {
         color: $linkColorActive;
       }
       @include mq(tablet) {
@@ -143,12 +161,23 @@
         span {
           margin-right: 12px;
         }
-        &.active {
+        &.active   {
           &:after {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            margin-right: -4px;
+            margin-right: -5px;
+            margin-left: 16px;
+            opacity: 1;
+          }
+        }
+        &:focus {
+          &:after {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: -5px;
+            margin-left: 16px;
             opacity: 1;
           }
         }

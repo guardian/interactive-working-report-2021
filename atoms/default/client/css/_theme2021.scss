@@ -137,6 +137,7 @@ $linkColorDarkActive: rgba($brand500, 1);
     p > em {
       display: flex;
       align-items: center;
+      line-height: 1;
       &::before {
         content: " ";
         display: block;
@@ -146,6 +147,9 @@ $linkColorDarkActive: rgba($brand500, 1);
         height: 22px;
         margin-right: 4px;
       }
+    }
+    p > strong {
+      font-style: normal;
     }
     @include mq(tablet) {
     }
