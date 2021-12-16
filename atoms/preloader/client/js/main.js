@@ -2,4 +2,4 @@ var el = document.createElement('script');
 el.src = '<%= atomPath %>/app.js';
 document.body.appendChild(el);
 
-console.log("preloader js")
+// console.log("preloader js")

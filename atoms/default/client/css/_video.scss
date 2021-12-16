@@ -17,12 +17,17 @@
   }
 }
 .hero-video {
-  // > div {
-  //   &::before {
-  //     border-radius: 12px;
-  //     overflow: hidden;
-  //   }
-  // }
+  picture {
+    &::before {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      @include background-opacity($neutral7, 0.6);
+    }
+  }
  .video-overlay {
    display: flex;
    flex-direction: column;
@@ -75,17 +80,6 @@
    @include mq(wide) {
      left: 240px;
      bottom: 120px;
-   }
- }
- picture{
-   &::after {
-     content: ' ';
-     position: absolute;
-     left: 0;
-     top: 0;
-     right: 0;
-     bottom: 0;
-     @include background-opacity($neutral7, 0.6);
    }
  }
   figcaption {

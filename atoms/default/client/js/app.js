@@ -18,6 +18,7 @@ const navTag            = 'nav'
 const menuClass         = 'nav-class'
 const menuClassVid      = 'video-link'
 const menuStuck         = 'stick-me'
+const menuFree          = 'free-me'
 const hideElem          = 'hide-app'
 const navStatus         = 'open-nav'
 const closeNav          = 'close-nav'
@@ -79,7 +80,8 @@ const checkApp = () => {
     videoClass        = '[data-component="youtube-atom"]';
     videoOverlayAtt   = '[data-cy="youtube-overlay"]';
     videoplayer       = document.querySelector(videoClass);
-    videoOverlay      = document.querySelector(videoOverlayAtt);
+    // videoOverlay      = document.querySelector(videoOverlayAtt);
+    videoOverlay      = document.querySelector(videoOverlayAtt + ' picture');
     targetElem        = mainContent.querySelectorAll(targetTag + ',' + videoClass);
     // get first set of links
     firstList         = mainContent.querySelectorAll('ul')[0] // ********* only needed if menu list exists
@@ -198,9 +200,6 @@ function addAnchorWrap(targetElem, i) {
       anchorIDTitle   = concatTitle(linkTitle);
       anchorNode.setAttribute('id', anchorIDTitle);
 
-      // if(videoOverlay){
-      //   videoOverlay.setAttribute('id', anchorIDTitle);
-      // }
       videoplayer.classList.add(videoplayerClass)
 
       const videoBtnWrap = document.querySelector('.' + videoBtnClass).parentElement
@@ -339,14 +338,16 @@ window.onload = function() {
   let obvsCallbackUp = (entries, observerUp) => {
     entries.forEach(entry => {
       if ( entry.isIntersecting === true && entry.intersectionRatio > 0.8 ) {
-
+        // Scrolling Up
         // setTimeout(() => {
           navHolder.classList.add(menuStuck)
-          console.log('stick-me')
+          console.log('Scrolling Up stick-me')
         // }, 1000)
 
       } else if (entry.intersectionRatio < 0.2) {
+        // Scrolling Down
         navHolder.classList.remove(menuStuck)
+        console.log('Scrolling Down remove: stick-me')
 
       }
     });
@@ -363,30 +364,48 @@ window.onload = function() {
   let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
     entries.forEach(entry => {
       if ( entry.isIntersecting ) {
+        // Top of page
+        console.log('Top of page');
+        navHolder.classList.add(menuFree)
         navElem[0].classList.remove('active');
         navElem[0].classList.remove('prev');
         removeHash()
+      } else {
+        console.log('NOT top of page');
+        navHolder.classList.remove(menuFree)
       }
     });
   };
-  // remove hash
   let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
   obvsTitleTop.observe(mainTitle);
 
   // hide nav app
+  let obvsOptsTitleHideNav = {
+    rootMargin: '0px',
+    threshold: 0.5
+  }
   let obvsCallHideNav = (entries, obvsTitleTop) => {
     entries.forEach(entry => {
       if ( entry.isIntersecting ) {
-        // add hide class
-        navHolder.classList.add(hideElem)
-        // console.log('video passing through')
+
+        if (parentIsIos || parentIsAndroid) {
+        // add hide class when video overlaps
+          navHolder.classList.add(hideElem)
+          // remove the open class to avoid layout shift on app
+          navHolder.classList.remove(navStatus)
+          // change open btn to closed
+          navToggle.classList.remove('open');
+        }
+
       } else {
-        // remove hide class
-        navHolder.classList.remove(hideElem)
+        // remove hide class only app because video overlaps
+        if (parentIsIos || parentIsAndroid) {
+          navHolder.classList.remove(hideElem)
+        }
       }
     });
   };
-  let obvsHideNav = new IntersectionObserver(obvsCallHideNav, obvsOptsTitleTop);
+  let obvsHideNav = new IntersectionObserver(obvsCallHideNav, obvsOptsTitleHideNav);
   obvsHideNav.observe(videoplayer);
 
   // Tracking
@@ -413,7 +432,7 @@ let anchorOptions = {
   rootMargin: '0px 0px -' + headSpace + 'px 0px',
   threshold: 0
 }
-
+// Checks if headers in view, updates menu status (active), checks if menu is stuck and updates hash
 let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){

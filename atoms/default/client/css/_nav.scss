@@ -23,6 +23,15 @@
       #close-nav {
         display: none;
       }
+      &.free-me {
+        position: absolute;
+        top: 102px;
+        right: -20px;
+        transition: top 0.5, opacity 250ms 2 ease-in-out;
+      }
+      &.stick-me {
+
+      }
       .nav-label {
         // transform: translateY(-50%);
         // transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
@@ -110,7 +119,7 @@
       @include mq(desktop) {
         padding-left: 10px;
         padding-right: 10px;
-        opacity: 0;
+        // opacity: 0;
         justify-content: flex-end;
         p {
           color: $neutral46;
