@@ -5,13 +5,8 @@
     @include mq(leftCol) {
       margin-left: 0 !important;
     }
-    @include mq(wide) {
-      // margin-left: 240px !important;
-    }
   }
   .article-navigation {
-    // display: flex;
-    // flex-direction: column;
     @include mq(desktop) {
       position: fixed;
       top: 50%;
@@ -23,14 +18,10 @@
       #close-nav {
         display: none;
       }
-      &.free-me {
-        position: absolute;
-        top: 102px;
-        right: -20px;
-        transition: top 0.5, opacity 250ms 2 ease-in-out;
-      }
       &.stick-me {
-
+        top: 50%;
+        -webkit-animation: none;
+        animation: none;
       }
       .nav-label {
         // transform: translateY(-50%);
@@ -70,7 +61,6 @@
         &::before {
           content: " ";
           display: block;
-          // background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.svg);
           background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.png);
           background-size: contain;
           background-repeat: no-repeat;
@@ -82,15 +72,17 @@
         }
       }
       &:hover {
+        // background: linear-gradient(to right, rgba($neutral100, 0), rgba($neutral100, 0.5), rgba($neutral100, 0.5));
+        // background-color: rgba($neutral100, .5);
         .nav-class span,
         // .nav-label
           {
-          // transition: all 0.3s ease-in-out;
           opacity: 1;
           transform: translateX(0);
           visibility: visible;
-          background-color: white;
+          // text-shadow: -1px -1px 0 rgba($neutral100, .2), 1px -1px 0 rgba($neutral100, .2), -1px 1px 0 rgba($neutral100, .2), 1px 1px 0 rgba($neutral100, .2);
           padding: 0 10px;
+          background-color: rgba($neutral100, 0.7);
         }
       }
       .nav-class {
@@ -98,11 +90,28 @@
           span,
         // .nav-label
           {
-            // transition: all 0.3s ease-in-out;
             opacity: 1;
             transform: translateX(0);
             visibility: visible;
-            background-color: white;
+            transition: background-color $transition-speed $transition-type;
+            background-color: rgba($neutral100, 0.9);
+            // text-shadow: -1px -1px 0 rgba($neutral100, .2), 1px -1px 0 rgba($neutral100, .2), -1px 1px 0 rgba($neutral100, .2), 1px 1px 0 rgba($neutral100, .2);
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+    @include mq(leftCol) {
+
+      &.free-me {
+        .nav-class {
+          span {
+            opacity: 1;
+            transform: translateX(0);
+            visibility: visible;
+            // background-color: white;
+            // transition: background-color $transition-speed $transition-type;
+            background-color: rgba($neutral100, 0.7);
             padding: 0 10px;
           }
         }
@@ -126,11 +135,9 @@
           text-align: right;
         }
       }
-      @include mq(leftCol) {
-        opacity: 1;
-      }
     }
     .nav-class {
+      position: relative;
       color: $linkColor;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
@@ -139,10 +146,15 @@
       padding-left: 10px;
       padding-right: 10px;
       transition: all 0.3s ease-in-out;
+      span {
+        }
       &:hover {
         color: $linkColorHover;
         span {
-          background-color: white;
+          // background-color: white;
+          transition: background-color $transition-speed $transition-type;
+          background-color: rgba($neutral100, 0.9 );
+          // text-shadow: -1px -1px 0 rgba($neutral100, .3), 1px -1px 0 rgba($neutral100, .3), -1px 1px 0 #fff, 1px 1px 0 rgba($neutral100, .3);
         }
       }
       &.active, &:focus {
@@ -161,7 +173,8 @@
           content: "";
           background-color: $primaryColor;
           width: 2px;
-          height: 20px;
+          // height: 20px;
+          height: 100%;
           display: inline-block;
           margin-left: 12px;
           transition: all 400ms ease-in-out, opacity 200ms linear;
@@ -192,6 +205,7 @@
         }
       }
       @include mq(leftCol) {
+        white-space: normal;
         span {
           opacity: 1;
         }

@@ -23,6 +23,8 @@ $menuMaxHeight: 700px;
 
 $transition-speed: 300ms;
 $transition-delay: 500ms;
+$transition-bez: cubic-bezier(0.32, 0.03, 0.19, 1);
+$transition-type: ease-in-out;
 
 @mixin background-opacity($color, $opacity: 0.3) {
     background: $color; /* The Fallback */
@@ -40,13 +42,23 @@ $transition-delay: 500ms;
 }
 
 @keyframes fadein {
-    0% { opacity:0; }
-    100% { opacity:1; }
+    0% {  opacity:0;
+          top: -$collapsed-nav-height;
+         // transform: translateY(-$collapsed-nav-height)
+       }
+    100% {  opacity:1;
+            top: 0;
+         // transform: translateY(0)
+       }
 }
 
 @-webkit-keyframes fadein {
-    0% { opacity:0; }
-    100% { opacity:1; }
+    0% { opacity:0;
+         // transform: translateY(-$collapsed-nav-height)
+       }
+    100% { opacity:1;
+         // transform: translateY(0)
+       }
 }
 @keyframes fadeout {
     0% { opacity:1; }
@@ -56,6 +68,47 @@ $transition-delay: 500ms;
 @-webkit-keyframes fadeout {
     0% { opacity:1; }
     100% { opacity:0; }
+}
+
+@keyframes menu-reposition {
+    0% {
+      opacity:1;
+      right: -20px; }
+    40% {
+      opacity:0;
+      right: -48px; }
+    45% {
+      top: 102px;
+    }
+    55% {
+      top: 50%;
+    }
+    60% {
+      opacity:0;
+      right: -48px;}
+    100% {
+      opacity:1;
+      right: 0px; }
+}
+@-webkit-keyframes menu-reposition {
+    0% {
+      opacity:1;
+      right: -20px; }
+    40% {
+      opacity:0;
+      right: -48px; }
+    45% {
+      top: 102px;
+    }
+    55% {
+      top: 50%;
+    }
+    60% {
+      opacity:0;
+      right: -48px;}
+    100% {
+      opacity:1;
+      right: 0px; }
 }
 @keyframes slidein {
   from {

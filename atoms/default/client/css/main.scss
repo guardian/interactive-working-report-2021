@@ -5,74 +5,16 @@
   -webkit-animation: fadein $transition-speed ease $transition-delay normal forwards 1 ;
   animation: fadein $transition-speed ease $transition-delay normal forwards 1 ;
 }
-
 // theme - create seperate scss - theme-core
 $primaryColor: #041f4a;
 $secondaryColor: #ffe500;
 $background: $neutral100;
 
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes fadeout {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@-webkit-keyframes fadeout {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes slidein {
-  from {
-    margin-top: -$anchor-margin;
-  }
-  to {
-    margin-top: 0;
-  }
-}
-
-@-webkit-keyframes slidein {
-  from {
-    margin-top: -$anchor-margin;
-  }
-  to {
-    margin-top: 0;
-  }
-}
-
 @import "fonts";
-// @import "enhanced_fonts";
 @import "mq";
 @import "palette";
 @import "enhancer";
-
 @import "theme2021";
-
-// gu_grid pulls the css for gs-container and content__main-column
-// @import "gu_grid";
 
 .hide-content {
   opacity: 0;
@@ -85,11 +27,18 @@ $background: $neutral100;
   padding: 0;
 }
 
+#holding-menu-block {
+  display: none;
+}
 // for apps adds extra padding. Needed to make dark mode work
 .ios,
 .android {
   .interactive-atom {
     padding: 8px;
+  }
+  #holding-menu-block{
+    display: block;
+    height: $collapsed-nav-height;
   }
 }
 
@@ -195,16 +144,13 @@ html {
   z-index: 5;
   padding: 8px 0;
   transition: all 0.3s ease-in-out;
-  // max-height: 500px;
   max-height: $collapsed-nav-height; //  collapse at start
   overflow-y: hidden;
   z-index: 2000;
-  // margin-top: -$collapsed-nav-height;
   margin-top: 0;
   border-bottom: 1px solid $neutral86;
   margin: 0 -10px;
   width: 100vw;
-  // @include animation-mixin(fade-1, 0, 0);
   @include mq(phablet) {
     width: calc(100% + 20px);
   }
@@ -228,54 +174,25 @@ html {
     border-bottom: none;
   }
   #close-nav {
-    // opacity: 0;
     span {
       @include sr-only();
     }
   }
   &.open-nav {
     max-height: $menuMaxHeight;
-    // .nav-label, .nav-class, .active {
-    //   top: 0px;
-    //   position: relative;
-    //   padding: inherit;
-    //   margin-bottom: inherit;
-    //   height: auto;
-    //   span {
-    //     line-height: inherit;
-    //   }
-    // }
-
     @include mq(desktop) {
       max-height: unset;
     }
   }
   &.stick-me {
-    // opacity: 0;
     max-height: $collapsed-nav-height;
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
 
-    // -webkit-animation: fadein 0.5s ease 1.5s normal forwards 1 ;
-    // animation: fadein 0.5s ease 1.5s normal forwards 1 ;
-    // -webkit-animation: slidein 1.5s ease 1s normal forwards 1 ;
-    // animation: slidein 1s ease 1.5s normal forwards 1 ;
-
     &.open-nav {
       max-height: $menuMaxHeight;
-      // .nav-label, .nav-class, .active {
-      //   top: 0px;
-      //   position: relative;
-      //   padding: inherit;
-      //   margin-bottom: inherit;
-      //   height: auto;
-      //   span {
-      //     line-height: inherit;
-      //   }
-      // }
-
       @include mq(desktop) {
         max-height: unset;
       }
@@ -315,7 +232,7 @@ html {
     // margin-left: 0 !important;
   }
   @include mq(leftCol) {
-    width: 300px;
+    width: 420px;
   }
   .nav-title-wrapper {
     display: flex;
@@ -351,20 +268,8 @@ html {
 
 .ios,
 .android {
-  .article__body {
-    // opacity: 1;
-    // -webkit-animation: none;
-    // animation: none;
-  }
-  // .content--interactive,
-  // .article__body {
-  //   -webkit-animation: fadein $transition-speed ease 0 normal forwards 1;
-  //   animation: fadein $transition-speed ease 0 normal forwards 1;
-  // }
   [data-atom-type="media"] {
     &::before {
-      // height: $anchor-margin-2;
-      // margin-top: -$anchor-margin-2;
       height: $anchor-margin-2;
       margin-top: -$anchor-margin-top-2;
     }
@@ -372,11 +277,6 @@ html {
   #standard-article-container {
     overflow: unset;
   }
-  // @media (prefers-color-scheme: dark) {
-  //   figure[data-atom-type="interactive"] {
-  //
-  //   }
-  // }
   .garnett--pillar-news figure[data-atom-type="interactive"] {
     @media (prefers-color-scheme: dark) {
       background-color: $neutral10;
@@ -391,22 +291,13 @@ html {
     padding-left: 10px;
     // max-height: $collapsed-nav-height;
     &.stick-me {
-      opacity: 0;
       &:not(.hide-app) {
+        // top: -$collapsed-nav-height;
         -webkit-animation: fadein 0.5s ease 0.5s normal forwards 1;
         animation: fadein 0.5s ease 0.5s normal forwards 1;
       }
-      // -webkit-animation: slidein 1.5s ease 1s normal forwards 1 ;
-      // animation: slidein 1s ease 1.5s normal forwards 1 ;
-      // visibility: visible;
-      // &.open-nav {
-      //   visibility: visible;
-      //   max-height: $menuMaxHeight;
-      // }
       &.hide-app {
         opacity: 0;
-        // max-height: 12px;
-        // margin-bottom: -24px;
       }
     }
     @media (prefers-color-scheme: dark) {

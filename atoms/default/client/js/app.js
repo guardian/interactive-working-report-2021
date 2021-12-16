@@ -6,6 +6,7 @@ var appTimer = 8000;
 // }, appTimer)
 
 const navID             = 'jump-nav'
+const navHolderID       = 'holding-menu-block'
 const anchorTag         = 'header'
 const targetTag         = 'h2'
 const targetTagInner    = 'strong'
@@ -39,6 +40,7 @@ var mainTitle
 var videoOverlay
 var videoplayer
 var interClassElem
+var navHolderBlock
 var videoClass
 var videoOverlayAtt
 var targetTagInnerAlt
@@ -57,6 +59,7 @@ const checkApp = () => {
   if (parentIsIos || parentIsAndroid) {
     // console.log('in app')
     // get our content container
+    navHolderBlock    = document.getElementById(navHolderID)
     mainContent       = document.getElementById('article-body')
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
@@ -77,6 +80,7 @@ const checkApp = () => {
     mainContent       = document.getElementById('maincontent')
     articleContent    = document.querySelector('.article-body-viewer-selector')
     // get our target element
+    // navHolderBlock    = document.getElementById(navHolderID)
     videoClass        = '[data-component="youtube-atom"]';
     videoOverlayAtt   = '[data-cy="youtube-overlay"]';
     videoplayer       = document.querySelector(videoClass);
@@ -134,6 +138,7 @@ function wrapElem(el, wrapper) {
 function menuContainer() {
   // build nav
   newElem(navTag,'id',navID, navClass,'',mainContent,'before');
+
   const menuHolder = document.getElementById(navID);
 
   newElem('div','id',navUtilityID,navBarClass,'',menuHolder,'before');
@@ -146,6 +151,9 @@ function menuContainer() {
   newElem('span','','','','Toggle menu',navToggle,'after');
 }
 
+if (parentIsIos || parentIsAndroid) {
+  navHolderBlock.remove();
+}
 menuContainer(); // ******* Building this now because it's needed to add the links, but should be when *no* nav has been found
 const navHolder = document.getElementById(navID); // added #2 to not conflict
 const closeBtn = document.getElementById(closeNav);
@@ -319,7 +327,6 @@ window.onload = function() {
       hashState = 1;
       navHolder.classList.remove(navStatus)
       navToggle.classList.toggle('open');
-      // navHolder.classList.toggle(navStatus);
       setTimeout(() => {
         hashState = 0;
       }, 1000)
@@ -341,13 +348,13 @@ window.onload = function() {
         // Scrolling Up
         // setTimeout(() => {
           navHolder.classList.add(menuStuck)
-          console.log('Scrolling Up stick-me')
+          // console.log('Scrolling Up stick-me')
         // }, 1000)
 
       } else if (entry.intersectionRatio < 0.2) {
         // Scrolling Down
-        navHolder.classList.remove(menuStuck)
-        console.log('Scrolling Down remove: stick-me')
+        // navHolder.classList.remove(menuStuck) // ************ keeps removing the menu
+        // console.log('Scrolling Down remove: stick-me')
 
       }
     });
@@ -359,19 +366,19 @@ window.onload = function() {
   // remove hash at top of page watching mainTitle
   let obvsOptsTitleTop = {
     rootMargin: '0px',
-    threshold: 0
+    threshold: 0.5
   }
   let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
     entries.forEach(entry => {
       if ( entry.isIntersecting ) {
         // Top of page
-        console.log('Top of page');
+        // console.log('Top of page');
         navHolder.classList.add(menuFree)
         navElem[0].classList.remove('active');
         navElem[0].classList.remove('prev');
         removeHash()
       } else {
-        console.log('NOT top of page');
+        // console.log('NOT top of page');
         navHolder.classList.remove(menuFree)
       }
     });
@@ -389,7 +396,7 @@ window.onload = function() {
       if ( entry.isIntersecting ) {
 
         if (parentIsIos || parentIsAndroid) {
-        // add hide class when video overlaps
+          // add hide class when video overlaps
           navHolder.classList.add(hideElem)
           // remove the open class to avoid layout shift on app
           navHolder.classList.remove(navStatus)

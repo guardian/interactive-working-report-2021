@@ -25,6 +25,9 @@
   position: relative;
   background-color: $brandAlt400;
   padding: 4px 10px;
+  @include mq(leftCol) {
+    margin-left: 1px;
+  }
   &.show-sub {
     .show-sub {
       display: block;
@@ -51,7 +54,6 @@
     @include mq(phablet) {
       max-width: 420px;
     }
-
     span {
       font-weight: 200;
     }

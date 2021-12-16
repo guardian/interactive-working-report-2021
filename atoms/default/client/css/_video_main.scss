@@ -21,7 +21,7 @@
   }
 }
 .video-illo-wrapper, .video-illo-wrapper-2 {
-  @include mq(tablet) {
+  @include mq(leftCol) {
     margin-left: 1px;
   }
   video {
