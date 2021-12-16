@@ -2,8 +2,9 @@
 
 .content--interactive,
 .article__body {
-  -webkit-animation: fadein $transition-speed ease $transition-delay normal forwards 1 ;
-  animation: fadein $transition-speed ease $transition-delay normal forwards 1 ;
+  -webkit-animation: fadein $transition-speed ease $transition-delay normal
+    forwards 1;
+  animation: fadein $transition-speed ease $transition-delay normal forwards 1;
 }
 // theme - create seperate scss - theme-core
 $primaryColor: #041f4a;
@@ -318,6 +319,28 @@ html {
     p + p,
     p + p + p {
       margin: 0;
+    }
+  }
+  #article-body-blocks blockquote,
+  .article__body blockquote,
+  .content--interactive blockquote {
+    @media (prefers-color-scheme: dark) {
+      background-color: #333333;
+      border-top: #ededed;
+      p {
+        em {
+          color: #e7d4b9;
+          &:before {
+            background-image: url(https://uploads.guim.co.uk/2021/12/16/light-star.png);
+          }
+        }
+        strong {
+          color: #ededed;
+          em {
+            color: #ededed;
+          }
+        }
+      }
     }
   }
 }
