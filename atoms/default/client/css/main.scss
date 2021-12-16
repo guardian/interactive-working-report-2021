@@ -139,9 +139,9 @@ html {
   }
   .prose blockquote,
   blockquote {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
     margin: 24px 0;
     padding: 4px 10px 24px 10px;
 
@@ -213,9 +213,10 @@ html {
   flex-direction: column;
   top: 0;
   z-index: 5;
-  padding: 10px 0;
+  padding: 8px 0;
   transition: all 0.3s ease-in-out;
-  max-height: 500px;
+  // max-height: 500px;
+  max-height: $collapsed-nav-height; //  collapse at start
   overflow-y: hidden;
   z-index: 2000;
   // margin-top: -$collapsed-nav-height;
@@ -231,6 +232,9 @@ html {
     border-bottom: none;
     max-height: $menuMaxHeight;
   }
+  .nav-label {
+    line-height: 30px;
+  }
   .nav-class {
     font-family: $f-serif-headline;
     font-size: 17px;
@@ -244,9 +248,26 @@ html {
     border-bottom: none;
   }
   #close-nav {
-    opacity: 0;
+    // opacity: 0;
     span {
       @include sr-only();
+    }
+  }
+  &.open-nav {
+    max-height: $menuMaxHeight;
+    // .nav-label, .nav-class, .active {
+    //   top: 0px;
+    //   position: relative;
+    //   padding: inherit;
+    //   margin-bottom: inherit;
+    //   height: auto;
+    //   span {
+    //     line-height: inherit;
+    //   }
+    // }
+
+    @include mq(desktop) {
+      max-height: unset;
     }
   }
   &.stick-me {
@@ -262,10 +283,6 @@ html {
     // -webkit-animation: slidein 1.5s ease 1s normal forwards 1 ;
     // animation: slidein 1s ease 1.5s normal forwards 1 ;
 
-    @include mq(desktop) {
-      max-height: unset;
-      left: auto;
-    }
     &.open-nav {
       max-height: $menuMaxHeight;
       // .nav-label, .nav-class, .active {
@@ -282,6 +299,10 @@ html {
       @include mq(desktop) {
         max-height: unset;
       }
+    }
+    @include mq(desktop) {
+      max-height: unset;
+      left: auto;
     }
     #close-nav {
       opacity: 1;
@@ -332,14 +353,17 @@ html {
       border-radius: $icon-radius/2;
       border: 1px solid $neutral7;
       content: " ";
-      background-image: url(https://uploads.guim.co.uk/2020/12/10/arrow-brand.svg);
+      transition: all $transition-speed ease-in-out;
+      // background-image: url(https://uploads.guim.co.uk/2020/12/10/arrow-brand.svg);
+      background-image: url(https://uploads.guim.co.uk/2021/12/16/cross.svg);
       background-repeat: no-repeat;
       background-position: center;
-      transform: rotate(180deg);
+      background-size: 16px;
+      transform: rotate(45deg);
     }
     &.open {
       &::before {
-        transform: rotate(0);
+        transform: rotate(0deg);
       }
     }
   }
@@ -347,6 +371,11 @@ html {
 
 .ios,
 .android {
+  .article__body {
+    opacity: 1;
+    -webkit-animation: none;
+    animation: none;
+  }
   // .content--interactive,
   // .article__body {
   //   -webkit-animation: fadein $transition-speed ease 0 normal forwards 1;
@@ -380,7 +409,7 @@ html {
     opacity: 0;
     padding-right: 10px;
     padding-left: 10px;
-    max-height: $collapsed-nav-height; //************************* THIS CAN BREAK NAV
+    // max-height: $collapsed-nav-height;
     &.stick-me {
       opacity: 0;
       &:not(.hide-app) {
