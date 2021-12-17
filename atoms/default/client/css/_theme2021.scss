@@ -2,10 +2,10 @@
 $background: $neutral100;
 $primaryColor: $brand400;
 $secondaryColor: $culture800;
-$linkColor: rgba($primaryColor, 0.7);
-$linkColorHover: rgba($primaryColor, 0.8);
-$linkColorActive: rgba($primaryColor, 1);
-$linkColorDark: rgba($brand500, 0.7);
+$linkColor: rgba($primaryColor, 1);
+$linkColorHover: rgba($neutral0, 0.8);
+$linkColorActive: rgba($neutral0, 1);
+$linkColorDark: rgba($brand500, 1);
 $linkColorDarkHover: rgba($brand500, 0.8);
 $linkColorDarkActive: rgba($brand500, 1);
 
@@ -96,6 +96,9 @@ $linkColorDarkActive: rgba($brand500, 1);
     span {
       transition: all 0.3s ease-in-out;
     }
+    &:visited {
+      color: $brand600;
+    }
     &:hover {
       color: $primaryColor;
       border-color: $primaryColor;
@@ -141,7 +144,8 @@ $linkColorDarkActive: rgba($brand500, 1);
       &::before {
         content: " ";
         display: block;
-        background-image: url("https://uploads.guim.co.uk/2021/12/06/Type__Asterisk-30-x2.png");
+        // background-image: url("https://uploads.guim.co.uk/2021/12/06/Type__Asterisk-30-x2.png");
+        background-image: url(https://uploads.guim.co.uk/2021/12/16/Type__Asterisk-30-c350.svg);
         background-size: cover;
         width: 20px;
         height: 22px;
@@ -150,6 +154,10 @@ $linkColorDarkActive: rgba($brand500, 1);
     }
     p > strong {
       font-style: normal;
+      sub {
+        font-size: smaller;
+        vertical-align: bottom;
+      }
     }
     @include mq(tablet) {
     }

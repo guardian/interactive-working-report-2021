@@ -1,3 +1,4 @@
+@import "variables";
 .onwards-wrapper {
   display: flex;
   flex-direction: column;
@@ -28,7 +29,7 @@
       top: 0;
       bottom: 0;
       left: -10px;
-      background-color: #dcdcdc;
+      background-color: $neutral86;
     }
     &:first-child::before {
       display: none;
@@ -37,10 +38,22 @@
       margin-right: 20px;
       margin-bottom: 0;
     }
+    &:visited {
+      .onwardcard-card {
+        .onwardcard-headline {
+          // opacity: 0.6;
+          color: $neutral46;
+          span {
+            // opacity: 0.6;
+            color: $brand600;;
+          }
+        }
+      }
+    }
     &:hover {
       cursor: pointer;
       .onwardcard-card {
-        background-color: #dcdcdc;
+        background-color: $neutral86;
       }
     }
     .onwardcard-image {
@@ -54,7 +67,8 @@
       min-height: 120px;
       flex-grow: 1;
       .onwardcard-headline {
-        color: #121212;
+        // color: $neutral7;
+        color: rgba($neutral7, 1);
         font-family: "Guardian Headline", "Guardian Egyptian Web",
           "Guardian Headline Full", Georgia, serif;
         font-size: 20px;
@@ -62,7 +76,8 @@
         line-height: 115%;
         span {
           font-weight: 400;
-          color: #052962;
+          // color: $brand400;
+            color: rgba($brand400, 1);
           background-color: transparent !important;
         }
       }

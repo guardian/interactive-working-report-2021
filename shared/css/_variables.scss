@@ -1,6 +1,7 @@
 // Colour pallet - create seperate scss - colours
 $brand400:      #052962;
 $brand500:      #007ABC;
+$brand600:      #506991;
 $brandAlt400:   #FFE500;
 $neutral100:    #ffffff;
 $neutral46:     #707070;
@@ -14,17 +15,21 @@ $beige:         #fff7e5;
 
 $collapsed-nav-height: 48px;
 $icon-radius: 32px;
-$anchor-margin-app: 204px;
+$anchor-margin-app: 224px;
 $anchor-margin: $anchor-margin-app;
-$anchor-margin-top: $anchor-margin-app - 24px;
+$anchor-margin-top: 174px ;
 $anchor-margin-2: 146px;
-$anchor-margin-top-2: 214px;
+$anchor-margin-top-2: 234px;
+// $anchor-margin-top-2: 174px;
 $menuMaxHeight: 700px;
 
 $transition-speed: 300ms;
 $transition-delay: 500ms;
 $transition-bez: cubic-bezier(0.32, 0.03, 0.19, 1);
 $transition-type: ease-in-out;
+
+$nav-link-back: rgba($neutral100, 1);
+$nav-link-back-hov: rgba($neutral100, 0.9);
 
 @mixin background-opacity($color, $opacity: 0.3) {
     background: $color; /* The Fallback */
@@ -44,11 +49,9 @@ $transition-type: ease-in-out;
 @keyframes fadein {
     0% {  opacity:0;
           top: -$collapsed-nav-height;
-         // transform: translateY(-$collapsed-nav-height)
        }
     100% {  opacity:1;
-            top: 0;
-         // transform: translateY(0)
+            top: 0px;
        }
 }
 
@@ -70,42 +73,18 @@ $transition-type: ease-in-out;
     100% { opacity:0; }
 }
 
-@keyframes menu-reposition {
+@keyframes desk-menu-in {
     0% {
-      opacity:1;
-      right: -20px; }
-    40% {
       opacity:0;
-      right: -48px; }
-    45% {
-      top: 102px;
-    }
-    55% {
-      top: 50%;
-    }
-    60% {
-      opacity:0;
-      right: -48px;}
+      right: -400px; }
     100% {
       opacity:1;
       right: 0px; }
 }
-@-webkit-keyframes menu-reposition {
+@-webkit-keyframes desk-menu-in {
     0% {
-      opacity:1;
-      right: -20px; }
-    40% {
       opacity:0;
-      right: -48px; }
-    45% {
-      top: 102px;
-    }
-    55% {
-      top: 50%;
-    }
-    60% {
-      opacity:0;
-      right: -48px;}
+      right: -40px; }
     100% {
       opacity:1;
       right: 0px; }

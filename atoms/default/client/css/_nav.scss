@@ -11,10 +11,11 @@
       position: fixed;
       top: 50%;
       right: 0;
+      opacity: 1;
       overflow-y: visible;
       transform: translateY(-50%);
       z-index: 1082;
-      padding: 40px 20px;
+      padding: 40px 20px 40px 0px;
       #close-nav {
         display: none;
       }
@@ -22,6 +23,20 @@
         top: 50%;
         -webkit-animation: none;
         animation: none;
+        right: 0;
+        opacity: 1;
+      }
+      &.desktop-menu {
+        right: 0;
+        opacity: 1;
+      }
+      &:not(.desktop-menu ) {
+        right: -400px;
+        opacity: 0;
+      }
+      &.free-me {
+        // right: 0;
+        // opacity: 1;
       }
       .nav-label {
         // transform: translateY(-50%);
@@ -82,7 +97,7 @@
           visibility: visible;
           // text-shadow: -1px -1px 0 rgba($neutral100, .2), 1px -1px 0 rgba($neutral100, .2), -1px 1px 0 rgba($neutral100, .2), 1px 1px 0 rgba($neutral100, .2);
           padding: 0 10px;
-          background-color: rgba($neutral100, 0.7);
+          background-color: $nav-link-back-hov;
         }
       }
       .nav-class {
@@ -94,7 +109,7 @@
             transform: translateX(0);
             visibility: visible;
             transition: background-color $transition-speed $transition-type;
-            background-color: rgba($neutral100, 0.9);
+            background-color: $nav-link-back-hov;
             // text-shadow: -1px -1px 0 rgba($neutral100, .2), 1px -1px 0 rgba($neutral100, .2), -1px 1px 0 rgba($neutral100, .2), 1px 1px 0 rgba($neutral100, .2);
             padding: 0 10px;
           }
@@ -111,7 +126,7 @@
             visibility: visible;
             // background-color: white;
             // transition: background-color $transition-speed $transition-type;
-            background-color: rgba($neutral100, 0.7);
+            background-color: $nav-link-back;
             padding: 0 10px;
           }
         }
@@ -153,7 +168,7 @@
         span {
           // background-color: white;
           transition: background-color $transition-speed $transition-type;
-          background-color: rgba($neutral100, 0.9 );
+          background-color: $nav-link-back-hov;
           // text-shadow: -1px -1px 0 rgba($neutral100, .3), 1px -1px 0 rgba($neutral100, .3), -1px 1px 0 #fff, 1px 1px 0 rgba($neutral100, .3);
         }
       }

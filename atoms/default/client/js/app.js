@@ -239,7 +239,7 @@ function vidCaptionOverlay(linkTitle) {
 // Concatinate titles
 function concatTitle(title) {
   const trimTitle = title.trim()
-  const newURL = trimTitle.replace(/\s+/g, '-').replace(/’+/g, '').toLowerCase()
+  const newURL = trimTitle.replace(/\s+/g, '-').replace(/’+/g, '').replace(/,+/g, '').toLowerCase()
   return newURL;
 }
 
@@ -348,13 +348,13 @@ window.onload = function() {
         // Scrolling Up
         // setTimeout(() => {
           navHolder.classList.add(menuStuck)
-          // console.log('Scrolling Up stick-me')
+          // console.log('Scrolling Up: stick-me')
         // }, 1000)
 
       } else if (entry.intersectionRatio < 0.2) {
         // Scrolling Down
         // navHolder.classList.remove(menuStuck) // ************ keeps removing the menu
-        // console.log('Scrolling Down remove: stick-me')
+        // console.log('Scrolling Down: stick-me')
 
       }
     });
@@ -363,38 +363,81 @@ window.onload = function() {
   let observerUp = new IntersectionObserver(obvsCallbackUp, obvsOptUp);
   observerUp.observe(navHolder);
 
-  // remove hash at top of page watching mainTitle
+  // do we need?
+  let obvsOptUp2 = {
+    rootMargin: '0px',
+    threshold: 0
+  }
+
+  // Observe the video so KEEP menu
+  let obvsCallbackUp2 = (entries, observerUp2) => {
+    entries.forEach(entry => {
+      if ( entry.isIntersecting ) {
+        // Scrolling Up
+          // console.log('KEEP MENU')
+          navHolder.classList.add('desktop-menu', 'keep')
+
+      } else {
+
+        navHolder.classList.remove('keep');
+      }
+    });
+  };
+
+  let observerUp2 = new IntersectionObserver(obvsCallbackUp2, obvsOptUp2);
+  observerUp2.observe(videoplayer);
+
+  let mainContentOptions = {
+    rootMargin: '-80% 0px 240px 0px',
+    threshold: 0
+  }
+  // Observe the main content
+  let mainContentCallback = (entries, mainContentObserver) => {
+    entries.forEach(entry => {
+      if ( entry.isIntersecting ) {
+        // Show menu on desktop
+        navHolder.classList.add('desktop-menu')
+      } else {
+        // Remove menu on desktop
+        navHolder.classList.remove('desktop-menu')
+      }
+    });
+  };
+
+  let mainContentObserver = new IntersectionObserver(mainContentCallback, mainContentOptions);
+  mainContentObserver.observe(mainContent);
+
   let obvsOptsTitleTop = {
+    rootMargin: '0px',
+    threshold: 1
+  }
+  let obvsOptsTitleHideNav = {
     rootMargin: '0px',
     threshold: 0.5
   }
+  // remove hash at top of page watching mainTitle
   let obvsCallbackTitleTop = (entries, obvsTitleTop) => {
     entries.forEach(entry => {
       if ( entry.isIntersecting ) {
         // Top of page
-        // console.log('Top of page');
         navHolder.classList.add(menuFree)
         navElem[0].classList.remove('active');
         navElem[0].classList.remove('prev');
         removeHash()
       } else {
-        // console.log('NOT top of page');
         navHolder.classList.remove(menuFree)
       }
     });
   };
-  let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleTop);
+  let obvsTitleTop = new IntersectionObserver(obvsCallbackTitleTop, obvsOptsTitleHideNav);
   obvsTitleTop.observe(mainTitle);
 
   // hide nav app
-  let obvsOptsTitleHideNav = {
-    rootMargin: '0px',
-    threshold: 0.5
-  }
   let obvsCallHideNav = (entries, obvsTitleTop) => {
     entries.forEach(entry => {
       if ( entry.isIntersecting ) {
 
+        // console.log('video present')
         if (parentIsIos || parentIsAndroid) {
           // add hide class when video overlaps
           navHolder.classList.add(hideElem)
@@ -405,6 +448,7 @@ window.onload = function() {
         }
 
       } else {
+        // console.log('video gone')
         // remove hide class only app because video overlaps
         if (parentIsIos || parentIsAndroid) {
           navHolder.classList.remove(hideElem)
@@ -439,7 +483,7 @@ let anchorOptions = {
   rootMargin: '0px 0px -' + headSpace + 'px 0px',
   threshold: 0
 }
-// Checks if headers in view, updates menu status (active), checks if menu is stuck and updates hash
+// Checks if section headers are in view, updates menu status (active), checks if menu is stuck and updates hash
 let anchorObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
