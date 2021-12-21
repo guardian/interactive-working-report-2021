@@ -55,8 +55,7 @@
   }
   .headline,
   // .section-header h2
-  h2 > strong
-  {
+  h2 > strong {
     display: block;
     background-color: $brand400;
     color: $neutral100;
@@ -282,5 +281,6 @@
 
   .standfirst {
     margin-top: 150px;
+    margin-top: 180px;
   }
 }

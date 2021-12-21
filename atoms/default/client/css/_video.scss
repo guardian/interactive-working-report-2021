@@ -19,7 +19,7 @@
 .hero-video {
   picture {
     &::before {
-      content: ' ';
+      content: " ";
       position: absolute;
       left: 0;
       top: 0;
@@ -28,61 +28,64 @@
       @include background-opacity($neutral7, 0.6);
     }
   }
- .video-overlay {
-   display: flex;
-   flex-direction: column;
-   @include mq(tablet) {
-     justify-content: center;
-   }
-   position: absolute;
-   top: 0;
-   right: 0;
-   bottom: 0;
-   left: 0;
-   // flex: 1;
-   text-align: left;
-   color: $neutral100;
-   font-family: $f-titlepiece;
-   line-height: 1;
- }
- .video-inner {;
-   font-size: 24px;
-   padding-top: 4px;
-   margin-left: 12px;
-   @include mq(tablet) {
-     max-width: 860px;
-     font-size: 42px;
-   }
-   @include mq(desktop){
-     font-size: 60px;
-   }
-   @include mq(leftCol){
-     margin-left: 160px
-   }
-   @include mq(wide) {
-     margin-left: 240px;
-     font-size: 70px;
-   }
- }
- .video-button-wrapper {
-   left: 12px;
-   bottom: 12px;
-   > div {
-     color: $brandAlt400;
-   }
-   @include mq(tablet) {
-     max-width: 620px;
-     bottom: 64px;
-   }
-   @include mq(leftCol){
-     left: 160px
-   }
-   @include mq(wide) {
-     left: 240px;
-     bottom: 120px;
-   }
- }
+  .video-overlay {
+    display: flex;
+    flex-direction: column;
+    @include mq(tablet) {
+      justify-content: center;
+    }
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // flex: 1;
+    text-align: left;
+    color: $neutral100;
+    font-family: $f-titlepiece;
+    line-height: 1;
+  }
+  .video-inner {
+    font-size: 24px;
+    padding-top: 4px;
+    margin-left: 12px;
+    @include mq(tablet) {
+      max-width: 860px;
+      font-size: 42px;
+    }
+    @include mq(desktop) {
+      font-size: 60px;
+    }
+    @include mq(leftCol) {
+      margin-left: 160px;
+    }
+    @include mq(wide) {
+      margin-left: 240px;
+      font-size: 70px;
+    }
+  }
+  .video-button-wrapper {
+    left: 12px;
+    bottom: 12px;
+    > div {
+      color: $brandAlt400;
+    }
+    @include mq(tablet) {
+      max-width: 620px;
+      bottom: 64px;
+    }
+    @include mq(leftCol) {
+      left: 160px;
+    }
+    @include mq(wide) {
+      left: 240px;
+      bottom: 120px;
+    }
+  }
   figcaption {
     @include sr-only();
+  }
+  [data-cy="youtube-overlay"] {
+    max-height: unset;
   }
 }
