@@ -35,7 +35,29 @@ $linkColorDarkActive: rgba($brand500, 1);
   .content__meta-container_dcr {
     div > div:first-child:not([class]),
     address {
-      display: none;
+      // display: none;
+      padding: 0 10px;
+      @include mq(tablet) {
+        border-left: 1px solid #dcdcdc;
+        border-right: 1px solid #dcdcdc;
+        width: 480px;
+        margin-left: 20px;
+        margin-top: -3px;
+      }
+      @include mq(desktop) {
+        margin-left: 0px;
+        margin-top: 0;
+      }
+      @include mq(leftCol) {
+        margin-left: 160px;
+      }
+      @include mq(wide) {
+        margin-left: 240px;
+        width: 560px;
+      }
+      .byline {
+        display: none;
+      }
     }
     [data-print-layout="hide"] {
       div:nth-of-type(2) {

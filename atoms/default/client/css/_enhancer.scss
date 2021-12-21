@@ -129,7 +129,8 @@ a,
   & > header,
   .element-interactive,
   .element-atom,
-  .element-video {
+  .element-video,
+  address {
     max-width: 620px;
 
     @include mq(leftCol) {
