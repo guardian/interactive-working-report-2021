@@ -65,6 +65,16 @@ html {
       }
     }
   }
+  .section-header,
+  [data-component="youtube-atom"],
+  [data-atom-type="media"] {
+    &:first-of-type {
+      &::before {
+        // height: 182px;
+        // margin-top: -162px;
+      }
+    }
+  }
   .prose blockquote,
   blockquote {
     // display: flex;
@@ -250,7 +260,7 @@ html {
       width: $icon-radius;
       height: $icon-radius;
       border-radius: $icon-radius/2;
-      border: 1px solid $neutral7;
+      border: 1px solid $neutral86;
       content: " ";
       transition: all $transition-speed ease-in-out;
       // background-image: url(https://uploads.guim.co.uk/2020/12/10/arrow-brand.svg);
@@ -258,7 +268,7 @@ html {
       background-repeat: no-repeat;
       background-position: center;
       background-size: 16px;
-      transform: rotate(45deg);
+      transform: rotate(-45deg);
     }
     &.open {
       &::before {
@@ -267,7 +277,11 @@ html {
     }
   }
 }
-
+.content__meta-container_dcr {
+  [data-print-layout="hide"]{
+    margin-bottom: 0;
+  }
+}
 .ios,
 .android {
   .section-header{
@@ -296,6 +310,29 @@ html {
   .article__header {
     margin-bottom: 0 !important;
   }
+  .video-illo-wrapper, .video-illo-wrapper-2 {
+    margin-left: -8px;
+    margin-right: -8px;
+    figcaption {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    .article--standard {
+      .section-header + p {
+        border-color: $neutral46;
+      }
+    }
+    .article-navigation {
+      border-color: $neutral46;
+    }
+  }
+  .article__header {
+    .standfirst {
+      padding-right: 0px !important;
+    }
+  }
   .article-navigation {
     position: fixed;
     top: 0;
@@ -305,10 +342,8 @@ html {
     opacity: 0;
     padding-right: 10px;
     padding-left: 10px;
-    // max-height: $collapsed-nav-height;
     &.stick-me {
       &:not(.hide-app) {
-        // top: -$collapsed-nav-height;
         -webkit-animation: fadein 0.5s ease 0.5s normal forwards 1;
         animation: fadein 0.5s ease 0.5s normal forwards 1;
       }
@@ -324,7 +359,7 @@ html {
       #close-nav {
         &::before {
           background-image: url(https://uploads.guim.co.uk/2021/12/16/cross-white.svg);
-          border-color: $neutral100;
+          border-color: $neutral46;
         }
       }
     }

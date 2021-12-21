@@ -63,7 +63,7 @@
     font-family: $f-titlepiece;
     padding: 4px 10px 48px 10px;
     margin: 0;
-    font-size: 52px;
+    font-size: 40px;
     line-height: 1;
     width: 100%;
     @include mq(tablet) {
@@ -93,10 +93,8 @@
   .standfirst {
     margin-top: 0;
     margin-bottom: 0;
-    // opacity: 0;
-
-    // -webkit-animation: fadein 0.5s ease 1.5s normal forwards 1 ;
-    // animation: fadein 0.5s ease 1.5s normal forwards 1 ;
+    max-width: 100%;
+    padding-right: 0px;
   }
   .content__main-column--interactive {
     & > .byline-box {

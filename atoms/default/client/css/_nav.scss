@@ -7,6 +7,64 @@
     }
   }
   .article-navigation {
+    overflow-x: hidden;
+    .nav-class{
+      span {
+        transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
+        transition-delay: 0s;
+        transform: translateX(48px);
+        visibility: hidden;
+        opacity: 0;
+      }
+      &:nth-child(1) span {
+        transition-delay: 0ms;
+      }
+      &:nth-child(2) span {
+        transition-delay: 5ms;
+      }
+      &:nth-child(3) span {
+        transition-delay: 75ms;
+      }
+      &:nth-child(4) span {
+        transition-delay: 100ms;
+      }
+      &:nth-child(5) span {
+        transition-delay: 125ms;
+      }
+      &:nth-child(6) span {
+        transition-delay: 150ms;
+      }
+    }
+    &:hover, &.open-nav {
+      .nav-class span {
+        opacity: 1;
+        transform: translateX(0);
+        visibility: visible;
+        background-color: $nav-link-back-hov;
+      }
+    }
+    &:not(.open-nav) .nav-class {
+      span {
+        transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
+        transition-delay: 0s;
+        transform: translateX(48px);
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
+    .nav-class {
+      &:focus {
+        span,
+      // .nav-label
+        {
+          opacity: 1;
+          transform: translateX(0);
+          visibility: visible;
+          transition: background-color $transition-speed $transition-type;
+          background-color: $nav-link-back-hov;
+        }
+      }
+    }
     @include mq(desktop) {
       position: fixed;
       top: 50%;
@@ -34,18 +92,8 @@
         right: -400px;
         opacity: 0;
       }
-      &.free-me {
-        // right: 0;
-        // opacity: 1;
-      }
-      .nav-label {
-        // transform: translateY(-50%);
-        // transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
-        // transition-delay: 0s;
-        // transform: translateX(48px);
-        // visibility: hidden;
-      }
-      .nav-class {
+      .nav-class{
+        overflow-x: hidden;
         span {
           transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
           transition-delay: 0s;
@@ -72,32 +120,28 @@
           transition-delay: 150ms;
         }
       }
-      .video-link span {
-        &::before {
-          content: " ";
-          display: block;
-          background-image: url(https://uploads.guim.co.uk/2021/12/09/video-icon.png);
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-position: center;
-          width: 12px;
-          height: 16px;
-          margin-right: 8px;
-          display: inline-block;
-        }
-      }
-      &:hover {
-        // background: linear-gradient(to right, rgba($neutral100, 0), rgba($neutral100, 0.5), rgba($neutral100, 0.5));
-        // background-color: rgba($neutral100, .5);
-        .nav-class span,
-        // .nav-label
-          {
+      &:hover, &.open-nav {
+        .nav-class span {
           opacity: 1;
           transform: translateX(0);
           visibility: visible;
-          // text-shadow: -1px -1px 0 rgba($neutral100, .2), 1px -1px 0 rgba($neutral100, .2), -1px 1px 0 rgba($neutral100, .2), 1px 1px 0 rgba($neutral100, .2);
-          padding: 0 10px;
           background-color: $nav-link-back-hov;
+        }
+      }
+      &.free-me {
+        // right: 0;
+        // opacity: 1;
+      }
+      .nav-label {
+        // transform: translateY(-50%);
+        // transition: transform 0.4s cubic-bezier(0.32, 0.03, 0.19, 1),opacity 250ms cubic-bezier(0.32, 0.03, 0.19, 1), visibility 250ms;
+        // transition-delay: 0s;
+        // transform: translateX(48px);
+        // visibility: hidden;
+      }
+      &:hover, &.open-nav {
+        .nav-class span {
+          padding: 0 10px;
         }
       }
       .nav-class {
@@ -110,14 +154,32 @@
             visibility: visible;
             transition: background-color $transition-speed $transition-type;
             background-color: $nav-link-back-hov;
-            // text-shadow: -1px -1px 0 rgba($neutral100, .2), 1px -1px 0 rgba($neutral100, .2), -1px 1px 0 rgba($neutral100, .2), 1px 1px 0 rgba($neutral100, .2);
+          }
+        }
+      }
+      .nav-class {
+        &:focus {
+          span {
             padding: 0 10px;
           }
         }
       }
+      .video-link span {
+        &::before {
+          content: " ";
+          display: block;
+          background-image: url(https://uploads.guim.co.uk/2021/12/17/video-icon-grey.svg);
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 12px;
+          height: 16px;
+          margin-right: 8px;
+          display: inline-block;
+        }
+      }
     }
     @include mq(leftCol) {
-
       &.free-me {
         .nav-class {
           span {

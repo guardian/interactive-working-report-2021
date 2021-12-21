@@ -2,7 +2,6 @@
 .onwards-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
   margin-left: 10px;
   margin-right: 10px;
   // padding: 0 10px;
@@ -10,6 +9,7 @@
     flex-direction: row;
   }
   @include mq(tablet) {
+    margin-bottom: 20px;
     margin-left: -10px;
     padding: 0;
   }
@@ -53,7 +53,9 @@
     &:hover {
       cursor: pointer;
       .onwardcard-card {
-        background-color: $neutral86;
+        @include mq(desktop) {
+          background-color: $neutral86;
+        }
       }
     }
     .onwardcard-image {
